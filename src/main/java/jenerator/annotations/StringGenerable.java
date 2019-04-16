@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
 @Target(FIELD)
-public @interface NaturalNumberGenerable {
+public @interface StringGenerable {
 
-	long maxValue() default Long.MAX_VALUE;
+	int minLenght() default 10;
 
-	long minValue() default Long.MIN_VALUE;
+	int maxLenght() default 5;
 
 }

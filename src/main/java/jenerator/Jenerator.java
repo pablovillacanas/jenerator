@@ -3,11 +3,8 @@ package jenerator;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
-import jenerator.annotations.FieldGenerable;
 import jenerator.validations.GenValidation;
 import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
 import jenerator.validations.pojo.exceptions.FieldValidationException;
@@ -44,10 +41,10 @@ public class Jenerator {
 			Annotation[] annotations = declaredFields[i].getAnnotations();
 			for (int j = 0; j < annotations.length; j++) {
 				System.out.println(annotations[j].annotationType().getCanonicalName() + " " + declaredFields[i].getName());
-				FieldGenerable annotation = declaredFields[i].getAnnotation(FieldGenerable.class);
-				if (annotation != null) {
-					System.out.println("\tdocValue - " + annotation.source() + " \n\tunique - " + annotation.unique());
-				}
+//				FieldGenerable annotation = declaredFields[i].getAnnotation(Gene.class);
+//				if (annotation != null) {
+//					System.out.println("\tdocValue - " + annotation.source() + " \n\tunique - " + annotation.unique());
+//				}
 			}
 		}
 		return null;
@@ -59,10 +56,10 @@ public class Jenerator {
 			Annotation[] annotations = declaredFields[i].getAnnotations();
 			for (int j = 0; j < annotations.length; j++) {
 				System.out.println(annotations[j].annotationType().getCanonicalName() + " " + declaredFields[i].getName());
-				FieldGenerable annotation = declaredFields[i].getAnnotation(FieldGenerable.class);
-				if (annotation != null) {
-					System.out.println("\tdocValue - " + annotation.source() + " \n\tunique - " + annotation.unique());
-				}
+//				FieldGenerable annotation = declaredFields[i].getAnnotation(FieldGenerable.class);
+//				if (annotation != null) {
+//					System.out.println("\tdocValue - " + annotation.source() + " \n\tunique - " + annotation.unique());
+//				}
 			}
 		}
 		return null;

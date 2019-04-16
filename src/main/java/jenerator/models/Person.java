@@ -3,16 +3,13 @@
  */
 package jenerator.models;
 
-import jenerator.annotations.FieldGenerable;
 import jenerator.annotations.Generable;
 
 @Generable
 public class Person {
 
-	@FieldGenerable
 	private String nombre;
 	
-	@FieldGenerable(unique = true)
 	private int edad;
 
 	public String getNombre() {

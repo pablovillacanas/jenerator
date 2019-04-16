@@ -8,10 +8,7 @@ import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
 @Target(FIELD)
-public @interface NaturalNumberGenerable {
+public @interface DecimalNumberGenerable {
 
-	long maxValue() default Long.MAX_VALUE;
-
-	long minValue() default Long.MIN_VALUE;
-
+	
 }

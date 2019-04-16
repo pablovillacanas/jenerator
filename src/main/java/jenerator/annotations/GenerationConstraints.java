@@ -8,9 +8,10 @@ import java.lang.annotation.Target;
 
 @Retention(RUNTIME)
 @Target(FIELD)
-public @interface FieldGenerable {
+public @interface GenerationConstraints {
 
 	String source() default "document.jen";
+
 	boolean unique() default false;
-	
+
 }

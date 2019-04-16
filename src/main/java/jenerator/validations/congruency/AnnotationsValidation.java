@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.NotGenerable;
+import jenerator.annotations.StringGenerable;
 import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
 import jenerator.validations.pojo.POJOUtils;
 
@@ -20,7 +22,7 @@ public class AnnotationsValidation {
 		for (Iterator<Field> iterator = fields.iterator(); iterator.hasNext();) {
 			Field field = iterator.next();
 			if (field.getAnnotation(NotGenerable.class) == null) {
-				if(validateConcordancy(field))
+				if (validateConcordancy(field))
 					System.out.println();
 				else
 					throw new AnnotationMismatchFieldException();
@@ -31,8 +33,7 @@ public class AnnotationsValidation {
 	private static boolean validateConcordancy(Field field) {
 		List<Class<?>> annotationsOfField = Arrays.asList(field.getAnnotations()).stream()
 				.filter(ann -> ann.annotationType().getName().startsWith("jenerator.annotations."))
-				.map(ann -> ann.annotationType())
-				.collect(Collectors.toList());
+				.map(ann -> ann.annotationType()).collect(Collectors.toList());
 		Set<Class<?>> concordantAnnotations = AnnotationsValidation.Utils.retrieveConcordantAnnotationsTo(field);
 		for (Class<?> annotation : annotationsOfField) {
 			if (!concordantAnnotations.contains(annotation))
@@ -41,9 +42,9 @@ public class AnnotationsValidation {
 		return true;
 	}
 
-	static class Utils {
+	static public class Utils {
 
-		static Set<Class<?>> retrieveConcordantAnnotationsTo(Field field) {
+		public static Set<Class<?>> retrieveConcordantAnnotationsTo(Field field) {
 			Class<?> class1 = field.getType();
 			HashSet<Class<?>> annotations = new HashSet<Class<?>>();
 			switch (class1.getCanonicalName()) {
@@ -59,8 +60,12 @@ public class AnnotationsValidation {
 			case "java.lang.Double":
 
 			case "java.lang.Float":
+				annotations.add(DecimalNumberGenerable.class);
 
 				break;
+			case "java.lang.String":
+				annotations.add(StringGenerable.class);
+
 			default:
 				break;
 			}
