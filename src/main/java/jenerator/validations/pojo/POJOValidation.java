@@ -2,12 +2,10 @@ package jenerator.validations.pojo;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
-import jenerator.exceptions.FieldValidationException;
-import jenerator.exceptions.NoEmptyConstructorException;
+import jenerator.validations.pojo.exceptions.FieldValidationException;
+import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 
 public class POJOValidation {
 
@@ -25,11 +23,12 @@ public class POJOValidation {
 			if (parameterCount == 1)
 				return;
 		}
-		throw new NoEmptyConstructorException("Class " + class1 + " must explicitly declare a public non-param constructor");
+		throw new NoEmptyConstructorException(
+				"Class " + class1 + " must explicitly declare a public non-param constructor");
 	}
 
 	public static <T> void validateFields(Class<T> class1) throws FieldValidationException {
-		List<Field> fields = (List<Field>) Arrays.asList(class1.getDeclaredFields()).stream().filter(field -> !field.getName().startsWith("this$")).collect(Collectors.toList());
+		ArrayList<Field> fields = POJOUtils.getDeclaredFields(class1);
 		for (Field field : fields) {
 			FieldValidation.hasGettersAndSetters(field);
 		}

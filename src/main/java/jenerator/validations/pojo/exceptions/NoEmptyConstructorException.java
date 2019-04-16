@@ -1,4 +1,4 @@
-package jenerator.exceptions;
+package jenerator.validations.pojo.exceptions;
 
 public class NoEmptyConstructorException extends Exception {
 

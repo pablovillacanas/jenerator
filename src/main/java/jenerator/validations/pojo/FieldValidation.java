@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import jenerator.exceptions.FieldValidationException;
+import jenerator.validations.pojo.exceptions.FieldValidationException;
 
 public class FieldValidation {
 

@@ -3,8 +3,8 @@
  */
 package jenerator.models;
 
-import jenerator.annnotations.FieldGenerable;
-import jenerator.annnotations.Generable;
+import jenerator.annotations.FieldGenerable;
+import jenerator.annotations.Generable;
 
 @Generable
 public class Person {

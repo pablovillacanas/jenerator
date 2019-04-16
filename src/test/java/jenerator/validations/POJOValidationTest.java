@@ -1,14 +1,14 @@
-package jenerator;
+package jenerator.validations;
 
 import org.junit.Test;
 
-import jenerator.exceptions.FieldValidationException;
-import jenerator.exceptions.NoEmptyConstructorException;
 import jenerator.models.POJOValidationTestsCases.ClassWellFormed;
 import jenerator.models.POJOValidationTestsCases.ClassWithoutConstructor;
 import jenerator.models.POJOValidationTestsCases.ClassWithoutCorrectModifierConstructor;
 import jenerator.models.POJOValidationTestsCases.ClassWithoutSetter;
 import jenerator.validations.pojo.POJOValidation;
+import jenerator.validations.pojo.exceptions.FieldValidationException;
+import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 
 public class POJOValidationTest {
 
