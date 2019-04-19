@@ -14,4 +14,6 @@ public @interface StringGenerable {
 
 	int maxLenght() default 5;
 
+	GenerationConstraints constraints();
+
 }

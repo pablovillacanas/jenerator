@@ -1,4 +1,4 @@
-package jenerator.field;
+package jenerator.engine;
 
 public class NaturalNumberGenerator {
 

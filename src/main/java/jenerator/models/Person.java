@@ -9,7 +9,7 @@ import jenerator.annotations.Generable;
 public class Person {
 
 	private String nombre;
-	
+
 	private int edad;
 
 	public String getNombre() {
