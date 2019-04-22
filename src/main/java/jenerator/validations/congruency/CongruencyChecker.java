@@ -9,22 +9,37 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import jenerator.annotations.DecimalNumberGenerable;
+import jenerator.annotations.Generable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.NotGenerable;
 import jenerator.annotations.StringGenerable;
 import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
-import jenerator.validations.pojo.POJOUtils;
 
-public class AnnotationsValidation {
+/**
+ * <p>
+ * This class validates at runtime the congruency between the attribute type and
+ * the annotation attached.
+ * </p>
+ * 
+ * @author pablo
+ *
+ */
+public class CongruencyChecker {
 
-	public static <T extends Object> void validate(Class<T> class1) throws AnnotationMismatchFieldException {
-		List<Field> fields = POJOUtils.getDeclaredFields(class1);
+	/**
+	 * This method checks that a list of annotated fields are well defined and do
+	 * not exist conflicts between annotations type and filed type.
+	 * 
+	 * @param <T>
+	 * @param fields
+	 * @throws AnnotationMismatchFieldException if the fields type does not match
+	 *                                          with the annotation type.
+	 */
+	public static <T extends Object> void validate(List<Field> fields) throws AnnotationMismatchFieldException {
 		for (Iterator<Field> iterator = fields.iterator(); iterator.hasNext();) {
 			Field field = iterator.next();
 			if (field.getAnnotation(NotGenerable.class) == null) {
-				if (validateConcordancy(field))
-					System.out.println();
-				else
+				if (!validateConcordancy(field))
 					throw new AnnotationMismatchFieldException();
 			}
 		}
@@ -32,9 +47,9 @@ public class AnnotationsValidation {
 
 	private static boolean validateConcordancy(Field field) {
 		List<Class<?>> annotationsOfField = Arrays.asList(field.getAnnotations()).stream()
-				.filter(ann -> ann.annotationType().getName().startsWith("jenerator.annotations."))
+				.filter(ann -> ann.annotationType().getName().startsWith(Generable.class.getPackage().getName()))
 				.map(ann -> ann.annotationType()).collect(Collectors.toList());
-		Set<Class<?>> concordantAnnotations = AnnotationsValidation.Utils.retrieveConcordantAnnotationsTo(field);
+		Set<Class<?>> concordantAnnotations = CongruencyChecker.Utils.retrieveConcordantAnnotationsTo(field);
 		for (Class<?> annotation : annotationsOfField) {
 			if (!concordantAnnotations.contains(annotation))
 				return false;
@@ -42,6 +57,13 @@ public class AnnotationsValidation {
 		return true;
 	}
 
+	/**
+	 * Utils class with the only purpose of provide a set of possibles annotated
+	 * types to each field type.
+	 * 
+	 * @author pablo
+	 *
+	 */
 	static public class Utils {
 
 		public static Set<Class<?>> retrieveConcordantAnnotationsTo(Field field) {

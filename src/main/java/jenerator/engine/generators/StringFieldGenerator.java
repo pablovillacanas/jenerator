@@ -1,4 +1,4 @@
-package jenerator.engine;
+package jenerator.engine.generators;
 
 public class StringFieldGenerator {
 

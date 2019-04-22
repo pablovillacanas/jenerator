@@ -14,5 +14,5 @@ public @interface NaturalNumberGenerable {
 
 	long minValue() default Long.MIN_VALUE;
 
-	GenerationConstraints constraints();
+	GenerationConstraints constraints() default @GenerationConstraints();
 }

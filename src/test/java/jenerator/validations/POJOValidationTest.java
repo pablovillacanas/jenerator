@@ -1,5 +1,7 @@
 package jenerator.validations;
 
+import java.lang.reflect.Constructor;
+
 import org.junit.Test;
 
 import jenerator.models.POJOValidationTestsCases.ClassWellFormed;
@@ -31,7 +33,7 @@ public class POJOValidationTest {
 	public void test_NotConstructor() throws FieldValidationException, NoEmptyConstructorException {
 		POJOValidation.validate(ClassWithoutConstructor.class);
 	}
-	
+
 	@Test(expected = NoEmptyConstructorException.class)
 	public void test_NotWellFormedConstructor() throws FieldValidationException, NoEmptyConstructorException {
 		POJOValidation.validate(ClassWithoutCorrectModifierConstructor.class);

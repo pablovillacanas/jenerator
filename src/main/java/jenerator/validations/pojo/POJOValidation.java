@@ -20,7 +20,7 @@ public class POJOValidation {
 		Constructor<T>[] constructors = (Constructor<T>[]) class1.getConstructors();
 		for (Constructor<T> c : constructors) {
 			int parameterCount = c.getParameterCount();
-			if (parameterCount == 1)
+			if (parameterCount == 0)
 				return;
 		}
 		throw new NoEmptyConstructorException(
