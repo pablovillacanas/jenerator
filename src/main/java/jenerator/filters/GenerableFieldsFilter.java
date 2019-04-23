@@ -20,7 +20,7 @@ public class GenerableFieldsFilter {
 		 * This predicate filters all fields that have one annotation of type
 		 * jenerator.annotations and does not have a @NoGenerable annotation
 		 */
-		DEFAULTFILTER,
+		EXPLICITFILTER,
 
 		/**
 		 * This predicate filters all fields that do not have a @NoGenerable annotation
@@ -29,7 +29,7 @@ public class GenerableFieldsFilter {
 	}
 
 	public GenerableFieldsFilter(List<Field> fields) {
-		this(fields, GenerableFieldsFilter.Filter.DEFAULTFILTER);
+		this(fields, GenerableFieldsFilter.Filter.EXPLICITFILTER);
 	}
 
 	public GenerableFieldsFilter(List<Field> fields, GenerableFieldsFilter.Filter filter) {
@@ -46,7 +46,7 @@ public class GenerableFieldsFilter {
 				}
 			};
 			break;
-		default:
+		case EXPLICITFILTER:
 			this.filedFilter = new Predicate<Field>() {
 				@Override
 				public boolean test(Field field) {

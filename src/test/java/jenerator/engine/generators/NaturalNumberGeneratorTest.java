@@ -1,10 +1,14 @@
-package jenerator;
+package jenerator.engine.generators;
 
 import org.junit.Test;
 
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.reader.NaturalNumberGeneratorReader;
+import jenerator.engine.generators.ByteGenerator;
+import jenerator.engine.generators.IntegerGenerator;
+import jenerator.engine.generators.LongGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
+import jenerator.engine.generators.ShortGenerator;
 
 public class NaturalNumberGeneratorTest {
 
@@ -17,20 +21,16 @@ public class NaturalNumberGeneratorTest {
 				.getAnnotation(NaturalNumberGenerable.class);
 		NaturalNumberGeneratorReader reader = new NaturalNumberGeneratorReader(annotation);
 
-		NaturalNumberGenerator<Long> naturalNumberGenerator2 = new NaturalNumberGenerator<Long>(reader) {
-		};
-		assert (naturalNumberGenerator2.getRandomValue() instanceof Long);
-
-		NaturalNumberGenerator<Integer> naturalNumberGenerator = new NaturalNumberGenerator<Integer>(reader) {
-		};
+		NaturalNumberGenerator<Integer> naturalNumberGenerator = new IntegerGenerator(reader);
 		assert (naturalNumberGenerator.getRandomValue() instanceof Integer);
 
-		NaturalNumberGenerator<Short> naturalNumberGenerator3 = new NaturalNumberGenerator<Short>(reader) {
-		};
+		NaturalNumberGenerator<Long> naturalNumberGenerator2 = new LongGenerator(reader);
+		assert (naturalNumberGenerator2.getRandomValue() instanceof Long);
+
+		NaturalNumberGenerator<Short> naturalNumberGenerator3 = new ShortGenerator(reader);
 		assert (naturalNumberGenerator3.getRandomValue() instanceof Short);
 
-		NaturalNumberGenerator<Byte> naturalNumberGenerator4 = new NaturalNumberGenerator<Byte>(reader) {
-		};
+		NaturalNumberGenerator<Byte> naturalNumberGenerator4 = new ByteGenerator(reader);
 		assert (naturalNumberGenerator4.getRandomValue() instanceof Byte);
 	}
 }

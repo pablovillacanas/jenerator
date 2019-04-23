@@ -1,8 +1,10 @@
-package jenerator.models;
+package jenerator.validations;
 
 public class POJOValidationTestsCases {
 
-	public class ClassWellFormed {
+	// Why static?
+	// http://thecodersbreakfast.net/index.php?post/2011/09/26/Inner-classes-and-the-myth-of-the-default-constructor
+	public static class ClassWellFormedWithoutExplicitConstructor {
 		private int foo;
 
 		public int getFoo() {
@@ -14,7 +16,23 @@ public class POJOValidationTestsCases {
 		}
 	}
 
-	public class ClassWithoutSetter {
+	public static class ClassWellFormedWithExplicitConstructor {
+		private int foo;
+
+		public ClassWellFormedWithExplicitConstructor() {
+
+		}
+
+		public int getFoo() {
+			return foo;
+		}
+
+		public void setFoo(int foo) {
+			this.foo = foo;
+		}
+	}
+
+	public static class ClassWithoutSetter {
 		private int foo;
 
 		public ClassWithoutSetter() {
@@ -25,7 +43,7 @@ public class POJOValidationTestsCases {
 		}
 	}
 
-	public class ClassWithoutGetter {
+	public static class ClassWithoutGetter {
 		@SuppressWarnings("unused")
 		private int foo;
 
@@ -37,10 +55,10 @@ public class POJOValidationTestsCases {
 		}
 	}
 
-	public class ClassWithoutConstructor {
+	public static class ClassWithoutEmptyConstructor {
 		private int foo;
 
-		public ClassWithoutConstructor(int foo) {
+		public ClassWithoutEmptyConstructor(int foo) {
 			this.foo = foo;
 		}
 
@@ -53,7 +71,7 @@ public class POJOValidationTestsCases {
 		}
 	}
 
-	public class ClassWithoutCorrectModifierConstructor {
+	public static class ClassWithoutCorrectModifierConstructor {
 		private int foo;
 
 		private ClassWithoutCorrectModifierConstructor() {

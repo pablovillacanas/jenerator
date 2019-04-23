@@ -1,13 +1,12 @@
 package jenerator.validations;
 
-import java.lang.reflect.Constructor;
-
 import org.junit.Test;
 
-import jenerator.models.POJOValidationTestsCases.ClassWellFormed;
-import jenerator.models.POJOValidationTestsCases.ClassWithoutConstructor;
-import jenerator.models.POJOValidationTestsCases.ClassWithoutCorrectModifierConstructor;
-import jenerator.models.POJOValidationTestsCases.ClassWithoutSetter;
+import jenerator.validations.POJOValidationTestsCases.ClassWellFormedWithExplicitConstructor;
+import jenerator.validations.POJOValidationTestsCases.ClassWellFormedWithoutExplicitConstructor;
+import jenerator.validations.POJOValidationTestsCases.ClassWithoutCorrectModifierConstructor;
+import jenerator.validations.POJOValidationTestsCases.ClassWithoutEmptyConstructor;
+import jenerator.validations.POJOValidationTestsCases.ClassWithoutSetter;
 import jenerator.validations.pojo.POJOValidation;
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
@@ -16,7 +15,12 @@ public class POJOValidationTest {
 
 	@Test
 	public void testAllOk() throws FieldValidationException, NoEmptyConstructorException {
-		POJOValidation.validate(ClassWellFormed.class);
+		POJOValidation.validate(ClassWellFormedWithExplicitConstructor.class);
+	}
+
+	@Test
+	public void testAllOk2() throws FieldValidationException, NoEmptyConstructorException {
+		POJOValidation.validate(ClassWellFormedWithoutExplicitConstructor.class);
 	}
 
 	@Test(expected = FieldValidationException.class)
@@ -31,7 +35,7 @@ public class POJOValidationTest {
 
 	@Test(expected = NoEmptyConstructorException.class)
 	public void test_NotConstructor() throws FieldValidationException, NoEmptyConstructorException {
-		POJOValidation.validate(ClassWithoutConstructor.class);
+		POJOValidation.validate(ClassWithoutEmptyConstructor.class);
 	}
 
 	@Test(expected = NoEmptyConstructorException.class)

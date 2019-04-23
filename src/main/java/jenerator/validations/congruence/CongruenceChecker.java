@@ -1,4 +1,4 @@
-package jenerator.validations.congruency;
+package jenerator.validations.congruence;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import jenerator.annotations.Generable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.NotGenerable;
 import jenerator.annotations.StringGenerable;
-import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
+import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
 
 /**
  * <p>
@@ -24,32 +24,32 @@ import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldExcept
  * @author pablo
  *
  */
-public class CongruencyChecker {
+public class CongruenceChecker {
 
 	/**
 	 * This method checks that a list of annotated fields are well defined and do
-	 * not exist conflicts between annotations type and filed type.
+	 * not exist conflicts between annotations type and field type.
 	 * 
 	 * @param <T>
 	 * @param fields
 	 * @throws AnnotationMismatchFieldException if the fields type does not match
 	 *                                          with the annotation type.
 	 */
-	public static <T extends Object> void validate(List<Field> fields) throws AnnotationMismatchFieldException {
+	public static <T extends Object> void check(List<Field> fields) throws AnnotationMismatchFieldException {
 		for (Iterator<Field> iterator = fields.iterator(); iterator.hasNext();) {
 			Field field = iterator.next();
 			if (field.getAnnotation(NotGenerable.class) == null) {
-				if (!validateConcordancy(field))
+				if (!validateConcordance(field))
 					throw new AnnotationMismatchFieldException();
 			}
 		}
 	}
 
-	private static boolean validateConcordancy(Field field) {
+	private static boolean validateConcordance(Field field) {
 		List<Class<?>> annotationsOfField = Arrays.asList(field.getAnnotations()).stream()
 				.filter(ann -> ann.annotationType().getName().startsWith(Generable.class.getPackage().getName()))
 				.map(ann -> ann.annotationType()).collect(Collectors.toList());
-		Set<Class<?>> concordantAnnotations = CongruencyChecker.Utils.retrieveConcordantAnnotationsTo(field);
+		Set<Class<?>> concordantAnnotations = CongruenceChecker.Utils.retrieveConcordantAnnotationsTo(field);
 		for (Class<?> annotation : annotationsOfField) {
 			if (!concordantAnnotations.contains(annotation))
 				return false;

@@ -1,4 +1,4 @@
-package jenerator.validations.congruency.exceptions;
+package jenerator.validations.congruence.exceptions;
 
 public class AnnotationMismatchFieldException extends Exception {
 

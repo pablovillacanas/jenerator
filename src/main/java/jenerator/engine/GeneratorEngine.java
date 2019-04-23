@@ -7,7 +7,7 @@ import java.util.List;
 
 import jenerator.filters.GenerableFieldsFilter;
 import jenerator.validations.GenValidation;
-import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
+import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 
@@ -16,10 +16,10 @@ public class GeneratorEngine {
 
 	public Object generateOne(Class<?> class1)
 			throws FieldValidationException, NoEmptyConstructorException, AnnotationMismatchFieldException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		// validate
+		// Validate POJO and congruence
 		GenValidation.validate(class1);
 
-		// create an empty instance of that class
+		// Create an empty instance of that class
 		Object instance = null;
 		try {
 			 instance = class1.getConstructor().newInstance();
@@ -28,7 +28,7 @@ public class GeneratorEngine {
 			e.printStackTrace();
 		}
 
-		// Get generable fields
+		//Get generable fields
 		List<Field> generableFields = new GenerableFieldsFilter(Arrays.asList(class1.getDeclaredFields())).filter();
 
 		// For each field set a value

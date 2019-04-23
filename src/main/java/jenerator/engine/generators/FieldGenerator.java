@@ -1,6 +1,6 @@
 package jenerator.engine.generators;
 
-public abstract class FieldGenerator {
+public abstract class FieldGenerator<T> implements ValueGenerator<T> {
 
 	private String source;
 

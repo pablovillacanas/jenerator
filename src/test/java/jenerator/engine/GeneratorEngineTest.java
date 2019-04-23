@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.junit.Test;
 
 import jenerator.Foo;
-import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
+import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 

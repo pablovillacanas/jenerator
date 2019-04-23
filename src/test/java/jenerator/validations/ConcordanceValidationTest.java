@@ -12,10 +12,10 @@ import org.junit.Test;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
-import jenerator.validations.congruency.CongruencyChecker;
-import jenerator.validations.congruency.exceptions.AnnotationMismatchFieldException;
+import jenerator.validations.congruence.CongruenceChecker;
+import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
 
-public class ConcordancyValidationTest {
+public class ConcordanceValidationTest {
 
 	static class Foo {
 		Byte byte1;
@@ -62,7 +62,7 @@ public class ConcordancyValidationTest {
 			Field[] declaredFields = Foo.class.getDeclaredFields();
 			Method[] declaredMethods = Foo.class.getDeclaredMethods();
 			for (int i = 0; i < declaredFields.length; i++) {
-				Set<Class<?>> concordantset = CongruencyChecker.Utils
+				Set<Class<?>> concordantset = CongruenceChecker.Utils
 						.retrieveConcordantAnnotationsTo(declaredFields[i]);
 				Class<?>[] concordantarray = concordantset.toArray(new Class<?>[concordantset.size()]);
 				Class<?>[] invoke = (Class<?>[]) declaredMethods[i].invoke(new Foo());

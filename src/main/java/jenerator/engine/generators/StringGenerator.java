@@ -1,5 +1,5 @@
 package jenerator.engine.generators;
 
-public class StringFieldGenerator {
+public class StringGenerator {
 
 }

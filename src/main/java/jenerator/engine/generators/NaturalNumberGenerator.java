@@ -1,10 +1,9 @@
 package jenerator.engine.generators;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
-
-import com.google.common.reflect.TypeToken;
 
 import jenerator.annotations.reader.NaturalNumberGeneratorReader;
 
@@ -16,20 +15,22 @@ import jenerator.annotations.reader.NaturalNumberGeneratorReader;
  *
  * @param <T> Java type that extends Number
  */
-public abstract class NaturalNumberGenerator<T extends Number> extends FieldGenerator {
+public abstract class NaturalNumberGenerator<T extends Number> extends FieldGenerator<T> {
 
-	private final Type type;
 	private long minValue;
 	private long maxValue;
+	private Class<T> type;
 
+	@SuppressWarnings("unchecked")
 	public NaturalNumberGenerator(NaturalNumberGeneratorReader reader) {
 		super();
-		@SuppressWarnings("serial")
-		final TypeToken<T> typeToken = new TypeToken<T>(getClass()) {
-		};
-		type = typeToken.getType();
+		this.type = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
 		this.minValue = reader.getMinValue();
 		this.maxValue = reader.getMaxValue();
+	}
+
+	public Class<T> getType() {
+		return type;
 	}
 
 	@SuppressWarnings("unchecked")

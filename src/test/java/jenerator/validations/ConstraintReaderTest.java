@@ -1,4 +1,4 @@
-package jenerator;
+package jenerator.validations;
 
 import org.junit.Test;
 
@@ -6,7 +6,7 @@ import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.reader.NaturalNumberGeneratorReader;
 
-public class ParserTest {
+public class ConstraintReaderTest {
 
 	class pojo {
 		@NaturalNumberGenerable(maxValue = 12, constraints = @GenerationConstraints(source = "hola", nullable = 0, unique = true))
@@ -18,7 +18,6 @@ public class ParserTest {
 		NaturalNumberGenerable annotation = pojo.class.getDeclaredField("i")
 				.getAnnotation(NaturalNumberGenerable.class);
 		NaturalNumberGeneratorReader s = new NaturalNumberGeneratorReader(annotation);
-//		annotation.
 		System.out.println(s);
 	}
 }
