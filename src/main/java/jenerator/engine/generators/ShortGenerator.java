@@ -1,11 +1,11 @@
 package jenerator.engine.generators;
 
-import jenerator.annotations.reader.NaturalNumberGeneratorReader;
+import jenerator.annotations.reader.NaturalNumberConstraints;
 
 public class ShortGenerator extends NaturalNumberGenerator<Short> {
 
-	public ShortGenerator(NaturalNumberGeneratorReader reader) {
-		super(reader);
+	public ShortGenerator(NaturalNumberConstraints constraints) {
+		super(constraints);
 	}
 
 	@Override

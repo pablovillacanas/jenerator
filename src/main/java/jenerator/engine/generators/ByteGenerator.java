@@ -1,11 +1,11 @@
 package jenerator.engine.generators;
 
-import jenerator.annotations.reader.NaturalNumberGeneratorReader;
+import jenerator.annotations.reader.NaturalNumberConstraints;
 
 public class ByteGenerator extends NaturalNumberGenerator<Byte> {
 
-	public ByteGenerator(NaturalNumberGeneratorReader reader) {
-		super(reader);
+	public ByteGenerator(NaturalNumberConstraints constraints) {
+		super(constraints);
 	}
 
 	@Override

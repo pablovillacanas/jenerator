@@ -1,6 +1,6 @@
 package jenerator.engine.generators;
 
-import jenerator.annotations.reader.NaturalNumberGeneratorReader;
+import jenerator.annotations.reader.NaturalNumberConstraints;
 
 /**
  * El motivo de esta clase es para proporcionar a su superclase su tipo en
@@ -15,8 +15,8 @@ import jenerator.annotations.reader.NaturalNumberGeneratorReader;
  */
 public class IntegerGenerator extends NaturalNumberGenerator<Integer> {
 
-	public IntegerGenerator(NaturalNumberGeneratorReader reader) {
-		super(reader);
+	public IntegerGenerator(NaturalNumberConstraints constraints) {
+		super(constraints);
 
 	}
 

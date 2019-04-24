@@ -5,7 +5,8 @@ import java.lang.reflect.Type;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import jenerator.annotations.reader.NaturalNumberGeneratorReader;
+import jenerator.annotations.GenerationConstraints;
+import jenerator.annotations.reader.NaturalNumberConstraints;
 
 /**
  * This class return a natural number of type T bounded into a minimum or
@@ -17,16 +18,18 @@ import jenerator.annotations.reader.NaturalNumberGeneratorReader;
  */
 public abstract class NaturalNumberGenerator<T extends Number> extends FieldGenerator<T> {
 
+	NaturalNumberConstraints naturalNumberConstraints;
 	private long minValue;
 	private long maxValue;
 	private Class<T> type;
 
 	@SuppressWarnings("unchecked")
-	public NaturalNumberGenerator(NaturalNumberGeneratorReader reader) {
+	public NaturalNumberGenerator(NaturalNumberConstraints naturalNumberConstraints) {
 		super();
 		this.type = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-		this.minValue = reader.getMinValue();
-		this.maxValue = reader.getMaxValue();
+		this.naturalNumberConstraints = naturalNumberConstraints;
+		minValue = naturalNumberConstraints.getMinValue();
+		maxValue = naturalNumberConstraints.getMaxValue();
 	}
 
 	public Class<T> getType() {
@@ -37,7 +40,7 @@ public abstract class NaturalNumberGenerator<T extends Number> extends FieldGene
 	public T getRandomValue() {
 		checkIntegrityMinMaxValues(type);
 		RandomDataGenerator random = new RandomDataGenerator();
-		if (getSource() == null) {
+		if (naturalNumberConstraints.getCommonConstraints().getSource().equals(GenerationConstraints.DEFAULTSOURCE)) {
 			switch (type.getTypeName()) {
 			case "java.lang.Long":
 				return (T) Long.valueOf(random.nextLong(minValue, maxValue));

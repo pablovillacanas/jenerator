@@ -1,11 +1,11 @@
 package jenerator.engine.generators;
 
-import jenerator.annotations.reader.NaturalNumberGeneratorReader;
+import jenerator.annotations.reader.NaturalNumberConstraints;
 
 public class LongGenerator extends NaturalNumberGenerator<Long> {
 
-	public LongGenerator(NaturalNumberGeneratorReader reader) {
-		super(reader);
+	public LongGenerator(NaturalNumberConstraints constraints) {
+		super(constraints);
 	}
 
 	@Override

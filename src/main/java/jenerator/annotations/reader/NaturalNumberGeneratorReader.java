@@ -2,28 +2,19 @@ package jenerator.annotations.reader;
 
 import jenerator.annotations.NaturalNumberGenerable;
 
-public class NaturalNumberGeneratorReader extends CommonConstraintReader
-		implements AnnotationReader<NaturalNumberGenerable> {
+public class NaturalNumberGeneratorReader extends CommonConstraintsReader implements IAnnotationReader<NaturalNumberGenerable> {
 
-	long minValue;
-	long maxValue;
+	NaturalNumberConstraints naturalNumberConstraints;
 
-	public NaturalNumberGeneratorReader(NaturalNumberGenerable annotation) {
-		readValues(annotation);
+	public NaturalNumberGeneratorReader() {
+		this.naturalNumberConstraints = new NaturalNumberConstraints();
 	}
 
-	public void readValues(NaturalNumberGenerable ann) {
-		super.readValues(ann.constraints());
-		maxValue = ann.maxValue();
-		minValue = ann.minValue();
+	@Override
+	public NaturalNumberConstraints readValues(NaturalNumberGenerable annotation) {
+		naturalNumberConstraints.setCommonConstraints(super.readValues(annotation.constraints()));
+		naturalNumberConstraints.setMinValue(annotation.minValue());
+		naturalNumberConstraints.setMaxValue(annotation.maxValue());
+		return naturalNumberConstraints;
 	}
-
-	public long getMinValue() {
-		return minValue;
-	}
-
-	public long getMaxValue() {
-		return maxValue;
-	}
-
 }
