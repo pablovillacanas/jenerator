@@ -2,7 +2,7 @@ package jenerator.engine;
 
 import java.lang.reflect.InvocationTargetException;
 
-import jenerator.filter.exceptions.NotAnnotationEncountered;
+import jenerator.filters.exceptions.NotAnnotationEncountered;
 import jenerator.validations.GenValidation;
 import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
 import jenerator.validations.pojo.exceptions.FieldValidationException;

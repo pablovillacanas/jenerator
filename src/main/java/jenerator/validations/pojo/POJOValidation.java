@@ -61,8 +61,8 @@ public class POJOValidation {
 	public static <T extends Object> boolean isEncapsulated(Class<T> class1) throws FieldValidationException {
 		List<Field> privateFilteredFields = POJOUtils.getDeclaredFields(class1).stream().filter(field -> {
 			int modifiers = field.getModifiers();
-			// If field is private and it is not final or static, must have setter and
-			// getter.
+			// If field is private and it is not final or static, it must have a setter and
+			// a getter.
 			if (Modifier.isPrivate(modifiers) && !Modifier.isFinal(modifiers) || !Modifier.isStatic(modifiers)) {
 				return true;
 			} else {

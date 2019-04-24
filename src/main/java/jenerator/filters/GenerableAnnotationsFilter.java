@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import jenerator.filter.exceptions.NotAnnotationEncountered;
+import jenerator.filters.exceptions.NotAnnotationEncountered;
 
 /**
  * <p>
