@@ -16,7 +16,7 @@ public class GeneratorEngineTest {
 	@Test
 	public void generate()
 			throws FieldValidationException, NoEmptyConstructorException, AnnotationMismatchFieldException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		GeneratorEngine generatorEngine = new GeneratorEngine();
+		GeneratorEngine generatorEngine = new GeneratorEngine(null);
 		Foo generateOne = (Foo) generatorEngine.generateOne(Foo.class);
 		System.out.println(generateOne.getI());
 	}

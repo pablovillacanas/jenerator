@@ -3,22 +3,24 @@ package jenerator.engine;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.reader.NaturalNumberGeneratorReader;
 import jenerator.engine.generators.LongGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
+import jenerator.filters.GenerableFieldsFilter;
 
 public class GeneratorController {
 
 	Object instance;
-	List<Field> fields;
+	Class<?> class1;
 
-	public GeneratorController(Object instance, List<Field> fields) {
+	public GeneratorController(Object instance, Class<?> class1) {
 		super();
 		this.instance = instance;
-		this.fields = fields;
+		this.class1 = class1;
 	}
 
 	public void setValue(Object instance, Field field) throws IllegalArgumentException, IllegalAccessException,
@@ -54,7 +56,8 @@ public class GeneratorController {
 
 	public void process() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
-		for (Field field : fields) {
+		List<Field> generableFields = new GenerableFieldsFilter(Arrays.asList(class1.getDeclaredFields())).filter();
+		for (Field field : generableFields) {
 			setValue(instance, field);
 		}
 	}
