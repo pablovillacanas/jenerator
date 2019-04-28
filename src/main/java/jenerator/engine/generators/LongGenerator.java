@@ -10,7 +10,7 @@ public class LongGenerator extends NaturalNumberGenerator<Long> {
 
 	@Override
 	public Long getValue() {
-		return super.getRandomValue();
+		return super.getValue();
 	}
 
 }

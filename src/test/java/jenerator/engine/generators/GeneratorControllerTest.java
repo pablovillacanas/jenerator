@@ -14,7 +14,7 @@ public class GeneratorControllerTest {
 	public void setValueTest() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, NotAnnotationEncountered {
 		Foo foo = new Foo();
-		GeneratorController generatorController = new GeneratorController(foo, Foo.class);
+		GeneratorController generatorController = new GeneratorController(foo);
 		generatorController.process();
 		System.out.println(foo);
 	}

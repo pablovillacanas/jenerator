@@ -6,13 +6,21 @@ package jenerator.engine;
  * going to use our annotations or Hibernate ones.
  * </p>
  * 
- * <p>
- * By this depends how are going to be parsed each class
- * </p>
- * 
  * @author pablo
  *
  */
 public class EngineConfiguration {
+
+	private static EngineConfiguration engineConfiguration;
+
+	private EngineConfiguration() {
+	}
+
+	public static EngineConfiguration getInstance() {
+		if (engineConfiguration == null) {
+			engineConfiguration = new EngineConfiguration();
+		}
+		return engineConfiguration;
+	}
 
 }

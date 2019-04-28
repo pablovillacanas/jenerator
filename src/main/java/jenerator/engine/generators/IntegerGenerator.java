@@ -22,7 +22,7 @@ public class IntegerGenerator extends NaturalNumberGenerator<Integer> {
 
 	@Override
 	public Integer getValue() {
-		return super.getRandomValue();
+		return super.getValue();
 	}
 
 }

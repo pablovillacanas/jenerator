@@ -10,7 +10,7 @@ public class ByteGenerator extends NaturalNumberGenerator<Byte> {
 
 	@Override
 	public Byte getValue() {
-		return super.getRandomValue();
+		return super.getValue();
 	}
 
 }

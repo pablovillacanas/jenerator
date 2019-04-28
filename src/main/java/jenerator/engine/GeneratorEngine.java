@@ -8,13 +8,20 @@ import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldExcept
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 
-//TODO multithread
+/**
+ * This class should be able to offer methods to the user that internally, calls
+ * the logic of the API.
+ * 
+ * @author pablo
+ *
+ */
 public class GeneratorEngine {
 
 	EngineConfiguration engineConfiguration;
+	GeneratorController generatorController;
 
-	public GeneratorEngine(EngineConfiguration engineConfiguration) {
-		this.engineConfiguration = engineConfiguration;
+	public GeneratorEngine() {
+		engineConfiguration = EngineConfiguration.getInstance();
 	}
 
 	public Object generateOne(Class<?> class1) throws FieldValidationException, NoEmptyConstructorException,
@@ -32,10 +39,9 @@ public class GeneratorEngine {
 			e.printStackTrace();
 		}
 
-		// Get generable fields
-
 		// For each field set a value
-		new GeneratorController(instance, class1).process();
+		generatorController = new GeneratorController(instance);
+		generatorController.process();
 		return instance;
 	}
 }

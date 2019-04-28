@@ -16,40 +16,35 @@ import jenerator.annotations.reader.NaturalNumberConstraints;
  *
  * @param <T> Java type that extends Number
  */
-public abstract class NaturalNumberGenerator<T extends Number> extends FieldGenerator<T> {
+public abstract class NaturalNumberGenerator<T extends Number> extends ValueGenerator<T> {
 
-	NaturalNumberConstraints naturalNumberConstraints;
-	private long minValue;
-	private long maxValue;
+	protected NaturalNumberConstraints constraints;
 	private Class<T> type;
 
 	@SuppressWarnings("unchecked")
 	public NaturalNumberGenerator(NaturalNumberConstraints naturalNumberConstraints) {
 		super();
-		this.type = ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-		this.naturalNumberConstraints = naturalNumberConstraints;
-		minValue = naturalNumberConstraints.getMinValue();
-		maxValue = naturalNumberConstraints.getMaxValue();
-	}
-
-	public Class<T> getType() {
-		return type;
+		this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		this.constraints = naturalNumberConstraints;
 	}
 
 	@SuppressWarnings("unchecked")
-	public T getRandomValue() {
+	public T getValue() {
 		checkIntegrityMinMaxValues(type);
 		RandomDataGenerator random = new RandomDataGenerator();
-		if (naturalNumberConstraints.getCommonConstraints().getSource().equals(GenerationConstraints.DEFAULTSOURCE)) {
+		if (constraints.getCommonConstraints().getSource().equals(GenerationConstraints.DEFAULTSOURCE)) {
 			switch (type.getTypeName()) {
 			case "java.lang.Long":
-				return (T) Long.valueOf(random.nextLong(minValue, maxValue));
+				return (T) Long.valueOf(random.nextLong(constraints.getMinValue(), constraints.getMaxValue()));
 			case "java.lang.Integer":
-				return (T) Integer.valueOf(random.nextInt((int) minValue, (int) maxValue));
+				return (T) Integer
+						.valueOf(random.nextInt((int) constraints.getMinValue(), (int) constraints.getMaxValue()));
 			case "java.lang.Byte":
-				return (T) Byte.valueOf((byte) random.nextInt((byte) minValue, (byte) maxValue));
+				return (T) Byte.valueOf(
+						(byte) random.nextInt((byte) constraints.getMinValue(), (byte) constraints.getMaxValue()));
 			case "java.lang.Short":
-				return (T) Short.valueOf((short) random.nextInt((short) minValue, (short) maxValue));
+				return (T) Short.valueOf(
+						(short) random.nextInt((short) constraints.getMinValue(), (short) constraints.getMaxValue()));
 			}
 		}
 		return null;
@@ -62,25 +57,25 @@ public abstract class NaturalNumberGenerator<T extends Number> extends FieldGene
 	 */
 	// TODO log para que el developer vea que se ha cambiado su valor en tiempo de
 	// ejecucion.
-	private void checkIntegrityMinMaxValues(Type class1) {
+	protected void checkIntegrityMinMaxValues(Type class1) {
 		switch (class1.getTypeName()) {
 		case "java.lang.Integer":
-			if (minValue < Integer.MIN_VALUE)
-				minValue = Integer.MIN_VALUE;
-			if (maxValue > Integer.MAX_VALUE)
-				maxValue = Integer.MAX_VALUE;
+			if (constraints.getMinValue() < Integer.MIN_VALUE)
+				constraints.setMinValue(Integer.MIN_VALUE);
+			if (constraints.getMaxValue() > Integer.MAX_VALUE)
+				constraints.setMaxValue(Integer.MAX_VALUE);
 			break;
 		case "java.lang.Byte":
-			if (minValue < Byte.MIN_VALUE)
-				minValue = Byte.MIN_VALUE;
-			if (maxValue > Byte.MAX_VALUE)
-				maxValue = Byte.MAX_VALUE;
+			if (constraints.getMinValue() < Byte.MIN_VALUE)
+				constraints.setMinValue(Byte.MIN_VALUE);
+			if (constraints.getMaxValue() > Byte.MAX_VALUE)
+				constraints.setMaxValue(Byte.MAX_VALUE);
 			break;
 		case "java.lang.Short":
-			if (minValue < Short.MIN_VALUE)
-				minValue = Short.MIN_VALUE;
-			if (maxValue > Short.MAX_VALUE)
-				maxValue = Short.MAX_VALUE;
+			if (constraints.getMinValue() < Short.MIN_VALUE)
+				constraints.setMinValue(Short.MIN_VALUE);
+			if (constraints.getMaxValue() > Short.MAX_VALUE)
+				constraints.setMaxValue(Short.MAX_VALUE);
 			break;
 		}
 	}

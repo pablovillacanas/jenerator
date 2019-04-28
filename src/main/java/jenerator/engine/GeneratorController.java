@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jenerator.annotations.reader.AnnotationReader;
 import jenerator.annotations.reader.Constraints;
@@ -13,8 +14,8 @@ import jenerator.annotations.reader.NaturalNumberConstraints;
 import jenerator.engine.generators.ByteGenerator;
 import jenerator.engine.generators.IntegerGenerator;
 import jenerator.engine.generators.LongGenerator;
-import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.ShortGenerator;
+import jenerator.engine.generators.ValueGenerator;
 import jenerator.filters.GenerableAnnotationsFilter;
 import jenerator.filters.GenerableFieldsFilter;
 import jenerator.filters.exceptions.NotAnnotationEncountered;
@@ -22,70 +23,58 @@ import jenerator.filters.exceptions.NotAnnotationEncountered;
 public class GeneratorController {
 
 	Object instance;
-	Class<?> class1;
+	GenerableFieldsFilter generableFieldsFilter;
+	AnnotationReader annotationReader = new AnnotationReader();
 
-	public GeneratorController(Object instance, Class<?> class1) {
-		super();
+	public GeneratorController(Object instance) {
 		this.instance = instance;
-		this.class1 = class1;
-	}
-
-	private void annotationDispatcher(Field field) throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException, SecurityException, NotAnnotationEncountered {
-		// Filtramos las anotaciones de nuestro framework
-		Annotation annotation = GenerableAnnotationsFilter.retrieveGenerableAnnotation(field);
-		// Obtenemos las constraints con el Reader
-		Constraints constraints = new AnnotationReader().readValues(annotation);
-		// Si annotation es de tipo NaturalNumber, le pasamos dicho campo al método
-		// encargado de setearle el valor.
-		setValue(instance, field, constraints);
-	}
-
-	private void setValue(Object instance, Field field, Constraints constraints) throws NoSuchMethodException,
-			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		if (field.getType().isAssignableFrom(Long.class)) {
-			NaturalNumberGenerator<Long> nng = new LongGenerator((NaturalNumberConstraints) constraints);
-			// Obtenemos lo que queremos
-			Long randomValue = nng.getRandomValue();
-			// Se lo metemos al campo
-			String fieldFirstUpp = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-			Method method = instance.getClass().getMethod("set" + fieldFirstUpp, Long.class);
-			method.invoke(instance, randomValue);
-		}
-		if (field.getType().isAssignableFrom(Integer.class)) {
-			NaturalNumberGenerator<Integer> nng = new IntegerGenerator((NaturalNumberConstraints) constraints);
-			// Obtenemos lo que queremos
-			Integer randomValue = nng.getRandomValue();
-			// Se lo metemos al campo
-			String fieldFirstUpp = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-			Method method = instance.getClass().getMethod("set" + fieldFirstUpp, Integer.class);
-			method.invoke(instance, randomValue);
-		}
-		if (field.getType().isAssignableFrom(Short.class)) {
-			NaturalNumberGenerator<Short> nng = new ShortGenerator((NaturalNumberConstraints) constraints);
-			// Obtenemos lo que queremos
-			Short randomValue = nng.getRandomValue();
-			// Se lo metemos al campo
-			String fieldFirstUpp = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-			Method method = instance.getClass().getMethod("set" + fieldFirstUpp, Short.class);
-			method.invoke(instance, randomValue);
-		}
-		if (field.getType().isAssignableFrom(Byte.class)) {
-			NaturalNumberGenerator<Byte> nng = new ByteGenerator((NaturalNumberConstraints) constraints);
-			// Obtenemos lo que queremos
-			Byte randomValue = nng.getRandomValue();
-			// Se lo metemos al campo
-			String fieldFirstUpp = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-			Method method = instance.getClass().getMethod("set" + fieldFirstUpp, Byte.class);
-			method.invoke(instance, randomValue);
-		}
+		generableFieldsFilter = new GenerableFieldsFilter();
 	}
 
 	public void process() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, NotAnnotationEncountered {
-		List<Field> generableFields = new GenerableFieldsFilter(Arrays.asList(class1.getDeclaredFields())).filter();
+		List<Field> generableFields = Arrays.asList(instance.getClass().getDeclaredFields()).stream()
+				.filter(generableFieldsFilter).collect(Collectors.toList());
 		for (Field field : generableFields) {
 			annotationDispatcher(field);
 		}
 	}
+
+	private void annotationDispatcher(Field field) throws IllegalArgumentException, IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException, SecurityException, NotAnnotationEncountered {
+		Constraints constraints = getGenerableConstraints(field);
+		setValue(instance, field, constraints);
+	}
+
+	private Constraints getGenerableConstraints(Field field) throws NotAnnotationEncountered {
+		Annotation annotation = GenerableAnnotationsFilter.retrieveGenerableAnnotation(field);
+		Constraints constraints = annotationReader.readValues(annotation);
+		return constraints;
+	}
+
+	private void setValue(Object instance, Field field, Constraints constraints) throws NoSuchMethodException,
+			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		String fieldFirstUpp = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+		Class<?> type = field.getType();
+		Method method = instance.getClass().getMethod("set" + fieldFirstUpp, type);
+		ValueGenerator<? extends Object> vg;
+
+		if (field.getType().isAssignableFrom(Long.class)) {
+			vg = new LongGenerator((NaturalNumberConstraints) constraints);
+			method.invoke(instance, (Long) vg.getValue());
+		}
+		if (field.getType().isAssignableFrom(Integer.class)) {
+			vg = new IntegerGenerator((NaturalNumberConstraints) constraints);
+			method.invoke(instance, (Integer) vg.getValue());
+		}
+		if (field.getType().isAssignableFrom(Short.class)) {
+			vg = new ShortGenerator((NaturalNumberConstraints) constraints);
+			method.invoke(instance, (Short) vg.getValue());
+		}
+		if (field.getType().isAssignableFrom(Byte.class)) {
+			vg = new ByteGenerator((NaturalNumberConstraints) constraints);
+			method.invoke(instance, (Byte) vg.getValue());
+		}
+	}
+
 }

@@ -10,7 +10,7 @@ public class ShortGenerator extends NaturalNumberGenerator<Short> {
 
 	@Override
 	public Short getValue() {
-		return super.getRandomValue();
+		return super.getValue();
 	}
 
 }

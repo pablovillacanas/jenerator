@@ -23,15 +23,15 @@ public class NaturalNumberGeneratorTest {
 		NaturalNumberConstraints constraints = new NaturalNumberGeneratorReader().readValues(annotation);
 
 		NaturalNumberGenerator<Integer> naturalNumberGenerator = new IntegerGenerator(constraints);
-		assert (naturalNumberGenerator.getRandomValue() instanceof Integer);
+		assert (naturalNumberGenerator.getValue() instanceof Integer);
 
 		NaturalNumberGenerator<Long> naturalNumberGenerator2 = new LongGenerator(constraints);
-		assert (naturalNumberGenerator2.getRandomValue() instanceof Long);
+		assert (naturalNumberGenerator2.getValue() instanceof Long);
 
 		NaturalNumberGenerator<Short> naturalNumberGenerator3 = new ShortGenerator(constraints);
-		assert (naturalNumberGenerator3.getRandomValue() instanceof Short);
+		assert (naturalNumberGenerator3.getValue() instanceof Short);
 
 		NaturalNumberGenerator<Byte> naturalNumberGenerator4 = new ByteGenerator(constraints);
-		assert (naturalNumberGenerator4.getRandomValue() instanceof Byte);
+		assert (naturalNumberGenerator4.getValue() instanceof Byte);
 	}
 }

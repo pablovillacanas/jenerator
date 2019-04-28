@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 
-public class POJOValidation {
+public class POJOValidator {
 
 	public static <T extends Object> boolean isPOJO(Class<T> class1)
 			throws FieldValidationException, NoEmptyConstructorException {
@@ -59,7 +60,7 @@ public class POJOValidation {
 	 * @throws FieldValidationException
 	 */
 	public static <T extends Object> boolean isEncapsulated(Class<T> class1) throws FieldValidationException {
-		List<Field> privateFilteredFields = POJOUtils.getDeclaredFields(class1).stream().filter(field -> {
+		List<Field> privateFilteredFields = getDeclaredFields(class1).stream().filter(field -> {
 			int modifiers = field.getModifiers();
 			// If field is private and it is not final or static, it must have a setter and
 			// a getter.
@@ -76,7 +77,12 @@ public class POJOValidation {
 		return true;
 	}
 
-	public static boolean hasGettersAndSetters(final Field field) throws FieldValidationException {
+	private static <T extends Object> ArrayList<Field> getDeclaredFields(Class<T> class1) {
+		return (ArrayList<Field>) Arrays.asList(class1.getDeclaredFields()).stream()
+				.filter(field -> !field.getName().startsWith("this$")).collect(Collectors.toList());
+	}
+
+	private static boolean hasGettersAndSetters(final Field field) throws FieldValidationException {
 		try {
 			int size = Arrays.asList(field.getDeclaringClass().getMethods()).stream().filter(method -> {
 				return (isGetter(method, field.getName()) || isSetter(method, field.getName()));
@@ -89,7 +95,7 @@ public class POJOValidation {
 		return true;
 	}
 
-	public static boolean isGetter(Method method, String fieldname) {
+	private static boolean isGetter(Method method, String fieldname) {
 		fieldname = fieldname.substring(0, 1).toUpperCase() + fieldname.substring(1);
 		if (Modifier.isPublic(method.getModifiers()) && method.getParameterTypes().length == 0) {
 			if (method.getName().matches("^get" + fieldname + "$") && !method.getReturnType().equals(void.class))
@@ -100,7 +106,7 @@ public class POJOValidation {
 		return false;
 	}
 
-	public static boolean isSetter(Method method, String fieldname) {
+	private static boolean isSetter(Method method, String fieldname) {
 		fieldname = fieldname.substring(0, 1).toUpperCase() + fieldname.substring(1);
 		return Modifier.isPublic(method.getModifiers()) && method.getReturnType().equals(void.class)
 				&& method.getParameterTypes().length == 1 && method.getName().matches("^set" + fieldname + "$");
