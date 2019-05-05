@@ -1,6 +1,6 @@
 package jenerator.engine.generators;
 
-import jenerator.annotations.reader.NaturalNumberConstraints;
+import jenerator.annotations.constraints.NaturalNumberConstraints;
 
 /**
  * El motivo de esta clase es para proporcionar a su superclase su tipo en

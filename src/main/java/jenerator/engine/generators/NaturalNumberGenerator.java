@@ -6,11 +6,13 @@ import java.lang.reflect.Type;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
 import jenerator.annotations.GenerationConstraints;
-import jenerator.annotations.reader.NaturalNumberConstraints;
+import jenerator.annotations.constraints.NaturalNumberConstraints;
 
 /**
- * This class return a natural number of type T bounded into a minimum or
- * maximun values.
+ * <p>
+ * This class return a natural number of type T within a minimum and maximun
+ * values.
+ * </p>
  * 
  * @author pablo
  *

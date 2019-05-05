@@ -2,6 +2,7 @@ package jenerator.engine;
 
 import java.lang.reflect.InvocationTargetException;
 
+import jenerator.annotations.readers.exceptions.AnnotationConstraintsException;
 import jenerator.filters.exceptions.NotAnnotationEncountered;
 import jenerator.validations.GenValidation;
 import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
@@ -24,9 +25,10 @@ public class GeneratorEngine {
 		engineConfiguration = EngineConfiguration.getInstance();
 	}
 
-	public Object generateOne(Class<?> class1) throws FieldValidationException, NoEmptyConstructorException,
-			AnnotationMismatchFieldException, IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException, SecurityException, NotAnnotationEncountered {
+	public Object generateOne(Class<?> class1)
+			throws FieldValidationException, NoEmptyConstructorException, AnnotationMismatchFieldException,
+			IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+			SecurityException, NotAnnotationEncountered, AnnotationConstraintsException {
 		// Validate POJO and congruence
 		GenValidation.validate(class1);
 

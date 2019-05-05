@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
 import jenerator.annotations.JenAnnotations;
-import jenerator.annotations.NotGenerable;
+import jenerator.annotations.NoGenerable;
 
 public class GenerableFieldsFilter implements Predicate<Field> {
 
@@ -37,7 +37,7 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 	public boolean test(Field field) {
 		switch (filter) {
 		case LAZYFILTER:
-			if (field.getAnnotation(NotGenerable.class) == null)
+			if (field.getAnnotation(NoGenerable.class) == null)
 				return true;
 			else
 				return false;
@@ -49,7 +49,7 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 				Package package1 = class1.getPackage();
 				String name = package1.getName();
 				if (name.equals(packageName)) {
-					if (fieldAnnotations[i].annotationType() != NotGenerable.class) {
+					if (fieldAnnotations[i].annotationType() != NoGenerable.class) {
 						return true;
 					} else {
 						return false;

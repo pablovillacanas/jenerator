@@ -8,13 +8,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jenerator.annotations.reader.AnnotationReader;
-import jenerator.annotations.reader.Constraints;
-import jenerator.annotations.reader.NaturalNumberConstraints;
+import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.NaturalNumberConstraints;
+import jenerator.annotations.constraints.StringConstraints;
+import jenerator.annotations.readers.AnnotationReader;
+import jenerator.annotations.readers.exceptions.AnnotationConstraintsException;
 import jenerator.engine.generators.ByteGenerator;
 import jenerator.engine.generators.IntegerGenerator;
 import jenerator.engine.generators.LongGenerator;
 import jenerator.engine.generators.ShortGenerator;
+import jenerator.engine.generators.StringGenerator;
 import jenerator.engine.generators.ValueGenerator;
 import jenerator.filters.GenerableAnnotationsFilter;
 import jenerator.filters.GenerableFieldsFilter;
@@ -32,7 +35,7 @@ public class GeneratorController {
 	}
 
 	public void process() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, NotAnnotationEncountered {
+			NoSuchMethodException, SecurityException, NotAnnotationEncountered, AnnotationConstraintsException {
 		List<Field> generableFields = Arrays.asList(instance.getClass().getDeclaredFields()).stream()
 				.filter(generableFieldsFilter).collect(Collectors.toList());
 		for (Field field : generableFields) {
@@ -40,13 +43,15 @@ public class GeneratorController {
 		}
 	}
 
-	private void annotationDispatcher(Field field) throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException, SecurityException, NotAnnotationEncountered {
+	private void annotationDispatcher(Field field)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+			SecurityException, NotAnnotationEncountered, AnnotationConstraintsException {
 		Constraints constraints = getGenerableConstraints(field);
 		setValue(instance, field, constraints);
 	}
 
-	private Constraints getGenerableConstraints(Field field) throws NotAnnotationEncountered {
+	private Constraints getGenerableConstraints(Field field)
+			throws NotAnnotationEncountered, AnnotationConstraintsException {
 		Annotation annotation = GenerableAnnotationsFilter.retrieveGenerableAnnotation(field);
 		Constraints constraints = annotationReader.readValues(annotation);
 		return constraints;
@@ -74,6 +79,10 @@ public class GeneratorController {
 		if (field.getType().isAssignableFrom(Byte.class)) {
 			vg = new ByteGenerator((NaturalNumberConstraints) constraints);
 			method.invoke(instance, (Byte) vg.getValue());
+		}
+		if (field.getType().isAssignableFrom(String.class)) {
+			vg = new StringGenerator((StringConstraints) constraints);
+			method.invoke(instance, (String) vg.getValue());
 		}
 	}
 

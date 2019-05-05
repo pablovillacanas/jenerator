@@ -1,6 +1,6 @@
 package jenerator.engine.generators;
 
-import jenerator.annotations.reader.NaturalNumberConstraints;
+import jenerator.annotations.constraints.NaturalNumberConstraints;
 
 public class ShortGenerator extends NaturalNumberGenerator<Short> {
 

@@ -1,8 +1,11 @@
-package jenerator.annotations.reader;
+package jenerator.annotations.readers;
 
 import java.lang.annotation.Annotation;
 
 import jenerator.annotations.NaturalNumberGenerable;
+import jenerator.annotations.StringGenerable;
+import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.readers.exceptions.AnnotationConstraintsException;
 
 /**
  * <p>
@@ -24,9 +27,11 @@ public class AnnotationReader implements IAnnotationReader<Annotation> {
 	 * </p>
 	 */
 	@Override
-	public Constraints readValues(Annotation annotation) {
+	public Constraints readValues(Annotation annotation) throws AnnotationConstraintsException {
 		if (annotation instanceof NaturalNumberGenerable)
-			return new NaturalNumberGeneratorReader().readValues((NaturalNumberGenerable) annotation);
+			return new NaturalNumberConstraintsReader().readValues((NaturalNumberGenerable) annotation);
+		if (annotation instanceof StringGenerable)
+			return new StringConstraintsReader().readValues((StringGenerable) annotation);
 		return null;
 	}
 }

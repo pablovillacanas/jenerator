@@ -1,6 +1,7 @@
-package jenerator.annotations.reader;
+package jenerator.annotations.readers;
 
 import jenerator.annotations.GenerationConstraints;
+import jenerator.annotations.constraints.CommonConstraints;
 
 public abstract class CommonConstraintsReader {
 

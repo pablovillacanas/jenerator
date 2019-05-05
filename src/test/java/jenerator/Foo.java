@@ -1,14 +1,19 @@
 package jenerator;
 
 import jenerator.annotations.NaturalNumberGenerable;
-import jenerator.annotations.NotGenerable;
+import jenerator.annotations.NoGenerable;
+import jenerator.annotations.StringGenerable;
+import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
 
 public class Foo {
 
 	@NaturalNumberGenerable
 	private Long long1;
 
-	@NotGenerable
+	@StringGenerable(style = StringSimpleFormat.ONLY_DIGITS, minLenght = 8, maxLenght = 8)
+	private String phone;
+
+	@NoGenerable
 	private Long long2;
 
 	@NaturalNumberGenerable
@@ -63,10 +68,18 @@ public class Foo {
 		this.long2 = long2;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	@Override
 	public String toString() {
-		return "Foo [long1=" + long1 + ", long2=" + long2 + ", short1=" + short1 + ", integer1=" + integer1 + ", byte1="
-				+ byte1 + "]";
+		return "Foo [long1=" + long1 + ", phone=" + phone + ", long2=" + long2 + ", short1=" + short1 + ", integer1="
+				+ integer1 + ", byte1=" + byte1 + "]";
 	}
 
 }

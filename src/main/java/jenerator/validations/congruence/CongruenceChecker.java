@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.Generable;
 import jenerator.annotations.NaturalNumberGenerable;
-import jenerator.annotations.NotGenerable;
+import jenerator.annotations.NoGenerable;
 import jenerator.annotations.StringGenerable;
 import jenerator.validations.congruence.exceptions.AnnotationMismatchFieldException;
 
@@ -38,7 +38,7 @@ public class CongruenceChecker {
 	public static <T extends Object> void check(List<Field> fields) throws AnnotationMismatchFieldException {
 		for (Iterator<Field> iterator = fields.iterator(); iterator.hasNext();) {
 			Field field = iterator.next();
-			if (field.getAnnotation(NotGenerable.class) == null) {
+			if (field.getAnnotation(NoGenerable.class) == null) {
 				if (!validateConcordance(field))
 					throw new AnnotationMismatchFieldException();
 			}
