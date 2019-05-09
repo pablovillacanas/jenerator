@@ -2,11 +2,11 @@ package jenerator.annotations.constraints;
 
 import jenerator.annotations.GenerationConstraints;
 
-public abstract class CommonConstraints extends Constraints {
+public class CommonConstraints extends Constraints {
 
-	private String source = GenerationConstraints.DEFAULTSOURCE;
-	private Boolean unique = Boolean.FALSE;
-	private Double nullable = 0.0;
+	private String source;
+	private Boolean unique;
+	private Double nullable;
 
 	void readValues(GenerationConstraints ann) {
 		this.source = ann.source();

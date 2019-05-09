@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
+import jenerator.JeneratorConfiguration.FieldFilterType;
 import jenerator.annotations.JenAnnotations;
 import jenerator.annotations.NoGenerable;
 
@@ -11,25 +12,7 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 
 	FieldFilterType filter;
 
-	public enum FieldFilterType {
-
-		/**
-		 * This predicate filters all fields that have one annotation of type
-		 * jenerator.annotations and does not have a @NoGenerable annotation
-		 */
-		EXPLICITFILTER,
-
-		/**
-		 * This predicate filters all fields that do not have a @NoGenerable annotation
-		 */
-		LAZYFILTER;
-	}
-
-	public GenerableFieldsFilter() {
-		this(FieldFilterType.EXPLICITFILTER);
-	}
-
-	public GenerableFieldsFilter(GenerableFieldsFilter.FieldFilterType filter) {
+	public GenerableFieldsFilter(FieldFilterType filter) {
 		this.filter = filter;
 	}
 

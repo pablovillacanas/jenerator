@@ -1,8 +1,8 @@
-package jenerator.parser;
+package jenerator.engine.generators;
 
 import com.google.common.collect.Streams;
 
-import jenerator.engine.generators.ValueGenerator;
+import jenerator.parser.SourceReader;
 
 public class ElementRandomGenerator extends ValueGenerator<String> {
 

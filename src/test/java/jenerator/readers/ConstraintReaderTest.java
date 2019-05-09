@@ -9,7 +9,6 @@ import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.annotations.readers.NaturalNumberConstraintsReader;
 import jenerator.annotations.readers.StringConstraintsReader;
-import jenerator.annotations.readers.exceptions.MinMaxConstraintException;
 
 public class ConstraintReaderTest {
 
@@ -20,8 +19,7 @@ public class ConstraintReaderTest {
 	String s;
 
 	@Test
-	public void NaturalNumberGenerableParser()
-			throws NoSuchFieldException, SecurityException, MinMaxConstraintException {
+	public void NaturalNumberGenerableParser() throws NoSuchFieldException, SecurityException {
 		NaturalNumberGenerable annotation = getClass().getDeclaredField("i")
 				.getAnnotation(NaturalNumberGenerable.class);
 		NaturalNumberConstraints constraint = new NaturalNumberConstraintsReader().readValues(annotation);
@@ -33,7 +31,7 @@ public class ConstraintReaderTest {
 	}
 
 	@Test
-	public void StringGenerableParser() throws NoSuchFieldException, SecurityException, MinMaxConstraintException {
+	public void StringGenerableParser() throws NoSuchFieldException, SecurityException {
 		StringGenerable annotation = getClass().getDeclaredField("s").getAnnotation(StringGenerable.class);
 		StringConstraints constraint = new StringConstraintsReader().readValues(annotation);
 		assert (constraint.getMinLenght() == 12);

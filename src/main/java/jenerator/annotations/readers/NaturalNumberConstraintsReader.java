@@ -2,7 +2,6 @@ package jenerator.annotations.readers;
 
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
-import jenerator.annotations.readers.exceptions.MinMaxConstraintException;
 
 public class NaturalNumberConstraintsReader extends CommonConstraintsReader
 		implements IAnnotationReader<NaturalNumberGenerable> {
@@ -14,7 +13,7 @@ public class NaturalNumberConstraintsReader extends CommonConstraintsReader
 	}
 
 	@Override
-	public NaturalNumberConstraints readValues(NaturalNumberGenerable annotation) throws MinMaxConstraintException {
+	public NaturalNumberConstraints readValues(NaturalNumberGenerable annotation){
 		naturalNumberConstraints.setCommonConstraints(super.readValues(annotation.constraints()));
 		naturalNumberConstraints.setMinValue(annotation.minValue());
 		naturalNumberConstraints.setMaxValue(annotation.maxValue());

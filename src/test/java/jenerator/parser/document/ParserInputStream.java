@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import jenerator.parser.ElementRandomGenerator;
+import jenerator.engine.generators.ElementRandomGenerator;
 import jenerator.parser.document.PlainDocument;
 import jenerator.parser.document.PlainDocumentReader;
 

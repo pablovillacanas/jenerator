@@ -30,7 +30,10 @@ public class StringConstraints extends Constraints {
 	}
 
 	public void setMaxLenght(long maxLenght) {
-		this.maxLength = maxLenght;
+		if (maxLenght > minLenght)
+			this.maxLength = maxLenght;
+		else
+			this.maxLength = minLenght + 5;
 	}
 
 	public StringSimpleFormat getStringSimpleFormat() {

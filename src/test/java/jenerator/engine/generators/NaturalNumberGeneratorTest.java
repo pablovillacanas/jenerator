@@ -5,12 +5,6 @@ import org.junit.Test;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.readers.NaturalNumberConstraintsReader;
-import jenerator.annotations.readers.exceptions.MinMaxConstraintException;
-import jenerator.engine.generators.ByteGenerator;
-import jenerator.engine.generators.IntegerGenerator;
-import jenerator.engine.generators.LongGenerator;
-import jenerator.engine.generators.NaturalNumberGenerator;
-import jenerator.engine.generators.ShortGenerator;
 
 public class NaturalNumberGeneratorTest {
 
@@ -18,7 +12,7 @@ public class NaturalNumberGeneratorTest {
 	private Integer i;
 
 	@Test
-	public void testConcordanceBetweenFieldTypeAndValueGenerated() throws NoSuchFieldException, SecurityException, MinMaxConstraintException {
+	public void testConcordanceBetweenFieldTypeAndValueGenerated() throws NoSuchFieldException, SecurityException{
 		NaturalNumberGenerable annotation = NaturalNumberGeneratorTest.class.getDeclaredField("i")
 				.getAnnotation(NaturalNumberGenerable.class);
 		NaturalNumberConstraints constraints = new NaturalNumberConstraintsReader().readValues(annotation);
