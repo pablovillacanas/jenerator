@@ -5,6 +5,7 @@ import java.util.List;
 
 import jenerator.JeneratorConfiguration;
 import jenerator.utils.ClassUtils;
+import jenerator.validations.congruence.MinMaxValuesBoundedMaintainer;
 import jenerator.validations.congruence.checkers.CongruenceAnnotation_FieldChecker;
 import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
 import jenerator.validations.pojo.POJOValidator;
@@ -22,11 +23,10 @@ public class GenValidation {
 
 	public void validate(Class<?> class1)
 			throws FieldValidationException, NoEmptyConstructorException, Annotation_FieldCongruenceException {
-		POJOValidator.isPOJO(class1); // Its a POJO
-
+		POJOValidator.isPOJO(class1);
 		List<Field> generableFields = ClassUtils.getGenerableFields(class1);
-
 		checkField_AnnotationCongruence(generableFields);
+		
 	}
 
 	private void checkField_AnnotationCongruence(List<Field> fields) throws Annotation_FieldCongruenceException {

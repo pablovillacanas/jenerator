@@ -8,6 +8,7 @@ import java.util.Arrays;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.readers.AnnotationReader;
 import jenerator.filters.GenerableAnnotationsFilter;
+import jenerator.validations.congruence.MinMaxValuesBoundedMaintainer;
 
 public class FieldUtils {
 
@@ -19,7 +20,8 @@ public class FieldUtils {
 	public static Constraints getConstraints(Field field) {
 		Annotation annotation = getGenerableAnnotation(field);
 		AnnotationReader annotationReader = new AnnotationReader();
-		return annotationReader.readValues(annotation);
+		Constraints constraints = annotationReader.readValues(annotation);
+		return new MinMaxValuesBoundedMaintainer(constraints).apply(field.getType());
 	}
 
 	public static Method getterOf(Field field) {

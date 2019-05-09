@@ -23,7 +23,7 @@ import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceExc
  * @author pablo
  *
  */
-public class CongruenceAnnotation_FieldChecker extends CongruenceChecker<Field> {
+public class CongruenceAnnotation_FieldChecker implements CongruenceChecker<Field> {
 
 	/**
 	 * This method checks that a list of annotated fields are well defined and do
