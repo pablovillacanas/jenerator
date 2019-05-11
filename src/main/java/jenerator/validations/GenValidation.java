@@ -5,7 +5,6 @@ import java.util.List;
 
 import jenerator.JeneratorConfiguration;
 import jenerator.utils.ClassUtils;
-import jenerator.validations.congruence.MinMaxValuesBoundedMaintainer;
 import jenerator.validations.congruence.checkers.CongruenceAnnotation_FieldChecker;
 import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
 import jenerator.validations.pojo.POJOValidator;

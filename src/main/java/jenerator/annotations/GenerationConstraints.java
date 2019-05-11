@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(TYPE)
 public @interface GenerationConstraints {
 
-	String DEFAULTSOURCE = "null";
+	String DEFAULTSOURCE = "";
 	
 	String source() default DEFAULTSOURCE;
 

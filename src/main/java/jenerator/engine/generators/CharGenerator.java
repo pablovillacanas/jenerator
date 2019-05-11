@@ -3,6 +3,7 @@ package jenerator.engine.generators;
 import java.util.ArrayList;
 import java.util.Random;
 
+import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.StringConstraints;
 
 public class CharGenerator extends ValueGenerator<Character> {
@@ -11,24 +12,6 @@ public class CharGenerator extends ValueGenerator<Character> {
 	 * List of available characters due configuration of generation.
 	 */
 	private ArrayList<Character> characters = new ArrayList<Character>();
-
-	public CharGenerator(StringConstraints stringConstraints) {
-		switch (stringConstraints.getStringSimpleFormat()) {
-		case ALPHANUMERIC:
-			getAlphaNumerics();
-			break;
-		case DIGITS_AND_LETTERS:
-			getDigits();
-			getLetters();
-			break;
-		case ONLY_DIGITS:
-			getDigits();
-			break;
-		case ONLY_LETTERS:
-			getLetters();
-			break;
-		}
-	}
 
 	private void getLetters() {
 		// Minus
@@ -56,8 +39,25 @@ public class CharGenerator extends ValueGenerator<Character> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Character getValue() {
+	public Character getValue(Constraints constraints) {
+		StringConstraints stringConstraints = (StringConstraints) constraints;
+		switch (stringConstraints.getStringSimpleFormat()) {
+		case ALPHANUMERIC:
+			getAlphaNumerics();
+			break;
+		case DIGITS_AND_LETTERS:
+			getDigits();
+			getLetters();
+			break;
+		case ONLY_DIGITS:
+			getDigits();
+			break;
+		case ONLY_LETTERS:
+			getLetters();
+			break;
+		}
 		int randomIndex = new Random().nextInt(characters.size());
 		return characters.get(randomIndex);
 	}

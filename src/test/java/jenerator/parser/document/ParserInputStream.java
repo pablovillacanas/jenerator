@@ -35,13 +35,13 @@ public class ParserInputStream {
 
 	@Test
 	public void testRandomElementsPlainText() throws IOException {
-		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filetxt))).getValue();
+		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filetxt))).getValue(null);
 		assertNotNull(value);
 	}
 
 	@Test
 	public void testRandomElementsCsv() throws IOException {
-		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filecsv))).getValue();
+		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filecsv))).getValue(null);
 		System.out.println(value);
 		assertNotNull(value);
 	}
