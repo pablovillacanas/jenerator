@@ -35,6 +35,4 @@ public class FieldUtils {
 		}
 		return null;
 	}
-	
-//	public static FieldgetFieldClass
 }

@@ -1,9 +1,7 @@
 package jenerator.validations.congruence.checkers;
 
-import jenerator.validations.congruence.exceptions.CongruenceException;
+public interface CongruenceChecker<T extends Object, U extends Object> {
 
-public interface CongruenceChecker<T extends Object> {
+	public boolean ckeck(T item1, U item2);
 
-	public abstract void ckeck(T checkable) throws CongruenceException;
-	
 }

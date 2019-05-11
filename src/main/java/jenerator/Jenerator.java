@@ -41,13 +41,13 @@ public class Jenerator {
 		return instances;
 	}
 
-	public static <T extends Object> T generateOne(Class<T> class1)
+	public static <T extends Object> T generate(Class<T> class1, long numInstances)
 			throws FieldValidationException, NoEmptyConstructorException, Annotation_FieldCongruenceException,
 			IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, NotAnnotationEncountered {
 		// Validate POJO and congruence
 		GenValidation genValidation = new GenValidation(engineConfiguration);
-		genValidation.validate(class1);
+		genValidation.validate(class1, numInstances);
 
 		// Create an empty instance of that class
 		T instance = null;

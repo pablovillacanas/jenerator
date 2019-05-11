@@ -44,17 +44,13 @@ public class GeneratorController {
 		Object value = ValueGenerator.getValue(field.getType(), constraints);
 		if (Long.class.isAssignableFrom(field.getType())) {
 			method.invoke(instance, value);
-		}
-		if (field.getType().isAssignableFrom(Integer.class)) {
+		}else if (Integer.class.isAssignableFrom(field.getType())) {
 			method.invoke(instance, (int) (long) value);
-		}
-		if (field.getType().isAssignableFrom(Short.class)) {
+		}else if (Short.class.isAssignableFrom(field.getType())) {
 			method.invoke(instance, (short) (long) value);
-		}
-		if (field.getType().isAssignableFrom(Byte.class)) {
+		}else if (Byte.class.isAssignableFrom(field.getType())) {
 			method.invoke(instance, (byte) (long) value);
-		}
-		if (field.getType().isAssignableFrom(String.class)) {
+		} else if (String.class.isAssignableFrom(field.getType())) {
 			method.invoke(instance, String.class.cast(value));
 		}
 	}

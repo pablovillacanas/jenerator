@@ -1,17 +1,15 @@
 package jenerator.validations.congruence.checkers;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 import jenerator.annotations.DecimalNumberGenerable;
-import jenerator.annotations.Generable;
 import jenerator.annotations.NaturalNumberGenerable;
-import jenerator.annotations.NoGenerable;
 import jenerator.annotations.StringGenerable;
+import jenerator.utils.FieldUtils;
 import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
 
 /**
@@ -23,7 +21,7 @@ import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceExc
  * @author pablo
  *
  */
-public class CongruenceAnnotation_FieldChecker implements CongruenceChecker<Field> {
+public class FieldCongruenceChecker implements Predicate<Field> {
 
 	/**
 	 * This method checks that a list of annotated fields are well defined and do
@@ -32,26 +30,19 @@ public class CongruenceAnnotation_FieldChecker implements CongruenceChecker<Fiel
 	 * @param <T>
 	 * @param fields
 	 * @throws Annotation_FieldCongruenceException if the fields type does not match
-	 *                                          with the annotation type.
+	 *                                             with the annotation type.
 	 */
+
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
-	public void ckeck(Field field) throws Annotation_FieldCongruenceException {
-		if (field.getAnnotation(NoGenerable.class) == null) {
-			if (!validateConcordance(field))
-				throw new Annotation_FieldCongruenceException();
-		}
-	}
-	
-	private static boolean validateConcordance(Field field) {
-		List<Class<?>> annotationsOfField = Arrays.asList(field.getAnnotations()).stream()
-				.filter(ann -> ann.annotationType().getName().startsWith(Generable.class.getPackage().getName()))
-				.map(ann -> ann.annotationType()).collect(Collectors.toList());
+	public boolean test(Field field) {
+		Annotation annotation = FieldUtils.getGenerableAnnotation(field);
 		Set<Class<?>> concordantAnnotations = Utils.retrieveConcordantAnnotationsTo(field);
-		for (Class<?> annotation : annotationsOfField) {
-			if (!concordantAnnotations.contains(annotation))
-				return false;
+		FieldUtils.getGenerableAnnotation(field);
+		if (concordantAnnotations.contains(annotation)) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
