@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.readers.AnnotationReader;
 import jenerator.engine.generators.ValueGenerator;
 import jenerator.filters.GenerableFieldsFilter;
@@ -34,11 +34,11 @@ public class GeneratorController {
 
 	private void annotationDispatcher(Field field) throws IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, NotAnnotationEncountered {
-		Constraints constraints = FieldUtils.getConstraints(field);
+		CommonConstraints constraints = FieldUtils.getConstraints(field);
 		setValue(instance, field, constraints);
 	}
 
-	private void setValue(Object instance, Field field, Constraints constraints) throws NoSuchMethodException,
+	private void setValue(Object instance, Field field, CommonConstraints constraints) throws NoSuchMethodException,
 			SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Method method = FieldUtils.getterOf(field);
 		Object value = ValueGenerator.getValue(field.getType(), constraints);

@@ -2,7 +2,7 @@ package jenerator.engine.generators;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 
 //Could have like a memory to ensure unique is unique, etc?
 public abstract class ValueGenerator<T extends Object> {
@@ -10,7 +10,7 @@ public abstract class ValueGenerator<T extends Object> {
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 
 	@SuppressWarnings("unchecked")
-	public final static <T extends Object> T getValue(Class<T> class1, Constraints constraints) {
+	public final static <T extends Object> T getValue(Class<T> class1, CommonConstraints constraints) {
 		if (Number.class.isAssignableFrom(class1)) {
 			if (class1.isAssignableFrom(Long.class) || class1.isAssignableFrom(Integer.class)
 					|| class1.isAssignableFrom(Short.class) || class1.isAssignableFrom(Byte.class)) {
@@ -25,6 +25,6 @@ public abstract class ValueGenerator<T extends Object> {
 	}
 
 	@SuppressWarnings("hiding")
-	public abstract <T extends Object> T getValue(Constraints constraints);
+	public abstract <T extends Object> T getValue(CommonConstraints constraints);
 
 }

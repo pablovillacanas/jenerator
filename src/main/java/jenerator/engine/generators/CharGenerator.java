@@ -3,7 +3,7 @@ package jenerator.engine.generators;
 import java.util.ArrayList;
 import java.util.Random;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 
 public class CharGenerator extends ValueGenerator<Character> {
@@ -41,7 +41,7 @@ public class CharGenerator extends ValueGenerator<Character> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Character getValue(Constraints constraints) {
+	public Character getValue(CommonConstraints constraints) {
 		StringConstraints stringConstraints = (StringConstraints) constraints;
 		switch (stringConstraints.getStringSimpleFormat()) {
 		case ALPHANUMERIC:

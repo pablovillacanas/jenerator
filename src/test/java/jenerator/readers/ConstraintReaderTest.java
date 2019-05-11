@@ -25,9 +25,9 @@ public class ConstraintReaderTest {
 		NaturalNumberConstraints constraint = new NaturalNumberConstraintsReader().readValues(annotation);
 		assert (constraint.getMaxValue() == 12);
 		assert (constraint.getMinValue() == Long.MIN_VALUE);
-		assert (constraint.getCommonConstraints().getNullable() == 0);
-		assert (constraint.getCommonConstraints().getUnique() == true);
-		assert (constraint.getCommonConstraints().getSource().equals("hola"));
+		assert (constraint.getNullable() == 0);
+		assert (constraint.getUnique() == true);
+		assert (constraint.getSource().equals("hola"));
 	}
 
 	@Test
@@ -36,8 +36,8 @@ public class ConstraintReaderTest {
 		StringConstraints constraint = new StringConstraintsReader().readValues(annotation);
 		assert (constraint.getMinLenght() == 12);
 		assert (constraint.getMaxLenght() == 17);
-		assert (constraint.getCommonConstraints().getNullable() == 0);
-		assert (constraint.getCommonConstraints().getUnique() == false);
-		assert (constraint.getCommonConstraints().getSource().equals("hola"));
+		assert (constraint.getNullable() == 0);
+		assert (constraint.getUnique() == false);
+		assert (constraint.getSource().equals("hola"));
 	}
 }

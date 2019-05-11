@@ -2,7 +2,7 @@ package jenerator.engine.generators;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 
 public class StringGenerator extends ValueGenerator<String> {
@@ -15,7 +15,7 @@ public class StringGenerator extends ValueGenerator<String> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getValue(Constraints constraints) {
+	public String getValue(CommonConstraints constraints) {
 		StringConstraints stringConstraints = (StringConstraints) constraints;
 		CharGenerator charGenerator = new CharGenerator();
 		long stringLenght = stringConstraints.getMinLenght();

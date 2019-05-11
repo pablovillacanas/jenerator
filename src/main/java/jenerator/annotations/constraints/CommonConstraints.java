@@ -1,17 +1,15 @@
 package jenerator.annotations.constraints;
 
-import jenerator.annotations.GenerationConstraints;
-
-public class CommonConstraints extends Constraints {
+public class CommonConstraints{
 
 	private String source;
 	private Boolean unique;
 	private Double nullable;
 
-	void readValues(GenerationConstraints ann) {
-		this.source = ann.source();
-		this.unique = ann.unique();
-		this.nullable = ann.nullable();
+	public void setCommonConstraints(CommonConstraints commonConstraints) {
+		setNullable(commonConstraints.getNullable());
+		setUnique(commonConstraints.getUnique());
+		setSource(commonConstraints.getSource());
 	}
 
 	public String getSource() {

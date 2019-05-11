@@ -12,7 +12,7 @@ public class StringConstraintsReader extends CommonConstraintsReader implements 
 	}
 
 	@Override
-	public StringConstraints readValues(StringGenerable annotation){
+	public StringConstraints readValues(StringGenerable annotation) {
 		stringConstraints.setCommonConstraints(super.readValues(annotation.constraints()));
 		stringConstraints.setMinLenght(annotation.minLenght());
 		stringConstraints.setMaxLenght(annotation.maxLenght());

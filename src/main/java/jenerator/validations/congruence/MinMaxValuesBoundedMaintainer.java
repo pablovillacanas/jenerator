@@ -2,7 +2,7 @@ package jenerator.validations.congruence;
 
 import java.util.function.Function;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 
 /**
@@ -13,17 +13,17 @@ import jenerator.annotations.constraints.NaturalNumberConstraints;
  * @author pablo
  *
  */
-public class MinMaxValuesBoundedMaintainer implements Function<Class<?>, Constraints> {
+public class MinMaxValuesBoundedMaintainer implements Function<Class<?>, CommonConstraints> {
 
-	private Constraints constraints;
+	private CommonConstraints constraints;
 
-	public MinMaxValuesBoundedMaintainer(Constraints constraints) {
+	public MinMaxValuesBoundedMaintainer(CommonConstraints constraints) {
 		super();
 		this.constraints = constraints;
 	}
 
 	@Override
-	public Constraints apply(Class<?> class1) {
+	public CommonConstraints apply(Class<?> class1) {
 		if (class1 == Integer.class) {
 			NaturalNumberConstraints integerConstraitns = ((NaturalNumberConstraints) constraints);
 			if (integerConstraitns.getMinValue() < Integer.MIN_VALUE)

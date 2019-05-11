@@ -1,18 +1,9 @@
 package jenerator.annotations.constraints;
 
-public class NaturalNumberConstraints extends Constraints {
+public class NaturalNumberConstraints extends CommonConstraints {
 
-	private CommonConstraints commonConstraints;
 	private long minValue;
 	private long maxValue;
-
-	public CommonConstraints getCommonConstraints() {
-		return commonConstraints;
-	}
-
-	public void setCommonConstraints(CommonConstraints commonConstraints) {
-		this.commonConstraints = commonConstraints;
-	}
 
 	public void setMinValue(long minValue) {
 		this.minValue = minValue;
@@ -22,7 +13,7 @@ public class NaturalNumberConstraints extends Constraints {
 		if (maxValue > minValue)
 			this.maxValue = maxValue;
 		else
-			//TODO Logger warning here
+			// TODO Logger warning here
 			this.maxValue = this.minValue;
 	}
 

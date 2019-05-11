@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 
 /**
  * <p>
@@ -26,7 +26,7 @@ public class AnnotationReader implements IAnnotationReader<Annotation> {
 	 * </p>
 	 */
 	@Override
-	public Constraints readValues(Annotation annotation) {
+	public CommonConstraints readValues(Annotation annotation) {
 		if (annotation instanceof NaturalNumberGenerable)
 			return new NaturalNumberConstraintsReader().readValues((NaturalNumberGenerable) annotation);
 		if (annotation instanceof StringGenerable)

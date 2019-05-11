@@ -2,7 +2,7 @@ package jenerator.engine.generators;
 
 import com.google.common.collect.Streams;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.parser.SourceReader;
 
 public class ElementRandomGenerator extends ValueGenerator<String> {
@@ -17,7 +17,7 @@ public class ElementRandomGenerator extends ValueGenerator<String> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public String getValue(Constraints constraints) {
+	public String getValue(CommonConstraints constraints) {
 		// TODO apply constraints
 		String element = "";
 		element = (String) Streams.stream(sourceReader.iterator())

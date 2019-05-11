@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.readers.AnnotationReader;
 import jenerator.filters.GenerableAnnotationsFilter;
 import jenerator.validations.congruence.MinMaxValuesBoundedMaintainer;
@@ -17,10 +17,10 @@ public class FieldUtils {
 				.findFirst().get();
 	}
 
-	public static Constraints getConstraints(Field field) {
+	public static CommonConstraints getConstraints(Field field) {
 		Annotation annotation = getGenerableAnnotation(field);
 		AnnotationReader annotationReader = new AnnotationReader();
-		Constraints constraints = annotationReader.readValues(annotation);
+		CommonConstraints constraints = annotationReader.readValues(annotation);
 		return new MinMaxValuesBoundedMaintainer(constraints).apply(field.getType());
 	}
 
