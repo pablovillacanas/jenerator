@@ -11,30 +11,36 @@ import jenerator.utils.FieldUtils;
 
 public class UniqueCongruenceChecker implements Predicate<Field> {
 
-	private long maxInstancesGenerable;
+	private long wonderedInstances;
 
-	public UniqueCongruenceChecker(Long maxInstancesGenerable) {
-		this.maxInstancesGenerable = maxInstancesGenerable;
+	public UniqueCongruenceChecker(Long wonderedInstances) {
+		this.wonderedInstances = wonderedInstances;
 	}
 
 	@Override
 	public boolean test(Field field) {
+		Double possiblilities = 0.0;
 		CommonConstraints commonConstraints = FieldUtils.getConstraints(field);
-		if (!commonConstraints.getSource().equals(GenerationConstraints.DEFAULTSOURCE)) {
+		if (commonConstraints.getSource().equals(GenerationConstraints.DEFAULTSOURCE)) {
 			if (Number.class.isAssignableFrom(field.getType())) {
 				NaturalNumberConstraints nnconstraints = (NaturalNumberConstraints) commonConstraints;
-				long minValue = nnconstraints.getMinValue();
-				long maxValue = nnconstraints.getMaxValue();
-				return (maxValue - minValue) > maxInstancesGenerable;
+				possiblilities = (double) nnconstraints.getMaxValue() - nnconstraints.getMinValue();
 			} else if (String.class.isAssignableFrom(field.getType())) {
 				StringConstraints constraints = (StringConstraints) commonConstraints;
-				constraints.getStringSimpleFormat().getCharacters().size();
+				int size = constraints.getStringSimpleFormat().getCharacters().size();
+				possiblilities = Math.pow(size, constraints.getMaxLenght())
+						- Math.pow(size, constraints.getMinLenght() - 1);
 			}
 		} else {
 			// Source element count
 		}
-
-		return false;
+		// Minus possible nulls
+		if(commonConstraints.getNullable() < 1) {
+		possiblilities /= 1 - commonConstraints.getNullable();
+		}else {
+			return true;
+		}
+		return possiblilities >= wonderedInstances;
 	}
 
 }

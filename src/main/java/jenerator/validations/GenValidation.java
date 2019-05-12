@@ -31,14 +31,10 @@ public class GenValidation {
 					.allMatch(new UniqueCongruenceChecker(numInstances))) {
 
 			} else {
-				// Throw uniquness imposible
+				// Throw impossible uniqueness
 			}
-			// Thow incongruence annotation-filter
+			// Throw incongruence annotation-filter
 		}
 
 	}
-
-//	private void checkField_AnnotationCongruence(List<Field> fields) throws Annotation_FieldCongruenceException {
-//		new CongruenceAnnotation_FieldChecker().
-//	}
 }
