@@ -25,6 +25,6 @@ public abstract class ValueGenerator<T extends Object> {
 	}
 
 	@SuppressWarnings("hiding")
-	public abstract <T extends Object> T getValue(CommonConstraints constraints);
+	protected abstract <T extends Object> T getValue(CommonConstraints constraints);
 
 }
