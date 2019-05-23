@@ -1,6 +1,7 @@
 package jenerator.engine.generators;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -14,7 +15,11 @@ public class ValueGeneratorTest {
 	public void getValueTest() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, NotAnnotationEncountered {
 		Foo foo = new Foo();
-		GeneratorController generatorController = new GeneratorController(foo);
+		Foo foo2 = new Foo();
+		ArrayList<Foo> arrayList = new ArrayList<Foo>();
+		arrayList.add(foo);
+		arrayList.add(foo2);
+		GeneratorController generatorController = new GeneratorController(Foo.class, arrayList);
 		generatorController.process();
 		System.out.println(foo);
 	}

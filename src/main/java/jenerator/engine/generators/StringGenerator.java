@@ -1,18 +1,23 @@
 package jenerator.engine.generators;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 
 public class StringGenerator extends ValueGenerator<String> {
 
-	private StringBuilder sb = new StringBuilder();
 	private StringSimpleFormat stringSimpleFormat;
+	private StringConstraints constraints;
+
+	public StringGenerator(StringConstraints constraints) {
+		this.constraints = constraints;
+	}
 
 	public static enum StringSimpleFormat {
 		ALPHANUMERIC("alpha"), ONLY_DIGITS("digits"), ONLY_LETTERS("letters"), DIGITS_AND_LETTERS("digits_letters");
@@ -73,22 +78,27 @@ public class StringGenerator extends ValueGenerator<String> {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public String getValue(CommonConstraints constraints) {
-		StringConstraints stringConstraints = (StringConstraints) constraints;
-		stringSimpleFormat = stringConstraints.getStringSimpleFormat();
-		long stringLenght = stringConstraints.getMinLenght();
-		if (stringConstraints.getMinLenght() != stringConstraints.getMaxLenght()) {
-			stringLenght = new RandomDataGenerator().nextLong(stringConstraints.getMinLenght(),
-					stringConstraints.getMaxLenght());
+	public Collection<String> generate(long quantity) {
+		if (constraints.getUnique()) {
+			setValueContainer(new HashSet<String>());
+		} else {
+			setValueContainer(new ArrayList<String>());
+			StringBuilder sb = new StringBuilder();
+			stringSimpleFormat = constraints.getStringSimpleFormat();
+			long stringLenght = constraints.getMinLenght();
+			if (constraints.getMinLenght() != constraints.getMaxLenght()) {
+				stringLenght = new RandomDataGenerator().nextLong(constraints.getMinLenght(),
+						constraints.getMaxLenght());
+			}
+			for (int i = 0; i < stringLenght; i++) {
+				List<Character> characters = stringSimpleFormat.getCharacters();
+				int randomIndex = new Random().nextInt(characters.size());
+				Character character = characters.get(randomIndex);
+				sb.append(character);
+			}
+			getValueContainer().add(sb.toString());
 		}
-		for (int i = 0; i < stringLenght; i++) {
-			List<Character> characters = stringSimpleFormat.getCharacters();
-			int randomIndex = new Random().nextInt(characters.size());
-			Character character = characters.get(randomIndex);
-			sb.append(character);
-		}
-		return sb.toString();
+		return getValueContainer();
 	}
 }

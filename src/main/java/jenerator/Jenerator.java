@@ -15,8 +15,8 @@ public class Jenerator {
 
 	private static JeneratorConfiguration engineConfiguration;
 	private static GeneratorController generatorController;
-	
-	static{
+
+	static {
 		engineConfiguration = JeneratorConfiguration.getInstance();
 	}
 
@@ -41,7 +41,7 @@ public class Jenerator {
 		return instances;
 	}
 
-	public static <T extends Object> T generate(Class<T> class1, long numInstances)
+	public static <T extends Object> List<T> generate(Class<T> class1, long numInstances)
 			throws FieldValidationException, NoEmptyConstructorException, Annotation_FieldCongruenceException,
 			IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
 			SecurityException, NotAnnotationEncountered {
@@ -49,18 +49,18 @@ public class Jenerator {
 		GenValidation genValidation = new GenValidation(engineConfiguration);
 		genValidation.validate(class1, numInstances);
 
-		// Create an empty instance of that class
-		T instance = null;
+		// Create n empty instance of that class
+		List<T> instances = new ArrayList<T>();
 		try {
-			instance = class1.getConstructor().newInstance();
+			instances.add(class1.getConstructor().newInstance());
 		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
 				| IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 
-		// For each field set a value
-		generatorController = new GeneratorController(instance);
+		// Process each class
+		generatorController = new GeneratorController(class1, instances);
 		generatorController.process();
-		return instance;
+		return instances;
 	}
 }

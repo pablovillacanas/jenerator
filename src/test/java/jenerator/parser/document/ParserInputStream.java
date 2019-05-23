@@ -1,7 +1,6 @@
 package jenerator.parser.document;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,10 +8,6 @@ import java.net.URISyntaxException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import jenerator.engine.generators.ElementRandomGenerator;
-import jenerator.parser.document.PlainDocument;
-import jenerator.parser.document.PlainDocumentReader;
 
 public class ParserInputStream {
 
@@ -35,14 +30,14 @@ public class ParserInputStream {
 
 	@Test
 	public void testRandomElementsPlainText() throws IOException {
-		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filetxt))).getValue(null);
-		assertNotNull(value);
+//		String value = new ElementFromSourceGenerator(new PlainDocumentReader(new PlainDocument(filetxt))).getValue();
+//		assertNotNull(value);
 	}
 
 	@Test
 	public void testRandomElementsCsv() throws IOException {
-		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filecsv))).getValue(null);
-		System.out.println(value);
-		assertNotNull(value);
+//		String value = new ElementRandomGenerator(new PlainDocumentReader(new PlainDocument(filecsv))).getValue(null);
+//		System.out.println(value);
+//		assertNotNull(value);
 	}
 }

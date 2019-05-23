@@ -1,12 +1,17 @@
 package jenerator.engine.generators;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
-import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 
 public class CharGenerator extends ValueGenerator<Character> {
+
+	StringConstraints constraints;
+
+	protected CharGenerator(StringConstraints constraints) {
+	}
 
 	/**
 	 * List of available characters due configuration of generation.
@@ -41,7 +46,7 @@ public class CharGenerator extends ValueGenerator<Character> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Character getValue(CommonConstraints constraints) {
+	public Character getValue() {
 		StringConstraints stringConstraints = (StringConstraints) constraints;
 		switch (stringConstraints.getStringSimpleFormat()) {
 		case ALPHANUMERIC:
@@ -60,6 +65,11 @@ public class CharGenerator extends ValueGenerator<Character> {
 		}
 		int randomIndex = new Random().nextInt(characters.size());
 		return characters.get(randomIndex);
+	}
+
+	@Override
+	public Collection<Character> generate(long quantity) {
+		return null;
 	}
 
 }

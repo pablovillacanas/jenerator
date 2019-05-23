@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 @Target(TYPE)
 public @interface GenerationConstraints {
 
-	String DEFAULTSOURCE = "";
+	String NONSOURCE = "";
 	
-	String source() default DEFAULTSOURCE;
+	String source() default NONSOURCE;
 
 	boolean unique() default false;
 

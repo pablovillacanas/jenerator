@@ -19,7 +19,7 @@ public class StringGeneratorTest {
 	public void testLetters() {
 		stringConstraints.setMinLenght(15);
 		stringConstraints.setMaxLenght(20);
-		String value = new StringGenerator().getValue(stringConstraints);
+		String value = (String) new StringGenerator(stringConstraints).getValue();
 		for (int i = 0; i < 50; i++) {
 			assert (value.matches("[A-Za-z]+"));
 		}
@@ -30,9 +30,9 @@ public class StringGeneratorTest {
 		stringConstraints.setMinLenght(5);
 		stringConstraints.setMaxLenght(7);
 		stringConstraints.setStringSimpleFormat(StringSimpleFormat.ONLY_DIGITS);
-		String value = new StringGenerator().getValue(stringConstraints);
+		String value = (String) new StringGenerator(stringConstraints).getValue();
 		for (int i = 0; i < 50; i++) {
-			assert(value.matches("[0-9]+"));
+			assert (value.matches("[0-9]+"));
 		}
 	}
 }

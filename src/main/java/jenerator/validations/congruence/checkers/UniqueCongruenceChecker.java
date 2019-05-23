@@ -11,6 +11,7 @@ import jenerator.utils.FieldUtils;
 
 public class UniqueCongruenceChecker implements Predicate<Field> {
 
+	private double coverage;
 	private long wonderedInstances;
 
 	public UniqueCongruenceChecker(Long wonderedInstances) {
@@ -21,7 +22,7 @@ public class UniqueCongruenceChecker implements Predicate<Field> {
 	public boolean test(Field field) {
 		Double possiblilities = 0.0;
 		CommonConstraints commonConstraints = FieldUtils.getConstraints(field);
-		if (commonConstraints.getSource().equals(GenerationConstraints.DEFAULTSOURCE)) {
+		if (commonConstraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 			if (Number.class.isAssignableFrom(field.getType())) {
 				NaturalNumberConstraints nnconstraints = (NaturalNumberConstraints) commonConstraints;
 				possiblilities = (double) nnconstraints.getMaxValue() - nnconstraints.getMinValue();
@@ -42,5 +43,6 @@ public class UniqueCongruenceChecker implements Predicate<Field> {
 		}
 		return possiblilities >= wonderedInstances;
 	}
-
+	
+	
 }
