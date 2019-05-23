@@ -1,6 +1,5 @@
 package jenerator.engine.generators;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
