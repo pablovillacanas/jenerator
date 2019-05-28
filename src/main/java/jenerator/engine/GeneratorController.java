@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jenerator.annotations.constraints.CommonConstraints;
+import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.ValueGenerator;
@@ -58,7 +58,7 @@ public class GeneratorController {
 
 	@SuppressWarnings("unchecked")
 	private <E extends Object> ValueGenerator<? extends E> generateValues(Class<E> fieldType,
-			CommonConstraints constraints) {
+			Constraints constraints) {
 		ValueGenerator<? extends Object> valueGenerator = null;
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)

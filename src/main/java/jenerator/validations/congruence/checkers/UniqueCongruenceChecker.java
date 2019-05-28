@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
 import jenerator.annotations.GenerationConstraints;
-import jenerator.annotations.constraints.CommonConstraints;
+import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.utils.FieldUtils;
@@ -21,7 +21,7 @@ public class UniqueCongruenceChecker implements Predicate<Field> {
 	@Override
 	public boolean test(Field field) {
 		Double possiblilities = 0.0;
-		CommonConstraints commonConstraints = FieldUtils.getConstraints(field);
+		Constraints commonConstraints = FieldUtils.getConstraints(field);
 		if (commonConstraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 			if (Number.class.isAssignableFrom(field.getType())) {
 				NaturalNumberConstraints nnconstraints = (NaturalNumberConstraints) commonConstraints;

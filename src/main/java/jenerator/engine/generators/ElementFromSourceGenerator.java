@@ -2,9 +2,7 @@ package jenerator.engine.generators;
 
 import java.util.Collection;
 
-import com.google.common.collect.Streams;
-
-import jenerator.annotations.constraints.CommonConstraints;
+import jenerator.annotations.constraints.Constraints;
 import jenerator.parser.Source;
 import jenerator.parser.SourceReader;
 
@@ -12,9 +10,9 @@ public abstract class ElementFromSourceGenerator<E, S extends Source> extends Va
 
 	private SourceReader<S> sourceReader;
 	private Collection<E> values;
-	private CommonConstraints constraints;
+	private Constraints constraints;
 	
-	public ElementFromSourceGenerator(CommonConstraints constraints, SourceReader<S> sourceReader) {
+	public ElementFromSourceGenerator(Constraints constraints, SourceReader<S> sourceReader) {
 		this.constraints = constraints;
 		this.sourceReader = sourceReader;
 	}

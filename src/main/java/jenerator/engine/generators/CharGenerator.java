@@ -44,7 +44,6 @@ public class CharGenerator extends ValueGenerator<Character> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Character getValue() {
 		StringConstraints stringConstraints = (StringConstraints) constraints;

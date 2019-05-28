@@ -2,9 +2,10 @@ package jenerator.annotations.readers;
 
 import java.lang.annotation.Annotation;
 
-import jenerator.annotations.constraints.CommonConstraints;
+import jenerator.annotations.constraints.Constraints;
 
-public interface IAnnotationReader<T extends Annotation> {
+public interface IAnnotationReader<A extends Annotation> {
 
-	CommonConstraints readValues(T annotation);
+	Constraints readValues(A annotation);
+
 }
