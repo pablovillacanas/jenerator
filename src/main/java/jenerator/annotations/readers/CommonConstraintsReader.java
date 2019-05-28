@@ -1,18 +1,23 @@
 package jenerator.annotations.readers;
 
+import java.lang.annotation.Annotation;
+
 import jenerator.annotations.GenerationConstraints;
-import jenerator.annotations.constraints.CommonConstraints;
+import jenerator.annotations.constraints.Constraints;
 
-public abstract class CommonConstraintsReader {
+public abstract class CommonConstraintsReader<A extends Annotation> implements IAnnotationReader<A> {
 
-	public CommonConstraintsReader() {}
+	private Constraints constraints;
 
-	CommonConstraints readValues(GenerationConstraints ann) {
-		CommonConstraints commonConstraints = new CommonConstraints();
-		commonConstraints.setSource(ann.source());
-		commonConstraints.setUnique(ann.unique());
-		commonConstraints.setNullable(ann.nullable());
-		return commonConstraints;
+	protected Constraints readValues(GenerationConstraints generationConstraints) {
+		constraints = new Constraints();
+		if (generationConstraints instanceof GenerationConstraints) {
+			GenerationConstraints annotation = (GenerationConstraints) generationConstraints;
+			constraints.setSource(annotation.source());
+			constraints.setUnique(annotation.unique());
+			constraints.setNullable(annotation.nullable());
+		}
+		return constraints;
 	}
 
 }

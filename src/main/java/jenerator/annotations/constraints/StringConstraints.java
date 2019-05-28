@@ -2,7 +2,7 @@ package jenerator.annotations.constraints;
 
 import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
 
-public class StringConstraints extends CommonConstraints {
+public class StringConstraints extends Constraints {
 
 	private long minLenght = 5;
 	private long maxLength = 10;

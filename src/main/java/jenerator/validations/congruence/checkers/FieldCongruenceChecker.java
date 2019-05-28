@@ -37,7 +37,7 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	@Override
 	public boolean test(Field field) {
 		Annotation annotation = FieldUtils.getGenerableAnnotation(field);
-		Set<Class<?>> concordantAnnotations = Utils.retrieveConcordantAnnotationsTo(field);
+		Set<Class<?>> concordantAnnotations = Utils.retrieveConcordantAnnotationsOf(field);
 		FieldUtils.getGenerableAnnotation(field);
 		if (concordantAnnotations.contains(annotation)) {
 			return true;
@@ -46,15 +46,17 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	}
 
 	/**
+	 * <p>
 	 * Utils class with the only purpose of provide a set of possibles annotated
 	 * types to each field type.
+	 * </p>
 	 * 
-	 * @author pablo
+	 * @author Pablo Villacanas
 	 *
 	 */
 	static public class Utils {
 
-		public static Set<Class<?>> retrieveConcordantAnnotationsTo(Field field) {
+		public static Set<Class<?>> retrieveConcordantAnnotationsOf(Field field) {
 			Class<?> class1 = field.getType();
 			HashSet<Class<?>> annotations = new HashSet<Class<?>>();
 			switch (class1.getCanonicalName()) {
