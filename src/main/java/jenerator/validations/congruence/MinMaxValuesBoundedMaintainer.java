@@ -6,9 +6,11 @@ import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 
 /**
- * This class changes de mininimum and maximum values by default if there are
+ * <p>
+ * This class changes the minimum and maximum values by default if there are
  * bigger or smaller than than minimum and maximum default values for that data
  * type.
+ * </p>
  * 
  * @author pablo
  *
