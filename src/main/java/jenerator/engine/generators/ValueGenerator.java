@@ -4,13 +4,13 @@ import java.util.Collection;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import jenerator.annotations.constraints.CommonConstraints;
+import jenerator.annotations.constraints.Constraints;
 
 public abstract class ValueGenerator<T extends Object> {
 
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 	private Collection<T> valueContainer;
-	protected CommonConstraints commonConstraints;
+	protected Constraints commonConstraints;
 	/**
 	 * <p>
 	 * Number of elements the developer wants to be generated.
@@ -20,7 +20,7 @@ public abstract class ValueGenerator<T extends Object> {
 
 	public static final double CRITICAL_COVERAGE = 0.75;
 
-	public ValueGenerator(long quantity, CommonConstraints commonConstraints) {
+	public ValueGenerator(long quantity, Constraints commonConstraints) {
 		super();
 		this.commonConstraints = commonConstraints;
 		this.quantity = quantity;
