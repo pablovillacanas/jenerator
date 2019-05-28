@@ -18,12 +18,14 @@ public class JeneratorConfiguration {
 
 		/**
 		 * This predicate filters all fields that have one annotation of type
-		 * jenerator.annotations and does not have a @NoGenerable annotation
+		 * jenerator.annotations and does not have a
+		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation
 		 */
 		EXPLICITFILTER,
 
 		/**
-		 * This predicate filters all fields that do not have a @NoGenerable annotation
+		 * This predicate filters all fields that do not have a
+		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation
 		 */
 		LAZYFILTER;
 	}
