@@ -6,7 +6,7 @@ package jenerator;
  * going to use our annotations or Hibernate ones.
  * </p>
  * 
- * @author pablo
+ * @author Pablo Villacanas
  *
  */
 public class JeneratorConfiguration {
@@ -14,6 +14,14 @@ public class JeneratorConfiguration {
 	private static JeneratorConfiguration engineConfiguration;
 	private FieldFilterType fieldFilterType;
 
+	/**
+	 * <p>
+	 * Sets the filter type for the future value generated fields.
+	 * </p>
+	 * 
+	 * @author Pablo Villacanas
+	 *
+	 */
 	public enum FieldFilterType {
 
 		/**

@@ -2,9 +2,6 @@ package jenerator.validations.congruence.exceptions;
 
 public class CongruenceException extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public CongruenceException() {

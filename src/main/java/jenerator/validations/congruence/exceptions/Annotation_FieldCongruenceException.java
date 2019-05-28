@@ -1,10 +1,7 @@
 package jenerator.validations.congruence.exceptions;
 
-public class Annotation_FieldCongruenceException extends CongruenceException{
+public class Annotation_FieldCongruenceException extends CongruenceException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public Annotation_FieldCongruenceException() {
