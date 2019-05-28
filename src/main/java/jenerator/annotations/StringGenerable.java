@@ -15,8 +15,16 @@ public @interface StringGenerable {
 	public final int DEFAULT_MIN_VALUE = 5;
 	public final int DEFAULT_MAX_VALUE = 10;
 
+	/**
+	 * Minimum length of the string. Inclusive.
+	 * @return
+	 */
 	int minLenght() default DEFAULT_MIN_VALUE;
 
+	/**
+	 * Maximum length of the string. Inclusive.
+	 * @return
+	 */
 	int maxLenght() default DEFAULT_MAX_VALUE;
 
 	StringSimpleFormat style() default StringSimpleFormat.ONLY_LETTERS;

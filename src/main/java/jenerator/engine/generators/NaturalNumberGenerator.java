@@ -12,32 +12,32 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 
 	NaturalNumberConstraints constraints;
 
-	public NaturalNumberGenerator(NaturalNumberConstraints constraints) {
+	public NaturalNumberGenerator(long quantity, NaturalNumberConstraints constraints) {
+		super(quantity, constraints);
 		this.constraints = constraints;
 	}
 
 	@Override
-	public Collection<Number> generate(long quantity) {
+	public Collection<Number> generate() {
 		if (constraints.getUnique()) {
 			setValueContainer(new HashSet<Number>());
-			long possiblilities = constraints.getMaxValue() - constraints.getMinValue();
-			if (quantity / possiblilities >= CRITICAL_COVERAGE) {
+			if (calculateCoverage() >= CRITICAL_COVERAGE) {
 				loadAllValues();
 				List<Number> valuesList = new ArrayList<Number>(getValueContainer());
+				List<Number> subList = valuesList.subList(0, (int) getQuantity());
 				Collections.shuffle(valuesList);
-				List<Number> subList = valuesList.subList(0, (int) quantity);
 				setValueContainer(subList);
 			} else {
-				while (getValueContainer().size() < quantity) {
+				while (getValuesToGenerate() > 0) {
 					long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
-					getValueContainer().add(nextLong);
+					addValue(nextLong);
 				}
 			}
 		} else {
 			setValueContainer(new ArrayList<Number>());
-			for (int i = 0; i < quantity; i++) {
+			while (getValuesToGenerate() > 0) {
 				long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
-				getValueContainer().add(nextLong);
+				addValue(nextLong);
 			}
 		}
 		return getValueContainer();
@@ -45,7 +45,14 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 
 	private void loadAllValues() {
 		for (long i = constraints.getMinValue(); i < constraints.getMaxValue(); i++) {
-			getValueContainer().add(i);
+			addValue(i);
 		}
+	}
+
+	@Override
+	protected double calculateCoverage() {
+		long possiblilities = constraints.getMaxValue() - constraints.getMinValue();
+		double toGenerate = getQuantity() - getValueContainer().size();
+		return toGenerate / possiblilities;
 	}
 }
