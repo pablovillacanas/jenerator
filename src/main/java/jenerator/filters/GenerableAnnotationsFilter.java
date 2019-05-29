@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 /**
  * <p>
- * This class filters the jenerator annotations from a field.
+ * This class provides the jenerator annotation from a Generable field
  * </p>
  * 
  * @author pablo

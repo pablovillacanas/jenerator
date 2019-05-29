@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public final class GeneratorAnnotations {
+public final class JenAnnotations {
 
+	
 	public static String getPackageName() {
 		return Generable.class.getPackage().getName();
 	}
-
 	/**
 	 * Scans all classes accessible from the context class loader which belong to
 	 * the given package and subpackages.
@@ -23,7 +23,7 @@ public final class GeneratorAnnotations {
 	 * @throws IOException
 	 */
 	public static List<Class<?>> list() throws ClassNotFoundException, IOException {
-		String packageName = getPackageName();
+		String packageName = JenAnnotations.class.getPackage().getName();
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		assert classLoader != null;
 		String path = packageName.replace('.', '/');
