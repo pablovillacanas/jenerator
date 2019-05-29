@@ -10,26 +10,5 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 public @interface DecimalNumberGenerable {
 
-	/**
-	 * <p>
-	 * Maximum value included in the generation of values.
-	 * </p>
-	 */
-	double maxValue() default Double.MAX_VALUE;
-
-	/**
-	 * <p>
-	 * Minimum value included in the generation of values.
-	 * </p>
-	 */
-	double minValue() default Double.MIN_VALUE;
 	
-	/**
-	 * <p>
-	 * NUmber of floating numbers in the generation of values.
-	 * </p>
-	 */
-	long precision() default Long.MIN_VALUE;
-
-	GenerationConstraints constraints() default @GenerationConstraints();
 }

@@ -5,20 +5,9 @@ import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
 import jenerator.JeneratorConfiguration.FieldFilterType;
-import jenerator.annotations.GeneratorAnnotations;
+import jenerator.annotations.JenAnnotations;
 import jenerator.annotations.NoGenerable;
 
-/**
- * <p>
- * This class filters the fields of a {@link jenerator.annotation.Generable
- * Generable} class by filter all its fields with a specific FieldFilterType.
- * </p>
- * 
- * @see FieldFilterType
- * 
- * @author pablo
- *
- */
 public class GenerableFieldsFilter implements Predicate<Field> {
 
 	FieldFilterType filter;
@@ -36,7 +25,7 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 			else
 				return false;
 		case EXPLICITFILTER:
-			String packageName = GeneratorAnnotations.getPackageName();
+			String packageName = JenAnnotations.getPackageName();
 			Annotation[] fieldAnnotations = field.getAnnotations();
 			for (int i = 0; i < fieldAnnotations.length; i++) {
 				Class<? extends Annotation> class1 = fieldAnnotations[i].annotationType();
