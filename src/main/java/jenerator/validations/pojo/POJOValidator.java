@@ -12,8 +12,27 @@ import java.util.stream.Collectors;
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
 
+/**
+ * <p>
+ * Validates that class is a POJO
+ * </p>
+ * 
+ * @author Pablo Villacanas
+ *
+ */
 public class POJOValidator {
 
+	/**
+	 * <p>
+	 * Check if the class has a valid constructor and it fields are encapsulated
+	 * </p>
+	 * 
+	 * @param <T>
+	 * @param class1
+	 * @return true if it is a POJO, false otherwise
+	 * @throws FieldValidationException
+	 * @throws NoEmptyConstructorException
+	 */
 	public static <T extends Object> boolean isPOJO(Class<T> class1)
 			throws FieldValidationException, NoEmptyConstructorException {
 		if (hasValidConstructor(class1) && isEncapsulated(class1))
@@ -77,11 +96,31 @@ public class POJOValidator {
 		return true;
 	}
 
+	/**
+	 * <p>
+	 * Filters only the fields that are declared in that class, excluding inherited
+	 * ones.
+	 * </p>
+	 * 
+	 * @param <T>
+	 * @param class1
+	 * @return
+	 */
 	private static <T extends Object> ArrayList<Field> getDeclaredFields(Class<T> class1) {
 		return (ArrayList<Field>) Arrays.asList(class1.getDeclaredFields()).stream()
 				.filter(field -> !field.getName().startsWith("this$")).collect(Collectors.toList());
 	}
 
+	/**
+	 * <p>
+	 * Compares all the methods declared in the class with the getter and setter
+	 * that there would have that field.
+	 * </p>
+	 * 
+	 * @param field
+	 * @return true if field has setter and getter
+	 * @throws FieldValidationException
+	 */
 	private static boolean hasGettersAndSetters(final Field field) throws FieldValidationException {
 		try {
 			int size = Arrays.asList(field.getDeclaringClass().getMethods()).stream().filter(method -> {
