@@ -16,16 +16,14 @@ public @interface StringGenerable {
 	public final int DEFAULT_MAX_VALUE = 10;
 
 	/**
-	 * <p>
-	 * Minimum length included in the generation of values
-	 * </p>
+	 * Minimum length of the string generated. Inclusive.
+	 * @return
 	 */
 	int minLenght() default DEFAULT_MIN_VALUE;
 
 	/**
-	 * <p>
-	 * Maximum length included in the generation of values
-	 * </p>
+	 * Maximum length of the string generated. Inclusive.
+	 * @return
 	 */
 	int maxLenght() default DEFAULT_MAX_VALUE;
 

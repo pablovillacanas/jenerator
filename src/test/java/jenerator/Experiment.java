@@ -1,5 +1,6 @@
 package jenerator;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -7,7 +8,7 @@ import org.junit.Test;
 public class Experiment {
 
 	public int i;
-	
+
 	@Test
 	public void test() throws NoSuchFieldException, SecurityException {
 //		Long l = new Long(3);
@@ -15,7 +16,7 @@ public class Experiment {
 //		Field field = getClass().getDeclaredField("i");
 //		assert (Integer.class.isAssignableFrom(FieldUtils.getFieldClass(field)));
 	}
-	
+
 	@Test
 	public void combinatoryTest() throws NoSuchFieldException, SecurityException {
 		System.out.println(Experiment.class.getDeclaredField("i").getType().getCanonicalName());

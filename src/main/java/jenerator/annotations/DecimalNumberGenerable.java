@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 public @interface DecimalNumberGenerable {
 
+	public final int DEFAULT_PRECISION = 2;
 	/**
 	 * <p>
 	 * Maximum value included in the generation of values.
@@ -29,7 +30,7 @@ public @interface DecimalNumberGenerable {
 	 * NUmber of floating numbers in the generation of values.
 	 * </p>
 	 */
-	long precision() default Long.MIN_VALUE;
+	short precision() default DEFAULT_PRECISION;
 
 	GenerationConstraints constraints() default @GenerationConstraints();
 }

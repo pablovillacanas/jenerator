@@ -39,9 +39,10 @@ public class GeneratorController {
 	public void process() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, NotAnnotationEncountered {
 		List<Field> generableFields = ClassUtils.getGenerableFields(actualClass);
+		int quantity = instances.size();
 		for (Field field : generableFields) {
 			Method getter = FieldUtils.getterOf(field);
-			ValueGenerator<? extends Object> generatedValues = generateValues(field.getType(),
+			ValueGenerator<? extends Object> generatedValues = generateValues(quantity, field.getType(),
 					FieldUtils.getConstraints(field));
 			relation.put(getter, generatedValues);
 		}
@@ -57,13 +58,18 @@ public class GeneratorController {
 	}
 
 	@SuppressWarnings("unchecked")
+<<<<<<< HEAD
 	private <E extends Object> ValueGenerator<? extends E> generateValues(Class<E> fieldType,
 			Constraints constraints) {
+=======
+	private <E extends Object> ValueGenerator<? extends E> generateValues(long quantity, Class<E> fieldType,
+			CommonConstraints constraints) {
+>>>>>>> f40231106248c39c00179216bb4378900da1cda8
 		ValueGenerator<? extends Object> valueGenerator = null;
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
 					|| Short.class.isAssignableFrom(fieldType) || Byte.class.isAssignableFrom(fieldType)) {
-				valueGenerator = new NaturalNumberGenerator((NaturalNumberConstraints) constraints);
+				valueGenerator = new NaturalNumberGenerator(quantity, (NaturalNumberConstraints) constraints);
 			} else {
 //						new DecimalNumberGenerator().getValue(field.getType(), constraints);
 			}

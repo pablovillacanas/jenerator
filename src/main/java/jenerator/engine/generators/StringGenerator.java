@@ -6,19 +6,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.math3.random.RandomDataGenerator;
-
 import jenerator.annotations.constraints.StringConstraints;
 
 public class StringGenerator extends ValueGenerator<String> {
 
-	private StringSimpleFormat stringSimpleFormat;
 	private StringConstraints constraints;
 
-	public StringGenerator(StringConstraints constraints) {
+	public StringGenerator(long quantity, StringConstraints constraints) {
+		super(quantity, constraints);
 		this.constraints = constraints;
 	}
 
+	/**
+	 * <p>
+	 * Enum that contains all the possible agrupations of characters to generate an
+	 * array
+	 * <p>
+	 * 
+	 * @author pablo
+	 *
+	 */
 	public static enum StringSimpleFormat {
 		ALPHANUMERIC("alpha"), ONLY_DIGITS("digits"), ONLY_LETTERS("letters"), DIGITS_AND_LETTERS("digits_letters");
 
@@ -79,26 +86,72 @@ public class StringGenerator extends ValueGenerator<String> {
 	}
 
 	@Override
-	public Collection<String> generate(long quantity) {
+	public Collection<String> generate() {
 		if (constraints.getUnique()) {
 			setValueContainer(new HashSet<String>());
+			if (calculateCoverage() >= CRITICAL_COVERAGE) {
+				loadAllValues();
+			} else {
+				stringRandomGenerator(getValuesToGenerate());
+			}
 		} else {
 			setValueContainer(new ArrayList<String>());
-			StringBuilder sb = new StringBuilder();
-			stringSimpleFormat = constraints.getStringSimpleFormat();
-			long stringLenght = constraints.getMinLenght();
-			if (constraints.getMinLenght() != constraints.getMaxLenght()) {
-				stringLenght = new RandomDataGenerator().nextLong(constraints.getMinLenght(),
-						constraints.getMaxLenght());
-			}
+			stringRandomGenerator(getValuesToGenerate());
+		}
+		return getValueContainer();
+	}
+
+	private void stringRandomGenerator(long valuesToGenerate) {
+		StringBuilder stringBuilder = new StringBuilder();
+		StringSimpleFormat stringSimpleFormat = constraints.getStringSimpleFormat();
+		while (getValuesToGenerate() > 0) {
+			long stringLenght = random.nextLong(constraints.getMinLenght(), constraints.getMaxLenght());
 			for (int i = 0; i < stringLenght; i++) {
 				List<Character> characters = stringSimpleFormat.getCharacters();
 				int randomIndex = new Random().nextInt(characters.size());
 				Character character = characters.get(randomIndex);
-				sb.append(character);
+				stringBuilder.append(character);
 			}
-			getValueContainer().add(sb.toString());
+			stringBuilder.setLength(0);
+			addValue(stringBuilder.toString());
 		}
-		return getValueContainer();
+	}
+
+	private void loadAllValues() {
+		long minLenght = constraints.getMinLenght();
+		long maxLenght = constraints.getMaxLenght();
+		long currentSize = 1;
+		do {
+			for (long i = maxLenght; i > minLenght; i--) {
+				// TODO get all variations with repetitions within range.
+			}
+			currentSize++;
+		} while (currentSize <= maxLenght);
+	}
+
+	@Override
+	protected double calculateCoverage() {
+		int size = constraints.getStringSimpleFormat().getCharacters().size();
+		double possiblilities = getPossibilities(constraints.getMinLenght(), constraints.getMaxLenght(), size);
+		return getValuesToGenerate() / possiblilities;
+	}
+
+	/**
+	 * <p>
+	 * Variations with repetition. Sumatory of all variation with repetitions within
+	 * range - both inclusive.
+	 * </p>
+	 * 
+	 * @param minLenght
+	 * @param maxLenght
+	 * @param sizeGroup
+	 * @return
+	 */
+	private long getPossibilities(long minLenght, long maxLenght, int sizeGroup) {
+		long sumatory = 0;
+		for (long i = minLenght; i <= maxLenght; i++) {
+			sumatory = +(long) Math.pow(sizeGroup, i);
+		}
+		return sumatory;
 	}
 }

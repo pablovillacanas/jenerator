@@ -11,7 +11,6 @@ import jenerator.utils.FieldUtils;
 
 public class UniqueCongruenceChecker implements Predicate<Field> {
 
-	private double coverage;
 	private long wonderedInstances;
 
 	public UniqueCongruenceChecker(Long wonderedInstances) {
@@ -36,13 +35,12 @@ public class UniqueCongruenceChecker implements Predicate<Field> {
 			// Source element count
 		}
 		// Minus possible nulls
-		if(commonConstraints.getNullable() < 1) {
-		possiblilities /= 1 - commonConstraints.getNullable();
-		}else {
+		if (commonConstraints.getNullable() < 1) {
+			possiblilities /= 1 - commonConstraints.getNullable();
+		} else {
 			return true;
 		}
 		return possiblilities >= wonderedInstances;
 	}
-	
-	
+
 }
