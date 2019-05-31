@@ -21,7 +21,7 @@ public class StringConstraints extends Constraints {
 	}
 
 	public void setMaxLenght(long maxLenght) {
-		if (maxLenght > minLenght)
+		if (maxLenght >= minLenght)
 			this.maxLength = maxLenght;
 		else
 			this.maxLength = minLenght + 5;

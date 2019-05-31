@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
 import jenerator.annotations.constraints.Constraints;
+import jenerator.engine.exceptions.CoverageExceededException;
 
 public abstract class ValueGenerator<T extends Object> {
 
@@ -21,32 +22,28 @@ public abstract class ValueGenerator<T extends Object> {
 	public static final double CRITICAL_COVERAGE = 0.75;
 
 	public ValueGenerator(long quantity, Constraints constraints) {
-		super();
 		this.constraints = constraints;
 		this.quantity = quantity;
-	}
-
-	public long getQuantity() {
-		return quantity;
 	}
 
 	/**
 	 * <p>
 	 * Calculates the coverage of values desired by the constraints. Must be
 	 * override due to different kinds of calculations that have to be implemented
-	 * in each generator type.
+	 * in each generator type. The calculation takes the quantity of instances that
+	 * developer want to generate and gets the relation with the possibilities that
+	 * constraints allows to.
 	 * </p>
 	 * 
-	 * @return
+	 * @return A number, tipically between 0.0 and 1.0 that
 	 */
-	protected abstract double calculateCoverage();
+	protected abstract double calculateCoverage() throws CoverageExceededException;
 
 	/**
 	 * <p>
 	 * Adds the null elements by nullable constraint definition.
 	 * </p>
 	 * 
-	 * @return
 	 */
 	protected void addNullElements() {
 		long nullElements = (long) (quantity * 1 - constraints.getNullable());
@@ -57,14 +54,26 @@ public abstract class ValueGenerator<T extends Object> {
 
 	/**
 	 * <p>
-	 * Returns the num of values that has to be generated to achieve the quantity of
-	 * values desired.
+	 * Performs an operation to calculate how many elements the generator has to
+	 * create subtracting the null ones setted by nullable constraint.
 	 * </p>
 	 * 
-	 * @return
+	 * @return the number of values that has to be generated to achieve the quantity
+	 *         of values desired.
 	 */
 	protected long getValuesToGenerate() {
-		return quantity - valueContainer.size();
+		long toGenerate = (long) (quantity - quantity * constraints.getNullable());
+		return toGenerate;
+	}
+
+	/**
+	 * Control if the container has the same number of elements the developer
+	 * require.
+	 * 
+	 * @return true if container is filled, false otherwise
+	 */
+	protected boolean containerIsFilled() {
+		return valueContainer.size() == quantity;
 	}
 
 	/**
@@ -101,5 +110,13 @@ public abstract class ValueGenerator<T extends Object> {
 			addNullElements();
 	}
 
-	public abstract Collection<T> generate();
+	public abstract Collection<T> generate() throws CoverageExceededException;
+
+	public void setQuantity(long quantity) {
+		this.quantity = quantity;
+	}
+
+	public long getQuantity() {
+		return quantity;
+	}
 }

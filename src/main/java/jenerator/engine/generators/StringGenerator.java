@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import jenerator.annotations.constraints.StringConstraints;
+import jenerator.engine.exceptions.CoverageExceededException;
 
 public class StringGenerator extends ValueGenerator<String> {
 
@@ -86,7 +87,7 @@ public class StringGenerator extends ValueGenerator<String> {
 	}
 
 	@Override
-	public Collection<String> generate() {
+	public Collection<String> generate() throws CoverageExceededException {
 		if (constraints.getUnique()) {
 			setValueContainer(new HashSet<String>());
 			if (calculateCoverage() >= CRITICAL_COVERAGE) {
@@ -104,7 +105,7 @@ public class StringGenerator extends ValueGenerator<String> {
 	private void stringRandomGenerator(long valuesToGenerate) {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringSimpleFormat stringSimpleFormat = constraints.getStringSimpleFormat();
-		while (getValuesToGenerate() > 0) {
+		while (!containerIsFilled()) {
 			long stringLenght = random.nextLong(constraints.getMinLenght(), constraints.getMaxLenght());
 			for (int i = 0; i < stringLenght; i++) {
 				List<Character> characters = stringSimpleFormat.getCharacters();
@@ -130,10 +131,15 @@ public class StringGenerator extends ValueGenerator<String> {
 	}
 
 	@Override
-	protected double calculateCoverage() {
+	protected double calculateCoverage() throws CoverageExceededException {
 		int size = constraints.getStringSimpleFormat().getCharacters().size();
 		double possiblilities = getPossibilities(constraints.getMinLenght(), constraints.getMaxLenght(), size);
-		return getValuesToGenerate() / possiblilities;
+		double coverage = getValuesToGenerate() / possiblilities;
+		if (coverage <= 1.0)
+			return getValuesToGenerate() / possiblilities;
+		else
+			throw new CoverageExceededException("The number of instances desired is " + getQuantity()
+					+ " but the posibilities are " + (int) possiblilities);
 	}
 
 	/**
