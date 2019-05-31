@@ -2,10 +2,12 @@ package jenerator.engine.generators;
 
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.junit.Before;
 import org.junit.Test;
 
 import jenerator.annotations.constraints.NaturalNumberConstraints;
+import jenerator.engine.exceptions.CoverageExceededException;
 
 public class NaturalNumberGeneratorTest {
 
@@ -18,7 +20,7 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbers() {
+	public void testNumbers() throws NumberIsTooLargeException, CoverageExceededException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(7);
 		numberConstraints.setUnique(false);
@@ -35,7 +37,7 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbersUniqueNonCritical() {
+	public void testNumbersUniqueNonCritical() throws NumberIsTooLargeException, CoverageExceededException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(700);
 		numberConstraints.setUnique(true);
@@ -49,11 +51,10 @@ public class NaturalNumberGeneratorTest {
 			assert (String.valueOf(value).matches("[0-9]+"));
 		}
 		assertTrue(nng.getValueContainer().size() == 0);
-		System.out.println();
 	}
 
 	@Test
-	public void testNumbersCritical() {
+	public void testNumbersCritical() throws NumberIsTooLargeException, CoverageExceededException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(55);
 		numberConstraints.setUnique(true);
@@ -63,10 +64,18 @@ public class NaturalNumberGeneratorTest {
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
 			Number value = nng.getValue();
-			System.out.print(value + " ");
 			assert (String.valueOf(value).matches("[0-9]+"));
 		}
 		assertTrue(nng.getValueContainer().size() == 0);
-		System.out.println();
+	}
+
+	@Test(expected = CoverageExceededException.class)
+	public void testNumbersOverCritical() throws NumberIsTooLargeException, CoverageExceededException {
+		numberConstraints.setMinValue(5);
+		numberConstraints.setMaxValue(54);
+		numberConstraints.setUnique(true);
+		numberConstraints.setNullable(0.0);
+		NaturalNumberGenerator nng = new NaturalNumberGenerator(numGenerations, numberConstraints);
+		nng.generate();
 	}
 }

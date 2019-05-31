@@ -6,7 +6,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.math3.exception.NumberIsTooLargeException;
+
 import jenerator.annotations.constraints.NaturalNumberConstraints;
+import jenerator.engine.exceptions.CoverageExceededException;
 
 public class NaturalNumberGenerator extends ValueGenerator<Number> {
 
@@ -18,7 +21,7 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 	}
 
 	@Override
-	public Collection<Number> generate() {
+	public Collection<Number> generate() throws NumberIsTooLargeException, CoverageExceededException {
 		if (constraints.getUnique()) {
 			setValueContainer(new HashSet<Number>());
 			if (calculateCoverage() >= CRITICAL_COVERAGE) {
@@ -28,14 +31,14 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 				Collections.shuffle(valuesList);
 				setValueContainer(subList);
 			} else {
-				while (getValuesToGenerate() > 0) {
+				while (!containerIsFilled()) {
 					long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
 					addValue(nextLong);
 				}
 			}
 		} else {
 			setValueContainer(new ArrayList<Number>());
-			while (getValuesToGenerate() > 0) {
+			while (!containerIsFilled()) {
 				long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
 				addValue(nextLong);
 			}
@@ -50,9 +53,7 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 	}
 
 	@Override
-	protected double calculateCoverage() {
-		long possiblilities = constraints.getMaxValue() - constraints.getMinValue();
-		double toGenerate = getQuantity() - getValueContainer().size();
-		return toGenerate / possiblilities;
+	protected long getPossibilities() {
+		return constraints.getMaxValue() - constraints.getMinValue();
 	}
 }

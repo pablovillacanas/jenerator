@@ -25,12 +25,30 @@ public class FieldUtils {
 	}
 
 	public static Method getterOf(Field field) {
-		String fieldName = "";
+		String methodName = "";
 		try {
 			Class<?> declaringClass = field.getDeclaringClass();
-			fieldName = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
-			return declaringClass.getMethod("set" + fieldName, field.getType());
+			methodName = field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1);
+			return declaringClass.getMethod("set" + methodName, field.getType());
 		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static Field fieldOf(Method method) {
+		String name = method.getName();
+		String fieldName = name.substring(3, name.length()).substring(0, 1).toLowerCase() + name.substring(4);
+		try {
+			Class<?> declaringClass = Class.forName(method.getDeclaringClass().getName());
+			return method.getDeclaringClass().getDeclaredField(fieldName);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
