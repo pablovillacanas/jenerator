@@ -112,8 +112,8 @@ public class StringGenerator extends ValueGenerator<String> {
 				Character character = characters.get(randomIndex);
 				stringBuilder.append(character);
 			}
-			stringBuilder.setLength(0);
 			addValue(stringBuilder.toString());
+			stringBuilder.delete(0, (int) stringLenght);
 		}
 	}
 
