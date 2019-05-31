@@ -29,9 +29,7 @@ public class CharGenerator extends ValueGenerator<Character> {
 	}
 
 	@Override
-	protected double calculateCoverage() {
-		long possiblilities = constraints.getStringSimpleFormat().characters.size();
-		double toGenerate = getQuantity() - getValueContainer().size();
-		return toGenerate / possiblilities;
+	protected long getPossibilities() {
+		return constraints.getStringSimpleFormat().characters.size();
 	}
 }

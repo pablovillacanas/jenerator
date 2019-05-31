@@ -35,9 +35,43 @@ public abstract class ValueGenerator<T extends Object> {
 	 * constraints allows to.
 	 * </p>
 	 * 
-	 * @return A number, tipically between 0.0 and 1.0 that
+	 * @return A number, typically between 0.0 and 1.0
+	 * @throws CoverageExceededException if number of values exceeds the
+	 *                                   possibilities for unique values
 	 */
-	protected abstract double calculateCoverage() throws CoverageExceededException;
+	protected double calculateCoverage() throws CoverageExceededException {
+		double coverage = 0.0;
+		long possibilities = getPossibilities();
+		if (possibilities >= getValuesToGenerate())
+			coverage = getValuesToGenerate() / possibilities;
+		else
+			throw new CoverageExceededException(getQuantity(), (int) possibilities);
+		return coverage;
+	}
+
+	/**
+	 * <p>
+	 * Performs an operation to calculate how many elements the generator has to
+	 * create subtracting the null ones settled by nullable constraint.
+	 * </p>
+	 * 
+	 * @return the number of values that has to be generated to achieve the quantity
+	 *         of values desired.
+	 */
+	protected long getValuesToGenerate() {
+		long toGenerate = (long) (quantity - quantity * constraints.getNullable());
+		return toGenerate;
+	}
+	
+	/**
+	 * <p>
+	 * Calculates the possibilities of different values where there if they must be
+	 * unique.
+	 * </p>
+	 * 
+	 * @return all the possibilities within constraints settled
+	 */
+	protected abstract long getPossibilities();
 
 	/**
 	 * <p>
@@ -50,20 +84,6 @@ public abstract class ValueGenerator<T extends Object> {
 		for (int i = 0; i < nullElements; i++) {
 			valueContainer.add(null);
 		}
-	}
-
-	/**
-	 * <p>
-	 * Performs an operation to calculate how many elements the generator has to
-	 * create subtracting the null ones setted by nullable constraint.
-	 * </p>
-	 * 
-	 * @return the number of values that has to be generated to achieve the quantity
-	 *         of values desired.
-	 */
-	protected long getValuesToGenerate() {
-		long toGenerate = (long) (quantity - quantity * constraints.getNullable());
-		return toGenerate;
 	}
 
 	/**

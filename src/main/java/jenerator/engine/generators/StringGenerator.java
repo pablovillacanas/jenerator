@@ -132,14 +132,11 @@ public class StringGenerator extends ValueGenerator<String> {
 
 	@Override
 	protected double calculateCoverage() throws CoverageExceededException {
-		int size = constraints.getStringSimpleFormat().getCharacters().size();
-		double possiblilities = getPossibilities(constraints.getMinLenght(), constraints.getMaxLenght(), size);
-		double coverage = getValuesToGenerate() / possiblilities;
-		if (coverage <= 1.0)
+		double possiblilities = getPossibilities();
+		if (possiblilities >= getValuesToGenerate())
 			return getValuesToGenerate() / possiblilities;
 		else
-			throw new CoverageExceededException("The number of instances desired is " + getQuantity()
-					+ " but the posibilities are " + (int) possiblilities);
+			throw new CoverageExceededException(getQuantity(), (int) possiblilities);
 	}
 
 	/**
@@ -153,11 +150,12 @@ public class StringGenerator extends ValueGenerator<String> {
 	 * @param sizeGroup
 	 * @return
 	 */
-	private long getPossibilities(long minLenght, long maxLenght, int sizeGroup) {
-		long sumatory = 0;
-		for (long i = minLenght; i <= maxLenght; i++) {
-			sumatory = +(long) Math.pow(sizeGroup, i);
+	protected long getPossibilities() {
+		int sizegroup = constraints.getStringSimpleFormat().characters.size();
+		long possibilities = 0;
+		for (long i = constraints.getMinLenght(); i <= constraints.getMaxLenght(); i++) {
+			possibilities = +(long) Math.pow(sizegroup, i);
 		}
-		return sumatory;
+		return possibilities;
 	}
 }
