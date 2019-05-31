@@ -106,7 +106,9 @@ public class StringGenerator extends ValueGenerator<String> {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringSimpleFormat stringSimpleFormat = constraints.getStringSimpleFormat();
 		while (!containerIsFilled()) {
-			long stringLenght = random.nextLong(constraints.getMinLenght(), constraints.getMaxLenght());
+			long stringLenght = constraints.getMaxLenght();
+			if (constraints.getMinLenght() > constraints.getMaxLenght())
+				stringLenght = random.nextLong(constraints.getMinLenght(), constraints.getMaxLenght());
 			for (int i = 0; i < stringLenght; i++) {
 				List<Character> characters = stringSimpleFormat.getCharacters();
 				int randomIndex = new Random().nextInt(characters.size());

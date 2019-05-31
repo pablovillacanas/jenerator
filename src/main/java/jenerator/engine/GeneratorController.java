@@ -9,11 +9,15 @@ import java.util.Map;
 
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
+import jenerator.annotations.constraints.StringConstraints;
+import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.NaturalNumberGenerator;
+import jenerator.engine.generators.StringGenerator;
 import jenerator.engine.generators.ValueGenerator;
 import jenerator.filters.exceptions.NotAnnotationEncountered;
 import jenerator.utils.ClassUtils;
 import jenerator.utils.FieldUtils;
+import jenerator.utils.Reflector.ReflectorUtils;
 
 /**
  * <p>
@@ -37,19 +41,23 @@ public class GeneratorController {
 	}
 
 	public void process() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, NotAnnotationEncountered {
+			NoSuchMethodException, SecurityException, NotAnnotationEncountered, CoverageExceededException {
 		List<Field> generableFields = ClassUtils.getGenerableFields(actualClass);
 		int quantity = instances.size();
 		for (Field field : generableFields) {
 			Method getter = FieldUtils.getterOf(field);
-			ValueGenerator<? extends Object> generatedValues = generateValues(quantity, field.getType(),
+			ValueGenerator<? extends Object> generatedValues = createValueGenerator(quantity, field.getType(),
 					FieldUtils.getConstraints(field));
+			generatedValues.generate();
 			relation.put(getter, generatedValues);
 		}
 		for (Object t : instances) {
 			relation.forEach((m, vg) -> {
 				try {
-					m.invoke(t, m.getParameterTypes()[0].getClass().cast(vg.getValue()));
+					t.toString();
+					// TODO simplificar buscando el tipo del parámetro
+					Class<?> type = FieldUtils.fieldOf(m).getType();
+					m.invoke(t, type.cast(vg.getValue()));
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
@@ -58,8 +66,8 @@ public class GeneratorController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <E extends Object> ValueGenerator<? extends E> generateValues(long quantity, Class<E> fieldType,
-			Constraints constraints) {
+	private <E extends Object> ValueGenerator<? extends E> createValueGenerator(long quantity, Class<E> fieldType,
+			Constraints constraints) throws CoverageExceededException {
 		ValueGenerator<? extends Object> valueGenerator = null;
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
@@ -68,8 +76,8 @@ public class GeneratorController {
 			} else {
 //						new DecimalNumberGenerator().getValue(field.getType(), constraints);
 			}
-		} else if (fieldType.isAssignableFrom(Long.class)) {
-//				new StringGenerator((StringConstraints) constraints).generate(instances.size());
+		} else if (String.class.isAssignableFrom(fieldType)) {
+			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
 		}
 		return (ValueGenerator<? extends E>) valueGenerator;
 	}
