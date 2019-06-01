@@ -6,17 +6,17 @@ import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.junit.Before;
 import org.junit.Test;
 
-import jenerator.annotations.constraints.NaturalNumberConstraints;
+import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 
-public class NaturalNumberGeneratorTest {
+public class DecimalNumberGeneratorTest {
 
-	NaturalNumberConstraints numberConstraints;
-	private final long numGenerations = 50;
+	DecimalNumberConstraints numberConstraints;
+	private final long numGenerations = 500;
 
 	@Before
 	public void init() {
-		numberConstraints = new NaturalNumberConstraints();
+		numberConstraints = new DecimalNumberConstraints();
 	}
 
 	@Test
@@ -25,13 +25,14 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(7);
 		numberConstraints.setUnique(false);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Short.class, numGenerations,
+		numberConstraints.setPrecision((short) 1);
+		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Double.class, numGenerations,
 				numberConstraints);
 		nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
 			Number value = nng.getValue();
-			assert (String.valueOf(value).matches("[0-9]+"));
+			assert (String.valueOf(value).matches("[0-9]+.[0-9]{1}"));
 		}
 		assertTrue(nng.getValueContainer().size() == 0);
 	}
@@ -42,13 +43,14 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(700);
 		numberConstraints.setUnique(true);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Integer.class, numGenerations,
+		numberConstraints.setPrecision((short) 1);
+		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Float.class, numGenerations,
 				numberConstraints);
 		nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
 			Number value = nng.getValue();
-			assert (String.valueOf(value).matches("[0-9]+"));
+			assert (String.valueOf(value).matches("[0-9]+.[0-9]{1}"));
 		}
 		assertTrue(nng.getValueContainer().size() == 0);
 	}
@@ -59,13 +61,14 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(55);
 		numberConstraints.setUnique(true);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Byte.class, numGenerations,
+		numberConstraints.setPrecision((short) 1);
+		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Double.class, numGenerations,
 				numberConstraints);
 		nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
 			Number value = nng.getValue();
-			assert (String.valueOf(value).matches("[0-9]+"));
+			assert (String.valueOf(value).matches("[0-9]+.[0-9]{1}"));
 		}
 		assertTrue(nng.getValueContainer().size() == 0);
 	}
@@ -76,7 +79,8 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(54);
 		numberConstraints.setUnique(true);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Long.class, numGenerations,
+		numberConstraints.setPrecision((short) 1);
+		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Float.class, numGenerations,
 				numberConstraints);
 		nng.generate();
 	}

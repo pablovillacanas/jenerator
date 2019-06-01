@@ -1,20 +1,13 @@
 package jenerator.engine.generators;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
-
-import com.google.common.reflect.TypeToken;
 
 import jenerator.annotations.constraints.Constraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 
 public abstract class ValueGenerator<T> {
-
-	@SuppressWarnings({ "unchecked", "serial" })
-	private final TypeToken<T> typeToken = new TypeToken<T>(getClass()) {
-	};
 
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 	private Collection<T> valueContainer;
@@ -31,7 +24,6 @@ public abstract class ValueGenerator<T> {
 	public ValueGenerator(long quantity, Constraints constraints) {
 		this.constraints = constraints;
 		this.quantity = quantity;
-		Type type = typeToken.getType();
 	}
 
 	/**

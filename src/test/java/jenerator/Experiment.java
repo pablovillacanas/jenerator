@@ -1,17 +1,15 @@
 package jenerator;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 
-import org.apache.commons.math3.exception.NumberIsTooLargeException;
+import org.apache.commons.math3.random.RandomDataGenerator;
 import org.junit.Test;
 
-import jenerator.annotations.constraints.Constraints;
-import jenerator.annotations.constraints.NaturalNumberConstraints;
-import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.generators.NaturalNumberGenerator;
+import jenerator.annotations.constraints.DecimalNumberConstraints;
 
 public class Experiment {
 
@@ -33,20 +31,19 @@ public class Experiment {
 		assertTrue(int.class.isAssignableFrom(Experiment.class.getDeclaredField("i").getType()));
 	}
 
-	@SuppressWarnings("unused")
 	@Test
 	public void cosas() throws NoSuchFieldException, SecurityException {
-		ArrayList<Class<?>> clases = new ArrayList<Class<?>>();
-		clases.add(Short.class);
-		clases.add(Byte.class);
-		clases.add(Integer.class);
-		for (Class<?> class1 : clases) {
-			boolean assignableFrom = getShortClass().isAssignableFrom(class1);
-			System.out.println(assignableFrom);
+		double minValue = 50.5;
+		double maxValue = 55.5;
+		short precision = 2;
+		double newminValue = minValue * Math.pow(10, precision);
+		double newmaxValue = maxValue * Math.pow(10, precision);
+		RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
+		for (int i = 0; i < 10000; i++) {
+			long nextLong = randomDataGenerator.nextLong((long) newminValue, (long) newmaxValue);
+			double finalResult = nextLong / Math.pow(10, precision);
+			assertTrue(finalResult <= maxValue && finalResult >= minValue);
+			System.out.println(finalResult);
 		}
-	}
-
-	public Class<?> getShortClass() {
-		return Short.class;
 	}
 }
