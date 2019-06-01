@@ -40,12 +40,8 @@ public class FieldUtils {
 		String name = method.getName();
 		String fieldName = name.substring(3, name.length()).substring(0, 1).toLowerCase() + name.substring(4);
 		try {
-			Class<?> declaringClass = Class.forName(method.getDeclaringClass().getName());
 			return method.getDeclaringClass().getDeclaredField(fieldName);
 		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
 			// TODO Auto-generated catch block
