@@ -8,16 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.DecimalNumberGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.StringGenerator;
 import jenerator.engine.generators.ValueGenerator;
 import jenerator.filters.exceptions.NotAnnotationEncountered;
 import jenerator.utils.ClassUtils;
 import jenerator.utils.FieldUtils;
-import jenerator.utils.Reflector.ReflectorUtils;
 
 /**
  * <p>
@@ -54,7 +55,6 @@ public class GeneratorController {
 		for (Object t : instances) {
 			relation.forEach((m, vg) -> {
 				try {
-					t.toString();
 					// TODO simplificar buscando el tipo del parámetro del metodo
 					Class<?> type = FieldUtils.fieldOf(m).getType();
 					m.invoke(t, type.cast(vg.getValue()));
@@ -75,7 +75,8 @@ public class GeneratorController {
 				valueGenerator = new NaturalNumberGenerator<Number>(fieldType, quantity,
 						(NaturalNumberConstraints) constraints);
 			} else {
-//						new DecimalNumberGenerator().getValue(field.getType(), constraints);
+				valueGenerator = new DecimalNumberGenerator<Number>(fieldType, quantity,
+						(DecimalNumberConstraints) constraints);
 			}
 		} else if (String.class.isAssignableFrom(fieldType)) {
 			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);

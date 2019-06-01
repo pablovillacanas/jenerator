@@ -12,10 +12,6 @@ import jenerator.engine.exceptions.CoverageExceededException;
 
 public abstract class ValueGenerator<T> {
 
-	@SuppressWarnings({ "unchecked", "serial" })
-	private final TypeToken<T> typeToken = new TypeToken<T>(getClass()) {
-	};
-
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 	private Collection<T> valueContainer;
 	protected Constraints constraints;
@@ -31,7 +27,6 @@ public abstract class ValueGenerator<T> {
 	public ValueGenerator(long quantity, Constraints constraints) {
 		this.constraints = constraints;
 		this.quantity = quantity;
-		Type type = typeToken.getType();
 	}
 
 	/**

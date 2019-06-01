@@ -1,17 +1,11 @@
 package jenerator;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import org.apache.commons.math3.exception.NumberIsTooLargeException;
+import org.apache.commons.math3.random.RandomDataGenerator;
 import org.junit.Test;
-
-import jenerator.annotations.constraints.Constraints;
-import jenerator.annotations.constraints.NaturalNumberConstraints;
-import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.generators.NaturalNumberGenerator;
 
 public class Experiment {
 
@@ -48,5 +42,21 @@ public class Experiment {
 
 	public Class<?> getShortClass() {
 		return Short.class;
+	}
+
+	@Test
+	public void cosas2() throws NoSuchFieldException, SecurityException {
+		double minValue = 50.5;
+		double maxValue = 55.5;
+		short precision = 2;
+		double newminValue = minValue * Math.pow(10, precision);
+		double newmaxValue = maxValue * Math.pow(10, precision);
+		RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
+		for (int i = 0; i < 10000; i++) {
+			long nextLong = randomDataGenerator.nextLong((long) newminValue, (long) newmaxValue);
+			double finalResult = nextLong / Math.pow(10, precision);
+			assertTrue(finalResult <= maxValue && finalResult >= minValue);
+			System.out.println(finalResult);
+		}
 	}
 }

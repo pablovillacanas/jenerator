@@ -39,36 +39,37 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 				setValueContainer(subList);
 			} else {
 				while (!containerIsFilled()) {
-					addValue(getRandomNumber(numberType));
+					addValue(getRandomNumber());
 				}
 			}
 		} else {
 			setValueContainer(new ArrayList<Number>());
 			while (!containerIsFilled()) {
-				addValue(getRandomNumber(numberType));
+				addValue(getRandomNumber());
 			}
 		}
 		return getValueContainer();
 	}
 
+	// TODO cuidado con el parser exception
 	private void loadAllValues() {
 		for (long i = constraints.getMinValue(); i < constraints.getMaxValue(); i++) {
 			addValue((Number) i);
 		}
 	}
 
-	private Number getRandomNumber(Class<?> type) {
+	private Number getRandomNumber() {
 		long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
-		if (Long.class.isAssignableFrom(type)) {
+		if (Long.class.isAssignableFrom(numberType)) {
 			return (Number) nextLong;
-		} else if (Integer.class.isAssignableFrom(type)) {
+		} else if (Integer.class.isAssignableFrom(numberType)) {
 			return (Number) Long.valueOf(nextLong).intValue();
-		} else if (Short.class.isAssignableFrom(type)) {
+		} else if (Short.class.isAssignableFrom(numberType)) {
 			return (Number) Long.valueOf(nextLong).shortValue();
-		} else if (Byte.class.isAssignableFrom(type)) {
+		} else if (Byte.class.isAssignableFrom(numberType)) {
 			return (Number) Long.valueOf(nextLong).byteValue();
 		}
-		return null;
+		return nextLong;
 	}
 
 	@Override
