@@ -55,7 +55,7 @@ public class GeneratorController {
 			relation.forEach((m, vg) -> {
 				try {
 					t.toString();
-					// TODO simplificar buscando el tipo del parámetro
+					// TODO simplificar buscando el tipo del parámetro del metodo
 					Class<?> type = FieldUtils.fieldOf(m).getType();
 					m.invoke(t, type.cast(vg.getValue()));
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -65,20 +65,21 @@ public class GeneratorController {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	private <E extends Object> ValueGenerator<? extends E> createValueGenerator(long quantity, Class<E> fieldType,
 			Constraints constraints) throws CoverageExceededException {
 		ValueGenerator<? extends Object> valueGenerator = null;
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
 					|| Short.class.isAssignableFrom(fieldType) || Byte.class.isAssignableFrom(fieldType)) {
-				valueGenerator = new NaturalNumberGenerator(quantity, (NaturalNumberConstraints) constraints);
+				valueGenerator = new NaturalNumberGenerator<Number>(fieldType, quantity,
+						(NaturalNumberConstraints) constraints);
 			} else {
 //						new DecimalNumberGenerator().getValue(field.getType(), constraints);
 			}
 		} else if (String.class.isAssignableFrom(fieldType)) {
 			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
 		}
-		return (ValueGenerator<? extends E>) valueGenerator;
+		return (ValueGenerator<E>) valueGenerator;
 	}
 }

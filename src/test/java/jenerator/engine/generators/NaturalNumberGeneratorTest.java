@@ -25,7 +25,8 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(7);
 		numberConstraints.setUnique(false);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator nng = new NaturalNumberGenerator(numGenerations, numberConstraints);
+		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Short.class, numGenerations,
+				numberConstraints);
 		nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
@@ -42,12 +43,12 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(700);
 		numberConstraints.setUnique(true);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator nng = new NaturalNumberGenerator(numGenerations, numberConstraints);
+		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Integer.class, numGenerations,
+				numberConstraints);
 		nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
 			Number value = nng.getValue();
-			System.out.print(value + " ");
 			assert (String.valueOf(value).matches("[0-9]+"));
 		}
 		assertTrue(nng.getValueContainer().size() == 0);
@@ -59,7 +60,8 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(55);
 		numberConstraints.setUnique(true);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator nng = new NaturalNumberGenerator(numGenerations, numberConstraints);
+		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Byte.class, numGenerations,
+				numberConstraints);
 		nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
@@ -75,7 +77,8 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setMaxValue(54);
 		numberConstraints.setUnique(true);
 		numberConstraints.setNullable(0.0);
-		NaturalNumberGenerator nng = new NaturalNumberGenerator(numGenerations, numberConstraints);
+		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Long.class, numGenerations,
+				numberConstraints);
 		nng.generate();
 	}
 }

@@ -8,16 +8,23 @@ import java.util.List;
 
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
 
+import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 
-public class NaturalNumberGenerator extends ValueGenerator<Number> {
+public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 
-	NaturalNumberConstraints constraints;
+	private NaturalNumberConstraints constraints;
+	private Class<?> numberType;
 
-	public NaturalNumberGenerator(long quantity, NaturalNumberConstraints constraints) {
-		super(quantity, constraints);
+	public NaturalNumberGenerator(Class<?> numberType, long quantity, NaturalNumberConstraints constraints) {
+		this(quantity, constraints);
 		this.constraints = constraints;
+		this.numberType = numberType;
+	}
+
+	private NaturalNumberGenerator(long quantity, Constraints constraints) {
+		super(quantity, constraints);
 	}
 
 	@Override
@@ -32,15 +39,13 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 				setValueContainer(subList);
 			} else {
 				while (!containerIsFilled()) {
-					long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
-					addValue(nextLong);
+					addValue(getRandomNumber(numberType));
 				}
 			}
 		} else {
 			setValueContainer(new ArrayList<Number>());
 			while (!containerIsFilled()) {
-				long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
-				addValue(nextLong);
+				addValue(getRandomNumber(numberType));
 			}
 		}
 		return getValueContainer();
@@ -48,8 +53,22 @@ public class NaturalNumberGenerator extends ValueGenerator<Number> {
 
 	private void loadAllValues() {
 		for (long i = constraints.getMinValue(); i < constraints.getMaxValue(); i++) {
-			addValue(i);
+			addValue((Number) i);
 		}
+	}
+
+	private Number getRandomNumber(Class<?> type) {
+		long nextLong = random.nextLong(constraints.getMinValue(), constraints.getMaxValue());
+		if (Long.class.isAssignableFrom(type)) {
+			return (Number) nextLong;
+		} else if (Integer.class.isAssignableFrom(type)) {
+			return (Number) Long.valueOf(nextLong).intValue();
+		} else if (Short.class.isAssignableFrom(type)) {
+			return (Number) Long.valueOf(nextLong).shortValue();
+		} else if (Byte.class.isAssignableFrom(type)) {
+			return (Number) Long.valueOf(nextLong).byteValue();
+		}
+		return null;
 	}
 
 	@Override
