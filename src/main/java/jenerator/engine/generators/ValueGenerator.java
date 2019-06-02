@@ -1,14 +1,12 @@
 package jenerator.engine.generators;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import com.google.common.reflect.TypeToken;
-
 import jenerator.annotations.constraints.Constraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 
 public abstract class ValueGenerator<T> {
 
@@ -37,18 +35,20 @@ public abstract class ValueGenerator<T> {
 	 * developer want to generate and gets the relation with the possibilities that
 	 * constraints allows to.
 	 * </p>
+	 * <p>
 	 * 
-	 * @return A number, typically between 0.0 and 1.0
+	 * @return A number representing the relation between the possibilities of
+	 *         values to generate and the quantity of values desired.
 	 * @throws CoverageExceededException if number of values exceeds the
-	 *                                   possibilities for unique values
+	 *                                   possibilities for unique values in case.
+	 * @throws NoSuitableElementsOnSource 
 	 */
-	protected double calculateCoverage() throws CoverageExceededException {
-		double coverage = 0.0;
+	protected double calculateCoverage() throws CoverageExceededException, NoSuitableElementsOnSource {
 		long possibilities = getPossibilities();
-		if (possibilities >= getValuesToGenerate())
-			coverage = getValuesToGenerate() / possibilities;
-		else
+		double coverage = getValuesToGenerate() / (double) possibilities;
+		if (coverage > 1 && constraints.getUnique()) {
 			throw new CoverageExceededException(getQuantity(), (int) possibilities);
+		}
 		return coverage;
 	}
 
@@ -73,8 +73,9 @@ public abstract class ValueGenerator<T> {
 	 * </p>
 	 * 
 	 * @return all the possibilities within constraints settled
+	 * @throws NoSuitableElementsOnSource
 	 */
-	protected abstract long getPossibilities();
+	protected abstract long getPossibilities() throws NoSuitableElementsOnSource;
 
 	/**
 	 * <p>
@@ -133,7 +134,7 @@ public abstract class ValueGenerator<T> {
 			addNullElements();
 	}
 
-	public abstract Collection<T> generate() throws CoverageExceededException;
+	public abstract Collection<T> generate() throws CoverageExceededException, NoSuitableElementsOnSource;
 
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;

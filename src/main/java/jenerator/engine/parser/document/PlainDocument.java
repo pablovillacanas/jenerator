@@ -1,10 +1,10 @@
-package jenerator.parser.document;
+package jenerator.engine.parser.document;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import jenerator.parser.Source;
+import jenerator.engine.parser.Source;
 
 public class PlainDocument extends Source {
 

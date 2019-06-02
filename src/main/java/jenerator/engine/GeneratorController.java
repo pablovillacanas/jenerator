@@ -1,5 +1,7 @@
 package jenerator.engine;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -7,15 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.DecimalNumberGenerator;
+import jenerator.engine.generators.ElementFromDocumentGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.StringGenerator;
 import jenerator.engine.generators.ValueGenerator;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
+import jenerator.engine.parser.document.PlainDocument;
+import jenerator.engine.parser.document.PlainDocumentReader;
 import jenerator.filters.exceptions.NotAnnotationEncountered;
 import jenerator.utils.ClassUtils;
 import jenerator.utils.FieldUtils;
@@ -41,8 +48,9 @@ public class GeneratorController {
 
 	}
 
-	public void process() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, NotAnnotationEncountered, CoverageExceededException {
+	public void process()
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+			SecurityException, NotAnnotationEncountered, CoverageExceededException, FileNotFoundException, IOException, NoSuitableElementsOnSource {
 		List<Field> generableFields = ClassUtils.getGenerableFields(actualClass);
 		int quantity = instances.size();
 		for (Field field : generableFields) {
@@ -67,19 +75,36 @@ public class GeneratorController {
 
 	@SuppressWarnings({ "unchecked" })
 	private <E extends Object> ValueGenerator<? extends E> createValueGenerator(long quantity, Class<E> fieldType,
-			Constraints constraints) throws CoverageExceededException {
+			Constraints constraints) throws CoverageExceededException, FileNotFoundException, IOException {
 		ValueGenerator<? extends Object> valueGenerator = null;
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
 					|| Short.class.isAssignableFrom(fieldType) || Byte.class.isAssignableFrom(fieldType)) {
-				valueGenerator = new NaturalNumberGenerator<Number>(fieldType, quantity,
-						(NaturalNumberConstraints) constraints);
+				if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
+					valueGenerator = new NaturalNumberGenerator<Number>(fieldType, quantity,
+							(NaturalNumberConstraints) constraints);
+				} else {
+					// FromSource
+					valueGenerator = new ElementFromDocumentGenerator<Number>((Class<Number>) fieldType, quantity,
+							(NaturalNumberConstraints) constraints);
+				}
 			} else {
-				valueGenerator = new DecimalNumberGenerator<Number>(fieldType, quantity,
-						(DecimalNumberConstraints) constraints);
+				if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
+					valueGenerator = new DecimalNumberGenerator<Number>(fieldType, quantity,
+							(DecimalNumberConstraints) constraints);
+				} else {
+					// FromSource
+					valueGenerator = new ElementFromDocumentGenerator<Number>((Class<Number>) fieldType, quantity,
+							(DecimalNumberConstraints) constraints);
+				}
 			}
 		} else if (String.class.isAssignableFrom(fieldType)) {
-			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
+			if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
+				valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
+			} else {
+				valueGenerator = new ElementFromDocumentGenerator<String>((Class<String>) fieldType, quantity,
+						(StringConstraints) constraints);
+			}
 		}
 		return (ValueGenerator<E>) valueGenerator;
 	}

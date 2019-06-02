@@ -1,7 +1,16 @@
-package jenerator.parser;
+package jenerator.engine.parser;
 
 import java.io.InputStream;
 
+/**
+ * <p>
+ * Represents a source of elements (input stream) that provide values to the
+ * ElementFromSourceGenerator.
+ * </p>
+ * 
+ * @author pablo
+ *
+ */
 public class Source {
 
 	private InputStream inputStream;

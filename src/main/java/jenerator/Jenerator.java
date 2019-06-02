@@ -1,11 +1,14 @@
 package jenerator;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import jenerator.engine.GeneratorController;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 import jenerator.filters.exceptions.NotAnnotationEncountered;
 import jenerator.validations.GenValidation;
 import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
@@ -45,7 +48,7 @@ public class Jenerator {
 	public static <T extends Object> List<T> generate(Class<T> class1, long numInstances)
 			throws FieldValidationException, NoEmptyConstructorException, Annotation_FieldCongruenceException,
 			IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, NotAnnotationEncountered, CoverageExceededException {
+			SecurityException, NotAnnotationEncountered, CoverageExceededException, FileNotFoundException, IOException, NoSuitableElementsOnSource {
 		// Validate POJO and congruence
 		GenValidation genValidation = new GenValidation(engineConfiguration);
 		genValidation.validate(class1, numInstances);

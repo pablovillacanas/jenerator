@@ -1,4 +1,4 @@
-package jenerator.parser.document;
+package jenerator.engine.parser.document;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,9 @@ import java.net.URISyntaxException;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import jenerator.engine.parser.document.PlainDocument;
+import jenerator.engine.parser.document.PlainDocumentReader;
 
 public class ParserInputStream {
 
@@ -25,7 +28,7 @@ public class ParserInputStream {
 	public void testWellCount() throws IOException {
 		PlainDocumentReader plainDocumentReader = new PlainDocumentReader(new PlainDocument(filetxt));
 		long numberOfItems = plainDocumentReader.getNumberOfItems();
-		assertEquals(6, numberOfItems);
+		assertEquals(13, numberOfItems);
 	}
 
 	@Test

@@ -2,6 +2,7 @@ package jenerator;
 
 import static org.junit.Assert.assertTrue;
 
+import java.awt.geom.Arc2D.Double;
 import java.util.ArrayList;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
@@ -27,7 +28,6 @@ public class Experiment {
 		assertTrue(int.class.isAssignableFrom(Experiment.class.getDeclaredField("i").getType()));
 	}
 
-	@SuppressWarnings("unused")
 	@Test
 	public void cosas() throws NoSuchFieldException, SecurityException {
 		ArrayList<Class<?>> clases = new ArrayList<Class<?>>();
@@ -58,5 +58,11 @@ public class Experiment {
 			assertTrue(finalResult <= maxValue && finalResult >= minValue);
 			System.out.println(finalResult);
 		}
+	}
+
+	@Test
+	public void cosas3() throws NoSuchFieldException, SecurityException {
+		boolean assignableFrom = Double.class.isAssignableFrom(Float.class);
+		assert (!assignableFrom);
 	}
 }

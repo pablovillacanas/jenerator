@@ -11,6 +11,7 @@ import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 
 public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 
@@ -28,7 +29,7 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 	}
 
 	@Override
-	public Collection<Number> generate() throws NumberIsTooLargeException, CoverageExceededException {
+	public Collection<Number> generate() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
 		if (constraints.getUnique()) {
 			setValueContainer(new HashSet<Number>());
 			if (calculateCoverage() >= CRITICAL_COVERAGE) {

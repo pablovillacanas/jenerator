@@ -1,4 +1,4 @@
-package jenerator.parser.document;
+package jenerator.engine.parser.document;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.xml.transform.Source;
 
-import jenerator.parser.SourceReader;
+import jenerator.engine.parser.SourceReader;
 
 public class PlainDocumentReader extends SourceReader<PlainDocument> {
 

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 
 public class NaturalNumberGeneratorTest {
 
@@ -20,7 +21,7 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbers() throws NumberIsTooLargeException, CoverageExceededException {
+	public void testNumbers() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(7);
 		numberConstraints.setUnique(false);
@@ -37,7 +38,7 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbersUniqueNonCritical() throws NumberIsTooLargeException, CoverageExceededException {
+	public void testNumbersUniqueNonCritical() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(700);
 		numberConstraints.setUnique(true);
@@ -54,7 +55,7 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbersCritical() throws NumberIsTooLargeException, CoverageExceededException {
+	public void testNumbersCritical() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(55);
 		numberConstraints.setUnique(true);
@@ -71,7 +72,8 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test(expected = CoverageExceededException.class)
-	public void testNumbersOverCritical() throws NumberIsTooLargeException, CoverageExceededException {
+	public void testNumbersOverCritical()
+			throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(54);
 		numberConstraints.setUnique(true);

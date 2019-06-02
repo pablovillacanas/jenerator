@@ -12,6 +12,7 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 
 public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Number> {
 
@@ -29,7 +30,7 @@ public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Num
 	}
 
 	@Override
-	public Collection<Number> generate() throws NumberIsTooLargeException, CoverageExceededException {
+	public Collection<Number> generate() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
 		if (constraints.getUnique()) {
 			setValueContainer(new HashSet<Number>());
 			if (calculateCoverage() >= CRITICAL_COVERAGE) {

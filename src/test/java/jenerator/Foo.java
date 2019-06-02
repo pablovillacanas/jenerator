@@ -1,7 +1,5 @@
 package jenerator;
 
-import java.text.DecimalFormat;
-
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.NoGenerable;
@@ -103,7 +101,6 @@ public class Foo {
 
 	@Override
 	public String toString() {
-		DecimalFormat decimalFormat = new DecimalFormat("#.##");
 		return "Foo [long1=" + long1 + ", phone=" + phone + ", long2=" + long2 + ", short1=" + short1 + ", integer1="
 				+ integer1 + ", byte1=" + byte1 + ", double1=" + double1 + ", float1=" + float1 + "]";
 	}
