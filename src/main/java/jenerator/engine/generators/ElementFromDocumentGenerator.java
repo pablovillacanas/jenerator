@@ -56,35 +56,61 @@ public class ElementFromDocumentGenerator<E extends Object> extends ElementFromS
 				NaturalNumberConstraints nnc = (NaturalNumberConstraints) constraints;
 				List<?> numbers = null;
 				if (Long.class.isAssignableFrom(elementType)) {
-					numbers = stream.filter(s -> !s.isEmpty()).map(Long::valueOf).filter(number -> {
-						if (number <= nnc.getMaxValue() && number >= nnc.getMinValue())
+					numbers = stream.filter(s -> !s.isEmpty()).map(s -> {
+						try {
+							Long valueOf = Long.valueOf(Long.parseLong(s));
+							return valueOf;
+						} catch (NumberFormatException e) {
+						}
+						return null;
+					}).filter(number -> {
+						if (number != null && number <= nnc.getMaxValue() && number >= nnc.getMinValue())
 							return true;
 						else
 							return false;
 					}).collect(Collectors.toList());
 				} else if (Integer.class.isAssignableFrom(elementType)) {
-					numbers = stream.filter(s -> !s.isEmpty() && s != null).map(Integer::valueOf).filter(number -> {
+					numbers = stream.filter(s -> !s.isEmpty() && s != null).map(s -> {
+						try {
+							Integer valueOf = Integer.valueOf(Integer.parseInt(s));
+							return valueOf;
+						} catch (NumberFormatException e) {
+						}
+						return null;
+					}).filter(number -> {
 						if (number != null && number <= nnc.getMaxValue() && number >= nnc.getMinValue())
 							return true;
 						else
 							return false;
 					}).collect(Collectors.toList());
 				} else if (Short.class.isAssignableFrom(elementType)) {
-					numbers = stream.filter(s -> !s.isEmpty()).map(s -> Short.valueOf(Short.parseShort(s)))
-							.filter(number -> {
-								if (number <= nnc.getMaxValue() && number >= nnc.getMinValue())
-									return true;
-								else
-									return false;
-							}).collect(Collectors.toList());
+					numbers = stream.filter(s -> !s.isEmpty()).map(s -> {
+						try {
+							Short valueOf = Short.valueOf(Short.parseShort(s));
+							return valueOf;
+						} catch (NumberFormatException e) {
+						}
+						return null;
+					}).filter(number -> {
+						if (number != null && number <= nnc.getMaxValue() && number >= nnc.getMinValue())
+							return true;
+						else
+							return false;
+					}).collect(Collectors.toList());
 				} else if (Byte.class.isAssignableFrom(elementType)) {
-					numbers = stream.filter(s -> !s.isEmpty()).map(s -> Byte.valueOf(Byte.parseByte(s)))
-							.filter(number -> {
-								if (number <= nnc.getMaxValue() && number >= nnc.getMinValue())
-									return true;
-								else
-									return false;
-							}).collect(Collectors.toList());
+					numbers = stream.filter(s -> !s.isEmpty()).map(s -> {
+						try {
+							Byte valueOf = Byte.valueOf(Byte.parseByte(s));
+							return valueOf;
+						} catch (NumberFormatException e) {
+						}
+						return null;
+					}).filter(number -> {
+						if (number != null && number <= nnc.getMaxValue() && number >= nnc.getMinValue())
+							return true;
+						else
+							return false;
+					}).collect(Collectors.toList());
 				}
 				setValueContainer((Collection<E>) numbers);
 			} else {
