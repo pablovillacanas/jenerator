@@ -5,16 +5,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import jenerator.engine.parser.Source;
+import jenerator.engine.parser.SourceNotFoundException;
 
 public class PlainDocument extends Source {
 
-	private File file;
 	private String extension;
 	private char[] separator;
 
-	public PlainDocument(File file) throws FileNotFoundException {
-		super(new FileInputStream(file));
-		this.setFile(file);
+	public PlainDocument(File file) throws SourceNotFoundException {
+		super();
+		try {
+			setInputStream(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			throw new SourceNotFoundException(this, e);
+		}
 		setExtension(file.getName().substring(file.getName().lastIndexOf(".")));
 		setDefaultSeparator();
 	}
@@ -37,14 +41,6 @@ public class PlainDocument extends Source {
 
 	public void setExtension(String extension) {
 		this.extension = extension;
-	}
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 
 	public char[] getSeparator() {

@@ -1,4 +1,4 @@
-package jenerator.validations.congruence.checkers;
+package jenerator.validations.congruence;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -14,21 +14,26 @@ import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceExc
 
 /**
  * <p>
- * This class validates at runtime the congruency between the attribute type and
- * the annotation attached.
+ * This class validates at runtime the congruence between the attribute type and
+ * the annotation attached. Its a filter to collect all those fields that do not
+ * match with their atatched annotation.
  * </p>
  * 
- * @author pablo
+ * @author Pablo Villacanas
  *
  */
 public class FieldCongruenceChecker implements Predicate<Field> {
 
 	/**
+	 * <p>
 	 * This method checks that a list of annotated fields are well defined and do
 	 * not exist conflicts between annotations type and field type.
+	 * </p>
 	 * 
 	 * @param <T>
 	 * @param fields
+	 * @return true if the field does does not fit with the annotation attached
+	 *         with, false otherwise
 	 * @throws Annotation_FieldCongruenceException if the fields type does not match
 	 *                                             with the annotation type.
 	 */

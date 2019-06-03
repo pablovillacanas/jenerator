@@ -1,7 +1,5 @@
 package jenerator.engine.generators;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,8 +10,8 @@ import com.google.common.collect.Streams;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
-import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
+import jenerator.engine.parser.ElementFromSourceException;
 import jenerator.engine.parser.document.PlainDocument;
 import jenerator.engine.parser.document.PlainDocumentReader;
 
@@ -22,30 +20,29 @@ public class ElementFromDocumentGenerator<E extends Object> extends ElementFromS
 	private Class<E> elementType;
 
 	public ElementFromDocumentGenerator(Class<E> elementType, long quantity, NaturalNumberConstraints constraints)
-			throws FileNotFoundException, IOException {
+			throws ElementFromSourceException {
 		super(quantity, constraints, new PlainDocumentReader(new PlainDocument(constraints.getSourceAsFile())));
 		this.elementType = elementType;
 		this.constraints = constraints;
 	}
 
 	public ElementFromDocumentGenerator(Class<E> elementType, long quantity, DecimalNumberConstraints constraints)
-			throws FileNotFoundException, IOException {
+			throws ElementFromSourceException {
 		super(quantity, constraints, new PlainDocumentReader(new PlainDocument(constraints.getSourceAsFile())));
 		this.elementType = elementType;
 		this.constraints = constraints;
 	}
 
 	public ElementFromDocumentGenerator(Class<E> elementType, long quantity, StringConstraints constraints)
-			throws FileNotFoundException, IOException {
+			throws ElementFromSourceException {
 		super(quantity, constraints, new PlainDocumentReader(new PlainDocument(constraints.getSourceAsFile())));
 		this.elementType = elementType;
 		this.constraints = constraints;
 	}
 
-	// TODO Number format Exception arises
 	@SuppressWarnings("unchecked")
 	@Override
-	protected long getPossibilities() throws NoSuitableElementsOnSource {
+	protected long getPossibilities() {
 		// Creamos una coleccion para meter los posibles elementos
 		Stream<String> stream = Streams.stream(sourceReader.iterator());
 		// Que tipo de elementos estamos trabajando
@@ -133,18 +130,19 @@ public class ElementFromDocumentGenerator<E extends Object> extends ElementFromS
 			}).collect(Collectors.toList()));
 		}
 		// Devolvemos el tamaño de la coleccion creada
-		long possibilities = 0;
 		if (constraints.getUnique()) {
 			setValueContainer(getValueContainer().stream().collect(Collectors.toSet()));
-		} else {
-			possibilities = getValueContainer().size();
 		}
+		long possibilities = getValueContainer().size();
 		return possibilities;
 	}
 
 	@Override
-	public Collection<E> generate() throws CoverageExceededException, NoSuitableElementsOnSource {
-		getPossibilities();
+	public Collection<E> generate() throws NoSuitableElementsOnSource {
+		long possibilities = getPossibilities();
+		if (possibilities == 0) {
+			throw new NoSuitableElementsOnSource();
+		}
 		return getValueContainer();
 	}
 

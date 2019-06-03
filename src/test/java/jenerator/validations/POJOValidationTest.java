@@ -8,38 +8,37 @@ import jenerator.validations.POJOValidationTestsCases.ClassWithoutCorrectModifie
 import jenerator.validations.POJOValidationTestsCases.ClassWithoutEmptyConstructor;
 import jenerator.validations.POJOValidationTestsCases.ClassWithoutSetter;
 import jenerator.validations.pojo.POJOValidator;
-import jenerator.validations.pojo.exceptions.FieldValidationException;
-import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
+import jenerator.validations.pojo.exceptions.POJOValidationException;
 
 public class POJOValidationTest {
 
 	@Test
-	public void testAllOk() throws FieldValidationException, NoEmptyConstructorException {
+	public void testAllOk() throws POJOValidationException {
 		POJOValidator.isPOJO(ClassWellFormedWithExplicitConstructor.class);
 	}
 
 	@Test
-	public void testAllOk2() throws FieldValidationException, NoEmptyConstructorException {
+	public void testAllOk2() throws POJOValidationException {
 		POJOValidator.isPOJO(ClassWellFormedWithoutExplicitConstructor.class);
 	}
 
-	@Test(expected = FieldValidationException.class)
-	public void testGettersAndSetters_NotSetter() throws FieldValidationException, NoEmptyConstructorException {
+	@Test(expected = POJOValidationException.class)
+	public void testGettersAndSetters_NotSetter() throws POJOValidationException {
 		POJOValidator.isPOJO(ClassWithoutSetter.class);
 	}
 
-	@Test(expected = FieldValidationException.class)
-	public void testGettersAndSetters_NotGetter() throws FieldValidationException, NoEmptyConstructorException {
+	@Test(expected = POJOValidationException.class)
+	public void testGettersAndSetters_NotGetter() throws POJOValidationException {
 		POJOValidator.isPOJO(ClassWithoutSetter.class);
 	}
 
-	@Test(expected = NoEmptyConstructorException.class)
-	public void test_NotConstructor() throws FieldValidationException, NoEmptyConstructorException {
+	@Test(expected = POJOValidationException.class)
+	public void test_NotConstructor() throws POJOValidationException {
 		POJOValidator.isPOJO(ClassWithoutEmptyConstructor.class);
 	}
 
-	@Test(expected = NoEmptyConstructorException.class)
-	public void test_NotWellFormedConstructor() throws FieldValidationException, NoEmptyConstructorException {
+	@Test(expected = POJOValidationException.class)
+	public void test_NotWellFormedConstructor() throws POJOValidationException {
 		POJOValidator.isPOJO(ClassWithoutCorrectModifierConstructor.class);
 	}
 }

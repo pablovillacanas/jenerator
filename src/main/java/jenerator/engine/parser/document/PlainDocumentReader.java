@@ -6,15 +6,20 @@ import java.util.ArrayList;
 
 import javax.xml.transform.Source;
 
+import jenerator.engine.parser.ElementFromSourceException;
 import jenerator.engine.parser.SourceReader;
 
 public class PlainDocumentReader extends SourceReader<PlainDocument> {
 
 	private Source source;
 
-	public PlainDocumentReader(PlainDocument source) throws IOException {
+	public PlainDocumentReader(PlainDocument source) throws ElementFromSourceException {
 		collection = new ArrayList<String>();
-		parseSource(source);
+		try {
+			parseSource(source);
+		} catch (IOException e) {
+			throw new ElementFromSourceException(e);
+		}
 	}
 
 	public Source getSource() {

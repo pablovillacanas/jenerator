@@ -52,7 +52,6 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 		return getValueContainer();
 	}
 
-	// TODO cuidado con el parser exception
 	private void loadAllValues() {
 		for (long i = constraints.getMinValue(); i < constraints.getMaxValue(); i++) {
 			addValue((Number) i);

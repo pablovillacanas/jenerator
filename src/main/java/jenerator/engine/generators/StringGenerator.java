@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 

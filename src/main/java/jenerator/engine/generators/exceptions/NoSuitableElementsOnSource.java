@@ -1,6 +1,17 @@
 package jenerator.engine.generators.exceptions;
 
-public class NoSuitableElementsOnSource extends Exception {
+import jenerator.engine.parser.ElementFromSourceException;
+
+/**
+ * <p>
+ * This exception is thrown when there are not elements that fits with the
+ * constraints in the source
+ * </p>
+ * 
+ * @author Pablo Villacanas
+ *
+ */
+public class NoSuitableElementsOnSource extends ElementFromSourceException {
 
 	/**
 	 * 
@@ -8,7 +19,7 @@ public class NoSuitableElementsOnSource extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	public NoSuitableElementsOnSource() {
-		this("It seems that in source especified there is no values that match constrints you defined");
+		this("It seems that in source especified there is no values that match constraints you have defined");
 		// TODO Auto-generated constructor stub
 	}
 

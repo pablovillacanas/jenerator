@@ -1,7 +1,5 @@
 package jenerator.engine;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,9 +19,7 @@ import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.StringGenerator;
 import jenerator.engine.generators.ValueGenerator;
 import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
-import jenerator.engine.parser.document.PlainDocument;
-import jenerator.engine.parser.document.PlainDocumentReader;
-import jenerator.filters.exceptions.NotAnnotationEncountered;
+import jenerator.engine.parser.ElementFromSourceException;
 import jenerator.utils.ClassUtils;
 import jenerator.utils.FieldUtils;
 
@@ -48,9 +44,7 @@ public class GeneratorController {
 
 	}
 
-	public void process()
-			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, NotAnnotationEncountered, CoverageExceededException, FileNotFoundException, IOException, NoSuitableElementsOnSource {
+	public void process() throws CoverageExceededException, NoSuitableElementsOnSource, ElementFromSourceException {
 		List<Field> generableFields = ClassUtils.getGenerableFields(actualClass);
 		int quantity = instances.size();
 		for (Field field : generableFields) {
@@ -75,7 +69,7 @@ public class GeneratorController {
 
 	@SuppressWarnings({ "unchecked" })
 	private <E extends Object> ValueGenerator<? extends E> createValueGenerator(long quantity, Class<E> fieldType,
-			Constraints constraints) throws CoverageExceededException, FileNotFoundException, IOException {
+			Constraints constraints) throws CoverageExceededException, ElementFromSourceException {
 		ValueGenerator<? extends Object> valueGenerator = null;
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
@@ -102,6 +96,7 @@ public class GeneratorController {
 			if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 				valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
 			} else {
+				// FromSource
 				valueGenerator = new ElementFromDocumentGenerator<String>((Class<String>) fieldType, quantity,
 						(StringConstraints) constraints);
 			}

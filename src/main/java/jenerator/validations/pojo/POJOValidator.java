@@ -11,11 +11,12 @@ import java.util.stream.Collectors;
 
 import jenerator.validations.pojo.exceptions.FieldValidationException;
 import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
+import jenerator.validations.pojo.exceptions.POJOValidationException;
 
 public class POJOValidator {
 
 	public static <T extends Object> boolean isPOJO(Class<T> class1)
-			throws FieldValidationException, NoEmptyConstructorException {
+			throws POJOValidationException {
 		if (hasValidConstructor(class1) && isEncapsulated(class1))
 			return true;
 		else
@@ -35,17 +36,19 @@ public class POJOValidator {
 	 * @param <T>
 	 * @param class1
 	 * @return
-	 * @throws NoEmptyConstructorException
+	 * @throws POJOValidationException if class not have a correct non-arg
+	 *                                 constructor declared.
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T extends Object> boolean hasValidConstructor(Class<T> class1) throws NoEmptyConstructorException {
+	private static <T extends Object> boolean hasValidConstructor(Class<T> class1) throws POJOValidationException {
 		Constructor<T>[] constructors = (Constructor<T>[]) class1.getConstructors();
 		for (Constructor<T> c : constructors) {
 			int parameterCount = c.getParameterCount();
 			if (parameterCount == 0)
 				return true;
 		}
-		throw new NoEmptyConstructorException("Class " + class1 + " must declare a public non-param constructor");
+		throw new POJOValidationException(
+				new NoEmptyConstructorException("Class " + class1 + " must declare a public non-param constructor"));
 	}
 
 	/**
@@ -57,9 +60,9 @@ public class POJOValidator {
 	 * @param <T>
 	 * @param class1
 	 * @return
-	 * @throws FieldValidationException
+	 * @throws POJOValidationException 
 	 */
-	public static <T extends Object> boolean isEncapsulated(Class<T> class1) throws FieldValidationException {
+	public static <T extends Object> boolean isEncapsulated(Class<T> class1) throws POJOValidationException {
 		List<Field> privateFilteredFields = getDeclaredFields(class1).stream().filter(field -> {
 			int modifiers = field.getModifiers();
 			// If field is private and it is not final or static, it must have a setter and
@@ -82,13 +85,14 @@ public class POJOValidator {
 				.filter(field -> !field.getName().startsWith("this$")).collect(Collectors.toList());
 	}
 
-	private static boolean hasGettersAndSetters(final Field field) throws FieldValidationException {
+	private static boolean hasGettersAndSetters(final Field field) throws POJOValidationException {
 		try {
 			int size = Arrays.asList(field.getDeclaringClass().getMethods()).stream().filter(method -> {
 				return (isGetter(method, field.getName()) || isSetter(method, field.getName()));
 			}).collect(Collectors.toSet()).size();
 			if (size != 2)
-				throw new FieldValidationException();
+				throw new POJOValidationException(new FieldValidationException(
+						"Field " + field.getName() + " must declare proper getters and setters"));
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		}

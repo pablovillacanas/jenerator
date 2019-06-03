@@ -39,11 +39,11 @@ public abstract class ValueGenerator<T> {
 	 * 
 	 * @return A number representing the relation between the possibilities of
 	 *         values to generate and the quantity of values desired.
-	 * @throws CoverageExceededException if number of values exceeds the
-	 *                                   possibilities for unique values in case.
-	 * @throws NoSuitableElementsOnSource 
+	 * @throws CoverageExceededException  if number of values exceeds the
+	 *                                    possibilities for unique values in case.
+	 * @throws NoSuitableElementsOnSource
 	 */
-	protected double calculateCoverage() throws CoverageExceededException, NoSuitableElementsOnSource {
+	protected double calculateCoverage() throws CoverageExceededException {
 		long possibilities = getPossibilities();
 		double coverage = getValuesToGenerate() / (double) possibilities;
 		if (coverage > 1 && constraints.getUnique()) {
@@ -75,7 +75,7 @@ public abstract class ValueGenerator<T> {
 	 * @return all the possibilities within constraints settled
 	 * @throws NoSuitableElementsOnSource
 	 */
-	protected abstract long getPossibilities() throws NoSuitableElementsOnSource;
+	protected abstract long getPossibilities();
 
 	/**
 	 * <p>

@@ -8,12 +8,15 @@ import java.io.InputStream;
  * ElementFromSourceGenerator.
  * </p>
  * 
- * @author pablo
+ * @author Pablo Villacanas
  *
  */
 public class Source {
 
 	private InputStream inputStream;
+
+	public Source() {
+	}
 
 	public Source(InputStream inputStream) {
 		this.setInputStream(inputStream);

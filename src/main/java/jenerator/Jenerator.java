@@ -1,19 +1,16 @@
 package jenerator;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import jenerator.engine.GeneratorController;
 import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
-import jenerator.filters.exceptions.NotAnnotationEncountered;
+import jenerator.engine.parser.ElementFromSourceException;
 import jenerator.validations.GenValidation;
-import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
-import jenerator.validations.pojo.exceptions.FieldValidationException;
-import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
+import jenerator.validations.ValidationException;
+import jenerator.validations.congruence.exceptions.CongruenceException;
+import jenerator.validations.pojo.exceptions.POJOValidationException;
 
 public class Jenerator {
 
@@ -45,26 +42,31 @@ public class Jenerator {
 		return instances;
 	}
 
-	public static <T extends Object> List<T> generate(Class<T> class1, long numInstances)
-			throws FieldValidationException, NoEmptyConstructorException, Annotation_FieldCongruenceException,
-			IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-			SecurityException, NotAnnotationEncountered, CoverageExceededException, FileNotFoundException, IOException, NoSuitableElementsOnSource {
+	public static <T extends Object> List<T> generate(Class<T> class1, long numInstances) throws JeneratorException {
 		// Validate POJO and congruence
 		GenValidation genValidation = new GenValidation(engineConfiguration);
-		genValidation.validate(class1, numInstances);
+		try {
+			genValidation.validate(class1, numInstances);
+		} catch (POJOValidationException | CongruenceException e) {
+			throw new ValidationException(e);
+		}
 
 		// Create n empty instance of that class
 		List<T> instances = new ArrayList<T>();
 		try {
 			instances.add(class1.getConstructor().newInstance());
-		} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-				| IllegalArgumentException | InvocationTargetException e) {
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | SecurityException e) {
 			e.printStackTrace();
 		}
 
 		// Process each class
 		generatorController = new GeneratorController(class1, instances);
-		generatorController.process();
+		try {
+			generatorController.process();
+		} catch (ElementFromSourceException | CoverageExceededException e) {
+			throw new JeneratorException(e);
+		}
 		return instances;
 	}
 }
