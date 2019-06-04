@@ -3,7 +3,7 @@ package jenerator.annotations.readers;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 
-public class DecimalNumberConstraintsReader<A extends DecimalNumberGenerable> extends CommonConstraintsReader<A> {
+public class DecimalNumberConstraintsReader extends ConstraintsReader<DecimalNumberGenerable> {
 
 	DecimalNumberConstraints decimalNumberConstraints;
 
@@ -11,6 +11,7 @@ public class DecimalNumberConstraintsReader<A extends DecimalNumberGenerable> ex
 		this.decimalNumberConstraints = new DecimalNumberConstraints();
 	}
 
+	@Override
 	public DecimalNumberConstraints readValues(DecimalNumberGenerable annotation) {
 		decimalNumberConstraints.setCommonConstraints(super.readValues(annotation.constraints()));
 		decimalNumberConstraints.setMinValue(annotation.minValue());

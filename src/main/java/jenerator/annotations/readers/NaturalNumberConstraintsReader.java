@@ -4,7 +4,7 @@ import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 
-public class NaturalNumberConstraintsReader<A extends NaturalNumberGenerable> extends CommonConstraintsReader<A> {
+public class NaturalNumberConstraintsReader extends ConstraintsReader<NaturalNumberGenerable> {
 
 	private NaturalNumberConstraints naturalNumberConstraints;
 

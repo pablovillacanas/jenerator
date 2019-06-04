@@ -15,7 +15,7 @@ import jenerator.annotations.constraints.Constraints;
  * @author pablo
  *
  */
-public class AnnotationReader implements IAnnotationReader<Annotation> {
+public class AnnotationReader {
 
 	/**
 	 * <p>
@@ -27,16 +27,12 @@ public class AnnotationReader implements IAnnotationReader<Annotation> {
 	 * </p>
 	 */
 	public Constraints readValues(Annotation annotation) {
-		if (annotation instanceof NaturalNumberGenerable) {
-			return new NaturalNumberConstraintsReader<NaturalNumberGenerable>()
-					.readValues((NaturalNumberGenerable) annotation);
-		}
+		if (annotation instanceof NaturalNumberGenerable)
+			return new NaturalNumberConstraintsReader().readValues((NaturalNumberGenerable) annotation);
 		if (annotation instanceof StringGenerable)
-			return new StringConstraintsReader<StringGenerable>().readValues((StringGenerable) annotation);
+			return new StringConstraintsReader().readValues((StringGenerable) annotation);
 		if (annotation instanceof DecimalNumberGenerable)
-			return new DecimalNumberConstraintsReader<DecimalNumberGenerable>()
-					.readValues((DecimalNumberGenerable) annotation);
+			return new DecimalNumberConstraintsReader().readValues((DecimalNumberGenerable) annotation);
 		return null;
 	}
-
 }

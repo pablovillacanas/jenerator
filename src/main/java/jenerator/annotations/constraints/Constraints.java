@@ -22,7 +22,7 @@ public class Constraints {
 
 	/**
 	 * 
-	 * @return The URL of the resource desired to obtain the values
+	 * @return The URL of the resource desired to obtain the values.
 	 */
 	public File getSourceAsFile() {
 		try {
