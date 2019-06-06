@@ -7,14 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.DecimalNumberGenerator;
-import jenerator.engine.generators.ElementFromDocumentGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.StringGenerator;
 import jenerator.engine.generators.ValueGenerator;
@@ -74,32 +72,14 @@ public class GeneratorController {
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
 					|| Short.class.isAssignableFrom(fieldType) || Byte.class.isAssignableFrom(fieldType)) {
-				if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 					valueGenerator = new NaturalNumberGenerator<Number>(fieldType, quantity,
 							(NaturalNumberConstraints) constraints);
-				} else {
-					// FromSource
-					valueGenerator = new ElementFromDocumentGenerator<Number>((Class<Number>) fieldType, quantity,
-							(NaturalNumberConstraints) constraints);
-				}
 			} else {
-				if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 					valueGenerator = new DecimalNumberGenerator<Number>(fieldType, quantity,
 							(DecimalNumberConstraints) constraints);
-				} else {
-					// FromSource
-					valueGenerator = new ElementFromDocumentGenerator<Number>((Class<Number>) fieldType, quantity,
-							(DecimalNumberConstraints) constraints);
-				}
 			}
 		} else if (String.class.isAssignableFrom(fieldType)) {
-			if (constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 				valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
-			} else {
-				// FromSource
-				valueGenerator = new ElementFromDocumentGenerator<String>((Class<String>) fieldType, quantity,
-						(StringConstraints) constraints);
-			}
 		}
 		return (ValueGenerator<E>) valueGenerator;
 	}

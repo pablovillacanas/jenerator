@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import jenerator.annotations.constraints.StringConstraints;
+import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 
 public class CharGenerator extends ValueGenerator<Character> {
 
@@ -24,12 +26,26 @@ public class CharGenerator extends ValueGenerator<Character> {
 	}
 
 	@Override
-	public Collection<Character> generate() {
+	protected long getPossibilities() {
+		return constraints.getStringSimpleFormat().getCharacters().size();
+	}
+
+	@Override
+	public Collection<Character> generateFromSource() throws CoverageExceededException, NoSuitableElementsOnSource {
 		return null;
 	}
 
 	@Override
-	protected long getPossibilities() {
-		return constraints.getStringSimpleFormat().characters.size();
+	public void valuesRandomGenerator() {
+		int randomIndex = 0;
+		while (!containerIsFilled()) {
+			random.nextInt(0, constraints.getStringSimpleFormat().getCharacters().size());
+			addValue(constraints.getStringSimpleFormat().getCharacters().get(randomIndex));
+		}
+	}
+
+	@Override
+	public List<Character> loadAllValues() {
+		return constraints.getStringSimpleFormat().getCharacters();
 	}
 }

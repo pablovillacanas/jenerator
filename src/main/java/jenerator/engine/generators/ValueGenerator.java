@@ -1,18 +1,33 @@
 package jenerator.engine.generators;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
+import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
+import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.parser.Source;
+import jenerator.engine.parser.SourceNotFoundException;
+import jenerator.engine.parser.SourceReader;
+import jenerator.engine.parser.SourceType;
+import jenerator.engine.parser.document.PlainDocument;
+import jenerator.engine.parser.document.PlainDocumentReader;
 
 public abstract class ValueGenerator<T> {
 
+	protected SourceReader<? extends Source> sourceReader;
+	protected SourceType sourceType;
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 	private Collection<T> valueContainer;
 	protected Constraints constraints;
+
 	/**
 	 * <p>
 	 * Number of elements the developer wants to be generated.
@@ -25,6 +40,11 @@ public abstract class ValueGenerator<T> {
 	public ValueGenerator(long quantity, Constraints constraints) {
 		this.constraints = constraints;
 		this.quantity = quantity;
+	}
+
+	protected void initSourceReader() throws SourceNotFoundException, ElementFromSourceException {
+		// TODO the logic SourceReaderFactory? By now all are Plain Document
+		sourceReader = new PlainDocumentReader(new PlainDocument(constraints.getSourceAsFile()));
 	}
 
 	/**
@@ -83,7 +103,7 @@ public abstract class ValueGenerator<T> {
 	 * </p>
 	 * 
 	 */
-	protected void addNullElements() {
+	private void addNullElements() {
 		long nullElements = (long) (quantity * 1 - constraints.getNullable());
 		for (int i = 0; i < nullElements; i++) {
 			valueContainer.add(null);
@@ -128,13 +148,53 @@ public abstract class ValueGenerator<T> {
 		return valueContainer;
 	}
 
+	/**
+	 * <p>
+	 * Sets the value container with the null values the developer desires
+	 * </p>
+	 * 
+	 * @param valueContainer
+	 */
 	protected void setValueContainer(Collection<T> valueContainer) {
 		this.valueContainer = valueContainer;
 		if (valueContainer.isEmpty() && constraints.getNullable() != 0.0)
 			addNullElements();
 	}
 
-	public abstract Collection<T> generate() throws CoverageExceededException, NoSuitableElementsOnSource;
+	public Collection<T> generate() throws CoverageExceededException, ElementFromSourceException {
+		if (!constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
+			setValueContainer(generateFromSource());
+		} else {
+			if (constraints.getUnique()) {
+				setValueContainer(new HashSet<T>()); // Value container now may contain null values
+				if (calculateCoverage() >= CRITICAL_COVERAGE) {
+					List<T> allValues = loadAllValues();
+					Collections.shuffle(allValues);
+					valueContainer.addAll(allValues);
+					List<T> subList = allValues.subList(0, (int) getValuesToGenerate());
+					setValueContainer(subList);
+				} else {
+					valuesRandomGenerator();
+				}
+			} else {
+				setValueContainer(new ArrayList<T>());
+				valuesRandomGenerator();
+			}
+		}
+		return getValueContainer();
+	}
+
+	/**
+	 * Loads value container untill fill it
+	 */
+	public abstract void valuesRandomGenerator();
+
+	/**
+	 * Loads all values on value container
+	 */
+	public abstract List<T> loadAllValues();
+
+	public abstract Collection<T> generateFromSource() throws CoverageExceededException, ElementFromSourceException;
 
 	public void setQuantity(long quantity) {
 		this.quantity = quantity;

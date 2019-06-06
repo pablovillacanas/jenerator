@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
+import jenerator.engine.parser.ElementFromSourceException;
 
 public class DecimalNumberGeneratorTest {
 
@@ -18,10 +18,11 @@ public class DecimalNumberGeneratorTest {
 	@Before
 	public void init() {
 		numberConstraints = new DecimalNumberConstraints();
+		numberConstraints.setSource("");
 	}
 
 	@Test
-	public void testNumbers() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
+	public void testNumbers() throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(7);
 		numberConstraints.setUnique(false);
@@ -39,7 +40,8 @@ public class DecimalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbersUniqueNonCritical() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
+	public void testNumbersUniqueNonCritical()
+			throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(700);
 		numberConstraints.setUnique(true);
@@ -57,7 +59,8 @@ public class DecimalNumberGeneratorTest {
 	}
 
 	@Test
-	public void testNumbersCritical() throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
+	public void testNumbersCritical()
+			throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(55);
 		numberConstraints.setUnique(true);
@@ -76,7 +79,7 @@ public class DecimalNumberGeneratorTest {
 
 	@Test(expected = CoverageExceededException.class)
 	public void testNumbersOverCritical()
-			throws NumberIsTooLargeException, CoverageExceededException, NoSuitableElementsOnSource {
+			throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(54);
 		numberConstraints.setUnique(true);

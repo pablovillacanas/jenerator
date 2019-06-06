@@ -8,6 +8,7 @@ import org.junit.Test;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
+import jenerator.engine.parser.ElementFromSourceException;
 
 public class StringGeneratorTest {
 
@@ -19,6 +20,7 @@ public class StringGeneratorTest {
 	public void setUp() throws Exception {
 		stringConstraints = new StringConstraints();
 		stringGenerator = new StringGenerator(numGenerations, stringConstraints);
+		stringConstraints.setSource("");
 	}
 
 	@Test
@@ -41,16 +43,16 @@ public class StringGeneratorTest {
 	public void testCalculateCoverageExceeded() throws CoverageExceededException {
 		stringConstraints.setMinLenght(1);
 		stringConstraints.setMaxLenght(1);
-		stringConstraints.setUnique(false);
+		stringConstraints.setUnique(true);
 		stringConstraints.setStringSimpleFormat(StringSimpleFormat.ONLY_DIGITS);
 
 		stringConstraints.setNullable(0.0);
 		stringGenerator.setQuantity(11);
-		assertEquals(stringGenerator.calculateCoverage(), 1.0, 0);
+		assertEquals(1.1, stringGenerator.calculateCoverage(), 0);
 	}
 
 	@Test
-	public void testStringGeneratorNumbers() throws CoverageExceededException {
+	public void testStringGeneratorNumbers() throws CoverageExceededException, ElementFromSourceException {
 		stringConstraints.setMinLenght(5);
 		stringConstraints.setMaxLenght(7);
 		stringConstraints.setUnique(false);
@@ -66,7 +68,7 @@ public class StringGeneratorTest {
 	}
 
 	@Test
-	public void testStringGeneratorString() throws CoverageExceededException {
+	public void testStringGeneratorString() throws CoverageExceededException, ElementFromSourceException {
 		stringConstraints.setMinLenght(15);
 		stringConstraints.setMaxLenght(20);
 		stringConstraints.setUnique(true);

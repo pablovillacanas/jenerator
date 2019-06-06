@@ -2,12 +2,17 @@ package jenerator.engine.generators;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.google.common.collect.Streams;
 
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.parser.ElementFromSourceException;
 
 public class StringGenerator extends ValueGenerator<String> {
 
@@ -24,28 +29,33 @@ public class StringGenerator extends ValueGenerator<String> {
 	 * array
 	 * <p>
 	 * 
-	 * @author pablo
+	 * @author Pablo Villacanas
 	 *
 	 */
 	public static enum StringSimpleFormat {
 		ALPHANUMERIC("alpha"), ONLY_DIGITS("digits"), ONLY_LETTERS("letters"), DIGITS_AND_LETTERS("digits_letters");
 
-		List<Character> characters = new ArrayList<Character>();
+		private List<Character> characters = new ArrayList<Character>();
+		private Pattern pattern;
 
 		private StringSimpleFormat(String string) {
 			switch (string) {
 			case "alpha":
 				getAlphaNumerics();
+				pattern = Pattern.compile(".*");
 				break;
 			case "digits_letters":
 				getDigits();
 				getLetters();
+				pattern = Pattern.compile("[a-zA-Z0-9]+");
 				break;
 			case "digits":
 				getDigits();
+				pattern = Pattern.compile("[0-9]+");
 				break;
 			case "letters":
 				getLetters();
+				pattern = Pattern.compile("[a-zA-Z]+");
 				break;
 			}
 		}
@@ -80,29 +90,14 @@ public class StringGenerator extends ValueGenerator<String> {
 			return characters;
 		}
 
-		public void setCharacters(List<Character> characters) {
-			this.characters = characters;
+		public Pattern getPattern() {
+			return pattern;
 		}
 
 	}
 
 	@Override
-	public Collection<String> generate() throws CoverageExceededException {
-		if (constraints.getUnique()) {
-			setValueContainer(new HashSet<String>());
-			if (calculateCoverage() >= CRITICAL_COVERAGE) {
-				loadAllValues();
-			} else {
-				stringRandomGenerator(getValuesToGenerate());
-			}
-		} else {
-			setValueContainer(new ArrayList<String>());
-			stringRandomGenerator(getValuesToGenerate());
-		}
-		return getValueContainer();
-	}
-
-	private void stringRandomGenerator(long valuesToGenerate) {
+	public void valuesRandomGenerator() {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringSimpleFormat stringSimpleFormat = constraints.getStringSimpleFormat();
 		while (!containerIsFilled()) {
@@ -120,25 +115,16 @@ public class StringGenerator extends ValueGenerator<String> {
 		}
 	}
 
-	private void loadAllValues() {
+	@Override
+	public List<String> loadAllValues() {
 		long minLenght = constraints.getMinLenght();
 		long maxLenght = constraints.getMaxLenght();
-		long currentSize = 1;
-		do {
+		while (!containerIsFilled()) {
 			for (long i = maxLenght; i > minLenght; i--) {
 				// TODO get all variations with repetitions within range.
 			}
-			currentSize++;
-		} while (currentSize <= maxLenght);
-	}
-
-	@Override
-	protected double calculateCoverage() throws CoverageExceededException {
-		double possiblilities = getPossibilities();
-		if (possiblilities >= getValuesToGenerate())
-			return getValuesToGenerate() / possiblilities;
-		else
-			throw new CoverageExceededException(getQuantity(), (int) possiblilities);
+		}
+		return null;
 	}
 
 	/**
@@ -152,6 +138,7 @@ public class StringGenerator extends ValueGenerator<String> {
 	 * @param sizeGroup
 	 * @return
 	 */
+	@Override
 	protected long getPossibilities() {
 		int sizegroup = constraints.getStringSimpleFormat().characters.size();
 		long possibilities = 0;
@@ -159,5 +146,28 @@ public class StringGenerator extends ValueGenerator<String> {
 			possibilities = +(long) Math.pow(sizegroup, i);
 		}
 		return possibilities;
+	}
+
+	@Override
+	public Collection<String> generateFromSource() throws ElementFromSourceException, CoverageExceededException {
+		initSourceReader();
+		Stream<String> stream = Streams.stream(sourceReader.iterator());
+		Collection<String> collectedPossibilities = stream.filter(string -> {
+			if (string.length() <= constraints.getMaxLenght() && string.length() >= constraints.getMinLenght()
+					&& constraints.getStringSimpleFormat().getPattern().matcher(string).matches()
+					&& string.length() != 0)
+				return true;
+			else
+				return false;
+		}).collect(Collectors.toList());
+		if (!constraints.getUnique()) {
+			setValueContainer(collectedPossibilities);
+		} else {
+			collectedPossibilities = collectedPossibilities.stream().collect(Collectors.toSet());
+			if (collectedPossibilities.size() < getValuesToGenerate()) {
+				throw new CoverageExceededException(getQuantity(), collectedPossibilities.size());
+			}
+		}
+		return collectedPossibilities;
 	}
 }

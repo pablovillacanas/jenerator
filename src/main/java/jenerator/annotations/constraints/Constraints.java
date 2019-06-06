@@ -25,6 +25,7 @@ public class Constraints {
 	 * @return The URL of the resource desired to obtain the values.
 	 */
 	public File getSourceAsFile() {
+		// TOO if there is not under resources folder.
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();
 			URI uri = classLoader.getResource(getSource()).toURI();
