@@ -3,7 +3,7 @@ package jenerator.annotations.readers;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 
-public class DecimalNumberConstraintsReader extends ConstraintsReader<DecimalNumberGenerable> {
+public class DecimalNumberConstraintsReader extends ConstraintsAnnotationReader<DecimalNumberGenerable> {
 
 	DecimalNumberConstraints decimalNumberConstraints;
 

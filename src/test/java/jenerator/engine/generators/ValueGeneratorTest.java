@@ -7,8 +7,8 @@ import org.junit.Test;
 import jenerator.Foo;
 import jenerator.engine.GeneratorController;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
-import jenerator.engine.parser.ElementFromSourceException;
 
 public class ValueGeneratorTest {
 

@@ -12,10 +12,10 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 
 import com.google.common.collect.Streams;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 
 public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Number> {
 
@@ -28,7 +28,7 @@ public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Num
 		this.numberType = numberType;
 	}
 
-	private DecimalNumberGenerator(long quantity, Constraints constraints) {
+	private DecimalNumberGenerator(long quantity, CommonConstraints constraints) {
 		super(quantity, constraints);
 	}
 

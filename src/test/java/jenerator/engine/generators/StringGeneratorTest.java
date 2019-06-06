@@ -8,7 +8,7 @@ import org.junit.Test;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 
 public class StringGeneratorTest {
 

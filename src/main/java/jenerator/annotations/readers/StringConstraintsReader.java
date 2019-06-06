@@ -4,7 +4,7 @@ import jenerator.annotations.StringGenerable;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.StringConstraints;
 
-public class StringConstraintsReader extends ConstraintsReader<StringGenerable> {
+public class StringConstraintsReader extends ConstraintsAnnotationReader<StringGenerable> {
 
 	private StringConstraints stringConstraints;
 

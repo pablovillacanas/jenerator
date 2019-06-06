@@ -1,7 +1,5 @@
 package jenerator.engine.generators.exceptions;
 
-import jenerator.engine.parser.ElementFromSourceException;
-
 /**
  * <p>
  * This exception is thrown when there are not elements that fits with the

@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import jenerator.engine.generators.exceptions.SourceNotFoundException;
 import jenerator.engine.parser.Source;
-import jenerator.engine.parser.SourceNotFoundException;
 
 public class PlainDocument extends Source {
 

@@ -9,12 +9,12 @@ import java.util.List;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
 import jenerator.annotations.GenerationConstraints;
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.SourceNotFoundException;
 import jenerator.engine.parser.Source;
-import jenerator.engine.parser.SourceNotFoundException;
 import jenerator.engine.parser.SourceReader;
 import jenerator.engine.parser.SourceType;
 import jenerator.engine.parser.document.PlainDocument;
@@ -26,7 +26,7 @@ public abstract class ValueGenerator<T> {
 	protected SourceType sourceType;
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 	private Collection<T> valueContainer;
-	protected Constraints constraints;
+	protected CommonConstraints constraints;
 
 	/**
 	 * <p>
@@ -37,7 +37,7 @@ public abstract class ValueGenerator<T> {
 
 	public static final double CRITICAL_COVERAGE = 0.75;
 
-	public ValueGenerator(long quantity, Constraints constraints) {
+	public ValueGenerator(long quantity, CommonConstraints constraints) {
 		this.constraints = constraints;
 		this.quantity = quantity;
 	}

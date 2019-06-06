@@ -1,4 +1,6 @@
-package jenerator.engine.parser;
+package jenerator.engine.generators.exceptions;
+
+import jenerator.engine.parser.Source;
 
 public class SourceNotFoundException extends ElementFromSourceException {
 

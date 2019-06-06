@@ -12,7 +12,7 @@ import com.google.common.collect.Streams;
 
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 
 public class StringGenerator extends ValueGenerator<String> {
 

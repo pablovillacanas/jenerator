@@ -1,6 +1,6 @@
 package jenerator.annotations.constraints;
 
-public class DecimalNumberConstraints extends Constraints {
+public class DecimalNumberConstraints extends CommonConstraints {
 
 	private double minValue;
 	private double maxValue;

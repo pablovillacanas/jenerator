@@ -64,5 +64,10 @@ public class Experiment {
 	public void cosas3() throws NoSuchFieldException, SecurityException {
 		boolean assignableFrom = Double.class.isAssignableFrom(Float.class);
 		assert (!assignableFrom);
+		Long l = 213412312323L;
+		int intValue = Long.valueOf(l).intValue();
+		System.out.println(intValue);
+		System.out.println(Integer.MAX_VALUE);
+		System.out.println(Integer.MIN_VALUE);
 	}
 }

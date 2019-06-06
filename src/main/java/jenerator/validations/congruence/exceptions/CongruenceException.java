@@ -1,7 +1,5 @@
 package jenerator.validations.congruence.exceptions;
 
-import jenerator.validations.ValidationException;
-
 public class CongruenceException extends ValidationException {
 
 	/**

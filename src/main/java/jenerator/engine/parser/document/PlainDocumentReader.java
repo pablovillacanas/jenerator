@@ -4,14 +4,12 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.xml.transform.Source;
-
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 import jenerator.engine.parser.SourceReader;
 
 public class PlainDocumentReader extends SourceReader<PlainDocument> {
 
-	private Source source;
+	private PlainDocument source;
 
 	public PlainDocumentReader(PlainDocument source) throws ElementFromSourceException {
 		collection = new ArrayList<String>();
@@ -22,16 +20,8 @@ public class PlainDocumentReader extends SourceReader<PlainDocument> {
 		}
 	}
 
-	public Source getSource() {
-		return source;
-	}
-
-	public void setSource(Source source) {
-		this.source = source;
-	}
-
 	@Override
-	protected void parseSource(PlainDocument source) throws IOException {
+	public void parseSource(PlainDocument source) throws IOException {
 		BufferedInputStream bais = new BufferedInputStream(source.getInputStream());
 		int nextByte;
 		String element = "";
@@ -54,9 +44,12 @@ public class PlainDocumentReader extends SourceReader<PlainDocument> {
 		collection.add(element);
 	}
 
-	@Override
-	public long getNumberOfItems() {
-		return collection.size();
+	public PlainDocument getSource() {
+		return source;
+	}
+
+	public void setSource(PlainDocument source) {
+		this.source = source;
 	}
 
 }

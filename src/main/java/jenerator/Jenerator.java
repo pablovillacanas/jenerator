@@ -6,10 +6,10 @@ import java.util.List;
 
 import jenerator.engine.GeneratorController;
 import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 import jenerator.validations.GenValidation;
-import jenerator.validations.ValidationException;
 import jenerator.validations.congruence.exceptions.CongruenceException;
+import jenerator.validations.congruence.exceptions.ValidationException;
 import jenerator.validations.pojo.exceptions.POJOValidationException;
 
 public class Jenerator {

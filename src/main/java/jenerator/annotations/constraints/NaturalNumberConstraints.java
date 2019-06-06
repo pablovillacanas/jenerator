@@ -1,6 +1,6 @@
 package jenerator.annotations.constraints;
 
-public class NaturalNumberConstraints extends Constraints {
+public class NaturalNumberConstraints extends CommonConstraints {
 
 	private long minValue;
 	private long maxValue;

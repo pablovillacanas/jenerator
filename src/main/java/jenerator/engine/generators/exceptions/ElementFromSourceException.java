@@ -1,4 +1,4 @@
-package jenerator.engine.parser;
+package jenerator.engine.generators.exceptions;
 
 public class ElementFromSourceException extends Exception {
 

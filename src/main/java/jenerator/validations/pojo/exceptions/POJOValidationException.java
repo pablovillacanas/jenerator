@@ -1,6 +1,6 @@
 package jenerator.validations.pojo.exceptions;
 
-import jenerator.validations.ValidationException;
+import jenerator.validations.congruence.exceptions.ValidationException;
 
 public class POJOValidationException extends ValidationException {
 

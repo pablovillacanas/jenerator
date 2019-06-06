@@ -10,10 +10,10 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.Streams;
 
-import jenerator.annotations.constraints.Constraints;
+import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
-import jenerator.engine.parser.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
 
 public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 
@@ -26,7 +26,7 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 		this.numberType = numberType;
 	}
 
-	private NaturalNumberGenerator(long quantity, Constraints constraints) {
+	private NaturalNumberGenerator(long quantity, CommonConstraints constraints) {
 		super(quantity, constraints);
 	}
 

@@ -8,8 +8,8 @@ import java.net.URISyntaxException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import jenerator.engine.parser.ElementFromSourceException;
-import jenerator.engine.parser.SourceNotFoundException;
+import jenerator.engine.generators.exceptions.ElementFromSourceException;
+import jenerator.engine.generators.exceptions.SourceNotFoundException;
 
 public class ParserInputStream {
 
@@ -25,7 +25,7 @@ public class ParserInputStream {
 	@Test
 	public void testWellCount() throws SourceNotFoundException, ElementFromSourceException {
 		PlainDocumentReader plainDocumentReader = new PlainDocumentReader(new PlainDocument(filetxt));
-		long numberOfItems = plainDocumentReader.getNumberOfItems();
+		long numberOfItems = plainDocumentReader.getCollection().size();
 		assertEquals(13, numberOfItems);
 	}
 }
