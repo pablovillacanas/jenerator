@@ -23,13 +23,20 @@ public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Num
 	private Class<?> numberType;
 
 	public DecimalNumberGenerator(Class<?> numberType, long quantity, DecimalNumberConstraints constraints) {
+		// TODO es necesario el tema de llevar al padre las constraints si despues las
+		// sobreescribimos? Piensalo.
 		this(quantity, constraints);
-		this.constraints = constraints;
+		if (constraints == null) {
+			this.constraints = new DecimalNumberConstraints();
+		}
 		this.numberType = numberType;
 	}
 
 	private DecimalNumberGenerator(long quantity, CommonConstraints constraints) {
 		super(quantity, constraints);
+		if (constraints == null) {
+			constraints = new DecimalNumberConstraints();
+		}
 	}
 
 	@Override

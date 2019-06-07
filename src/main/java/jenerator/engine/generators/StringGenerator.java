@@ -20,7 +20,9 @@ public class StringGenerator extends ValueGenerator<String> {
 
 	public StringGenerator(long quantity, StringConstraints constraints) {
 		super(quantity, constraints);
-		this.constraints = constraints;
+		if (constraints == null) {
+			this.constraints = new StringConstraints();
+		}
 	}
 
 	/**

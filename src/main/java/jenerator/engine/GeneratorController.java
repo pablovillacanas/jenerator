@@ -5,11 +5,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jenerator.annotations.Generable;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
@@ -87,10 +90,9 @@ public class GeneratorController {
 				.collect(Collectors.toList());
 	}
 
-	private Annotation getGenerableAnnotation(Field field) {
+	private Optional<Annotation> getGenerableAnnotation(Field field) {
 		GenerableAnnotationsFilter generableFieldsFilter = engineConfiguration.getGenerableAnnotationFilter();
-		return (Annotation) Arrays.asList(field.getAnnotations()).stream().filter(generableFieldsFilter).findFirst()
-				.get();
+		return Arrays.asList(field.getAnnotations()).stream().filter(generableFieldsFilter).findFirst();
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -98,8 +100,11 @@ public class GeneratorController {
 			throws CoverageExceededException, ElementFromSourceException {
 		ValueGenerator<? extends Object> valueGenerator = null;
 		Class<?> fieldType = field.getType();
-		Annotation generableAnnotation = getGenerableAnnotation(field);
-		Constraints constraints = annotationParser.parse(generableAnnotation);
+		Optional<Annotation> generableAnnotation = getGenerableAnnotation(field);
+		Constraints constraints = null;
+		if (generableAnnotation.isPresent()) {
+			constraints = annotationParser.parse(generableAnnotation.get());
+		}
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
 					|| Short.class.isAssignableFrom(fieldType) || Byte.class.isAssignableFrom(fieldType)) {
@@ -111,6 +116,11 @@ public class GeneratorController {
 			}
 		} else if (String.class.isAssignableFrom(fieldType)) {
 			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
+		} else if (Collection.class.isAssignableFrom(fieldType)) {
+			// TODO creamos un nuevo Generator controller solo si su parametrizada es
+			// Generable o String
+		} else if (fieldType.isAnnotationPresent(Generable.class)) {
+			// TODO creamos un nuevo Generator controller
 		}
 		return (ValueGenerator<E>) valueGenerator;
 	}

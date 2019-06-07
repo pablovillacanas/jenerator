@@ -14,7 +14,9 @@ public class CharGenerator extends ValueGenerator<Character> {
 
 	protected CharGenerator(long quantity, StringConstraints constraints) {
 		super(quantity, constraints);
-		this.constraints = constraints;
+		if (constraints == null) {
+			this.constraints = new StringConstraints();
+		}
 	}
 
 	@Override

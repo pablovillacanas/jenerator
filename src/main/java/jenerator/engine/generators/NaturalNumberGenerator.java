@@ -22,12 +22,15 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 
 	public NaturalNumberGenerator(Class<?> numberType, long quantity, NaturalNumberConstraints constraints) {
 		this(quantity, constraints);
-		this.constraints = constraints;
+		if (constraints == null) {
+			this.constraints = new NaturalNumberConstraints();
+		}
 		this.numberType = numberType;
 	}
 
 	private NaturalNumberGenerator(long quantity, CommonConstraints constraints) {
 		super(quantity, constraints);
+
 	}
 
 	@Override
