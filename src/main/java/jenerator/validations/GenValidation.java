@@ -1,11 +1,13 @@
 package jenerator.validations;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import jenerator.JeneratorConfiguration;
-import jenerator.utils.ClassUtils;
+import jenerator.configuration.JeneratorConfiguration;
+import jenerator.configuration.filters.GenerableFieldsFilter;
 import jenerator.validations.congruence.FieldCongruenceChecker;
 import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
 import jenerator.validations.congruence.exceptions.CongruenceException;
@@ -14,7 +16,7 @@ import jenerator.validations.pojo.exceptions.POJOValidationException;
 
 public class GenValidation {
 
-	JeneratorConfiguration engineConfiguration;
+	JeneratorConfiguration engineConfiguration = JeneratorConfiguration.getInstance();
 
 	public GenValidation(JeneratorConfiguration engineConfiguration) {
 		super();
@@ -23,8 +25,11 @@ public class GenValidation {
 
 	public void validate(Class<?> class1, long numInstances) throws POJOValidationException, CongruenceException {
 		POJOValidator.isPOJO(class1);
-		List<Field> generableFields = ClassUtils.getGenerableFields(class1);
-		Optional<Field> field = generableFields.stream().filter(new FieldCongruenceChecker()).findFirst();
+		GenerableFieldsFilter generableFieldsFilter = engineConfiguration.getGenerableFieldsFilter();
+		List<Field> generableFields = Arrays.asList(class1.getDeclaredFields()).stream().filter(generableFieldsFilter)
+				.collect(Collectors.toList());
+		FieldCongruenceChecker fieldCongruenceChecker = new FieldCongruenceChecker();
+		Optional<Field> field = generableFields.stream().filter(fieldCongruenceChecker).findFirst();
 		if (field.isPresent()) {
 			throw new CongruenceException(new Annotation_FieldCongruenceException(field.get()));
 		}

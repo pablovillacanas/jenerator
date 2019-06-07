@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jenerator.configuration.JeneratorConfiguration;
 import jenerator.engine.GeneratorController;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.ElementFromSourceException;

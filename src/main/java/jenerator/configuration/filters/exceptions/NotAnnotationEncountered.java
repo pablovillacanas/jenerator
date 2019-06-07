@@ -1,4 +1,4 @@
-package jenerator.filters.exceptions;
+package jenerator.configuration.filters.exceptions;
 
 public class NotAnnotationEncountered extends Exception {
 

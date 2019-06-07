@@ -2,6 +2,7 @@ package jenerator.validations.congruence;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
-import jenerator.utils.FieldUtils;
+import jenerator.configuration.JeneratorConfiguration;
 import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
 
 /**
@@ -23,6 +24,8 @@ import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceExc
  *
  */
 public class FieldCongruenceChecker implements Predicate<Field> {
+
+	JeneratorConfiguration engineConfiguration = JeneratorConfiguration.getInstance();
 
 	/**
 	 * <p>
@@ -41,9 +44,9 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean test(Field field) {
-		Annotation annotation = FieldUtils.getGenerableAnnotation(field);
+		Annotation annotation = (Annotation) Arrays.asList(field.getAnnotations()).stream()
+				.filter(engineConfiguration.getGenerableAnnotationFilter()).findFirst().get();
 		Set<Class<?>> concordantAnnotations = Utils.retrieveConcordantAnnotationsOf(field);
-		FieldUtils.getGenerableAnnotation(field);
 		if (concordantAnnotations.contains(annotation)) {
 			return true;
 		}
