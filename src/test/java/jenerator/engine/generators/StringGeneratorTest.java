@@ -2,6 +2,9 @@ package jenerator.engine.generators;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,13 +61,13 @@ public class StringGeneratorTest {
 		stringConstraints.setUnique(false);
 		stringConstraints.setNullable(0.0);
 		stringConstraints.setStringSimpleFormat(StringSimpleFormat.ONLY_DIGITS);
-		stringGenerator.generate();
+		Collection<String> generate = stringGenerator.generate();
+		Iterator<String> iterator = generate.iterator();
 		for (int i = 0; i < numGenerations; i++) {
-			String value = stringGenerator.getValue();
+			String value = iterator.next();
 			assert (value.matches("[0-9]+"));
 			assert (value.length() >= 5 && value.length() <= 7);
 		}
-		assert (stringGenerator.getValueContainer().isEmpty());
 	}
 
 	@Test
@@ -73,12 +76,12 @@ public class StringGeneratorTest {
 		stringConstraints.setMaxLenght(20);
 		stringConstraints.setUnique(true);
 		stringConstraints.setNullable(0.0);
-		stringGenerator.generate();
+		Collection<String> generate = stringGenerator.generate();
+		Iterator<String> iterator = generate.iterator();
 		for (int i = 0; i < numGenerations; i++) {
-			String value = stringGenerator.getValue();
+			String value = iterator.next();
 			assert (value.matches("[A-Za-z]+"));
 			assert (value.length() >= 15 && value.length() <= 20);
 		}
-		assert (stringGenerator.getValueContainer().isEmpty());
 	}
 }

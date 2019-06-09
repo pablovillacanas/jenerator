@@ -10,8 +10,8 @@ import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.ElementFromSourceException;
 import jenerator.validations.GenValidation;
 import jenerator.validations.congruence.exceptions.CongruenceException;
-import jenerator.validations.congruence.exceptions.ValidationException;
-import jenerator.validations.pojo.exceptions.POJOValidationException;
+import jenerator.validations.exceptions.POJOValidationException;
+import jenerator.validations.exceptions.ValidationException;
 
 public class Jenerator {
 
@@ -62,12 +62,17 @@ public class Jenerator {
 		}
 
 		// Process each class
-		generatorController = new GeneratorController(class1, instances);
+		generatorController = new GeneratorController(instances);
 		try {
 			generatorController.process();
 		} catch (ElementFromSourceException | CoverageExceededException e) {
 			throw new JeneratorException(e);
 		}
 		return instances;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T extends Object> T generateOne(Class<?> class1) throws JeneratorException {
+		return (T) generate(class1, 1).get(0);
 	}
 }

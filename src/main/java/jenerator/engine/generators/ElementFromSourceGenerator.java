@@ -10,7 +10,7 @@ public abstract class ElementFromSourceGenerator<E, S extends Source> extends Va
 
 	public ElementFromSourceGenerator(long quantity, CommonConstraints constraints, SourceReader<S> sourceReader) {
 		super(quantity, constraints);
-		this.constraints = constraints;
+		this.commonConstraints = constraints;
 		this.sourceReader = sourceReader;
 	}
 

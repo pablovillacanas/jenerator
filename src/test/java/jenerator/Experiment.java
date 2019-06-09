@@ -12,6 +12,8 @@ public class Experiment {
 
 	public int i;
 
+	public ArrayList<String> strings;
+
 	@Test
 	public void test() throws NoSuchFieldException, SecurityException {
 //		Long l = new Long(3);
@@ -22,10 +24,9 @@ public class Experiment {
 
 	@Test
 	public void combinatoryTest() throws NoSuchFieldException, SecurityException {
-		System.out.println(Experiment.class.getDeclaredField("i").getType().getCanonicalName());
-		System.out.println(String.class.getCanonicalName());
 //		assertTrue(Experiment.class.getDeclaredField("i").getType().getCanonicalName().equals(String.class.getCanonicalName()));
 		assertTrue(int.class.isAssignableFrom(Experiment.class.getDeclaredField("i").getType()));
+		assertTrue(String.valueOf("31123").matches("[0-9]+"));
 	}
 
 	@Test
@@ -36,7 +37,7 @@ public class Experiment {
 		clases.add(Integer.class);
 		for (Class<?> class1 : clases) {
 			boolean assignableFrom = getShortClass().isAssignableFrom(class1);
-			System.out.println(assignableFrom);
+			assertTrue(assignableFrom);
 		}
 	}
 
@@ -56,7 +57,6 @@ public class Experiment {
 			long nextLong = randomDataGenerator.nextLong((long) newminValue, (long) newmaxValue);
 			double finalResult = nextLong / Math.pow(10, precision);
 			assertTrue(finalResult <= maxValue && finalResult >= minValue);
-			System.out.println(finalResult);
 		}
 	}
 
@@ -64,10 +64,10 @@ public class Experiment {
 	public void cosas3() throws NoSuchFieldException, SecurityException {
 		boolean assignableFrom = Double.class.isAssignableFrom(Float.class);
 		assert (!assignableFrom);
-		Long l = 213412312323L;
-		int intValue = Long.valueOf(l).intValue();
-		System.out.println(intValue);
-		System.out.println(Integer.MAX_VALUE);
-		System.out.println(Integer.MIN_VALUE);
+//		Long l = 213412312323L;
+//		int intValue = Long.valueOf(l).intValue();
+//		System.out.println(intValue);
+//		System.out.println(Integer.MAX_VALUE);
+//		System.out.println(Integer.MIN_VALUE);
 	}
 }

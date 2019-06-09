@@ -1,4 +1,4 @@
-package jenerator.validations.pojo;
+package jenerator.validations;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import jenerator.validations.pojo.exceptions.FieldValidationException;
-import jenerator.validations.pojo.exceptions.NoEmptyConstructorException;
-import jenerator.validations.pojo.exceptions.POJOValidationException;
+import jenerator.validations.exceptions.FieldValidationException;
+import jenerator.validations.exceptions.NoEmptyConstructorException;
+import jenerator.validations.exceptions.POJOValidationException;
 
 public class POJOValidator {
 

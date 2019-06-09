@@ -12,18 +12,32 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 	public enum FieldFilterType {
 
 		/**
+		 * <p>
 		 * This predicate filters all fields that have one annotation of type
-		 * jenerator.annotations and does not have a @NoGenerable annotation
+		 * jenerator.annotations and does not have a
+		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation
+		 * </p>
 		 */
 		EXPLICITFILTER,
 
 		/**
-		 * This predicate filters all fields that do not have a @NoGenerable annotation
+		 * <p>
+		 * This predicate filters all fields that do not have a
+		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation and could be
+		 * generated. See the list of fields that could be generated at {@link
+		 * jenerator.validations.congruence.FieldCongruenceChecker.ConcordantAnnotationRetriever
+		 * RetrieveConcordantAnnotation}
+		 * </p>
 		 */
 		LAZYFILTER;
 	}
 
 	FieldFilterType filter;
+
+	public GenerableFieldsFilter(FieldFilterType filter) {
+		super();
+		this.filter = filter;
+	}
 
 	@Override
 	public boolean test(Field field) {

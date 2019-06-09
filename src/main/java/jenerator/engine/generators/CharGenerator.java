@@ -2,7 +2,6 @@ package jenerator.engine.generators;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
@@ -20,14 +19,6 @@ public class CharGenerator extends ValueGenerator<Character> {
 	}
 
 	@Override
-	public Character getValue() {
-		StringConstraints stringConstraints = (StringConstraints) constraints;
-		List<Character> characters = stringConstraints.getStringSimpleFormat().getCharacters();
-		int randomIndex = new Random().nextInt(characters.size());
-		return characters.get(randomIndex);
-	}
-
-	@Override
 	protected long getPossibilities() {
 		return constraints.getStringSimpleFormat().getCharacters().size();
 	}
@@ -42,7 +33,7 @@ public class CharGenerator extends ValueGenerator<Character> {
 		int randomIndex = 0;
 		while (!containerIsFilled()) {
 			random.nextInt(0, constraints.getStringSimpleFormat().getCharacters().size());
-			addValue(constraints.getStringSimpleFormat().getCharacters().get(randomIndex));
+			getValueContainer().add(constraints.getStringSimpleFormat().getCharacters().get(randomIndex));
 		}
 	}
 

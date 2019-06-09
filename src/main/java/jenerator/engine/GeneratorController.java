@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jenerator.Jenerator;
+import jenerator.JeneratorException;
 import jenerator.annotations.Generable;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
@@ -21,6 +23,7 @@ import jenerator.annotations.readers.AnnotationParser;
 import jenerator.configuration.JeneratorConfiguration;
 import jenerator.configuration.filters.GenerableAnnotationsFilter;
 import jenerator.configuration.filters.GenerableFieldsFilter;
+import jenerator.configuration.filters.GenerableFieldsFilter.FieldFilterType;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.DecimalNumberGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
@@ -42,29 +45,34 @@ public class GeneratorController {
 	private JeneratorConfiguration engineConfiguration = JeneratorConfiguration.getInstance();
 	private final AnnotationParser annotationParser = new AnnotationParser();
 	private List<? extends Object> instances;
-	private Class<?> actualClass;
-	private Map<Method, ValueGenerator<? extends Object>> method_values;
+	private Map<Method, Collection<? extends Object>> method_values;
 
-	public GeneratorController(Class<?> class1, List<? extends Object> instances) {
+	public GeneratorController(List<? extends Object> instances) {
 		this.instances = instances;
-		this.actualClass = class1;
-		method_values = new HashMap<Method, ValueGenerator<? extends Object>>();
+		method_values = new HashMap<Method, Collection<? extends Object>>();
 	}
 
 	public void process() throws CoverageExceededException, NoSuitableElementsOnSource, ElementFromSourceException {
-		List<Field> generableFields = getGenerableFields(actualClass);
+		List<Field> generableFields = getGenerableFields(instances.get(0).getClass());
 		int quantity = instances.size();
 		for (Field field : generableFields) {
 			Method getter = retrieveGetterOf(field);
-			ValueGenerator<? extends Object> generatedValues = createValueGenerator(quantity, field);
-			generatedValues.generate();
+			Class<?> fieldType = field.getType();
+			Optional<Annotation> generableAnnotation = getGenerableAnnotation(field);
+			Constraints constraints = null;
+			if (generableAnnotation.isPresent()) {
+				constraints = annotationParser.parse(generableAnnotation.get());
+			}
+			Collection<? extends Object> generatedValues = generateValues(fieldType, quantity, constraints);
 			method_values.put(getter, generatedValues);
 		}
 		for (Object t : instances) {
-			method_values.forEach((m, vg) -> {
+			method_values.forEach((method, values) -> {
 				try {
-					Class<?> type = m.getParameterTypes()[0];
-					m.invoke(t, type.cast(vg.getValue()));
+					Class<?> type = method.getParameterTypes()[0];
+					Object value = values.iterator().next();
+					method.invoke(t, type.cast(value));
+					values.remove(value);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
@@ -85,7 +93,8 @@ public class GeneratorController {
 	}
 
 	private List<Field> getGenerableFields(Class<?> actualClass) {
-		GenerableFieldsFilter generableFieldsFilter = engineConfiguration.getGenerableFieldsFilter();
+		FieldFilterType fieldFilter = ((Generable) actualClass.getAnnotation(Generable.class)).getFieldFilter();
+		GenerableFieldsFilter generableFieldsFilter = new GenerableFieldsFilter(fieldFilter);
 		return Arrays.asList(actualClass.getDeclaredFields()).stream().filter(generableFieldsFilter)
 				.collect(Collectors.toList());
 	}
@@ -96,15 +105,9 @@ public class GeneratorController {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	private <E extends Object> ValueGenerator<? extends E> createValueGenerator(long quantity, Field field)
-			throws CoverageExceededException, ElementFromSourceException {
+	private <E extends Object> Collection<? extends E> generateValues(Class<?> fieldType, long quantity,
+			Constraints constraints) throws CoverageExceededException, ElementFromSourceException {
 		ValueGenerator<? extends Object> valueGenerator = null;
-		Class<?> fieldType = field.getType();
-		Optional<Annotation> generableAnnotation = getGenerableAnnotation(field);
-		Constraints constraints = null;
-		if (generableAnnotation.isPresent()) {
-			constraints = annotationParser.parse(generableAnnotation.get());
-		}
 		if (Number.class.isAssignableFrom(fieldType)) {
 			if (Long.class.isAssignableFrom(fieldType) || Integer.class.isAssignableFrom(fieldType)
 					|| Short.class.isAssignableFrom(fieldType) || Byte.class.isAssignableFrom(fieldType)) {
@@ -118,11 +121,21 @@ public class GeneratorController {
 			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
 		} else if (Collection.class.isAssignableFrom(fieldType)) {
 			// TODO creamos un nuevo Generator controller solo si su parametrizada es
-			// Generable o String
+			// Generable o un tipo soportado por el framework
 		} else if (fieldType.isAnnotationPresent(Generable.class)) {
-			// TODO creamos un nuevo Generator controller
+			System.out.println(fieldType.getCanonicalName());
+			try {
+				Class<?> forName = Class.forName(fieldType.getCanonicalName());
+				try {
+					return (Collection<? extends E>) Jenerator.generate(forName, 1);
+				} catch (JeneratorException e) {
+					e.printStackTrace();
+				}
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		return (ValueGenerator<E>) valueGenerator;
+		return (Collection<? extends E>) valueGenerator.generate();
 	}
 
 }

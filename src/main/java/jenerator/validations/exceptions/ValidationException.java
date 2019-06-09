@@ -1,4 +1,4 @@
-package jenerator.validations.congruence.exceptions;
+package jenerator.validations.exceptions;
 
 import jenerator.JeneratorException;
 

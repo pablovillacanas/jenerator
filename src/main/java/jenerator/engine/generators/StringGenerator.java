@@ -20,7 +20,8 @@ public class StringGenerator extends ValueGenerator<String> {
 
 	public StringGenerator(long quantity, StringConstraints constraints) {
 		super(quantity, constraints);
-		if (constraints == null) {
+		this.constraints = constraints;
+		if (this.constraints == null) {
 			this.constraints = new StringConstraints();
 		}
 	}
@@ -112,7 +113,7 @@ public class StringGenerator extends ValueGenerator<String> {
 				Character character = characters.get(randomIndex);
 				stringBuilder.append(character);
 			}
-			addValue(stringBuilder.toString());
+			getValueContainer().add(stringBuilder.toString());
 			stringBuilder.delete(0, (int) stringLenght);
 		}
 	}

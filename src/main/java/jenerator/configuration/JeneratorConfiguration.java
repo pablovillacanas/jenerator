@@ -1,9 +1,7 @@
 package jenerator.configuration;
 
 import jenerator.configuration.filters.GenerableAnnotationsFilter;
-import jenerator.configuration.filters.GenerableFieldsFilter;
 import jenerator.configuration.filters.GenerableAnnotationsFilter.AnnotationFilterType;
-import jenerator.configuration.filters.GenerableFieldsFilter.FieldFilterType;
 
 /**
  * <p>
@@ -17,7 +15,7 @@ import jenerator.configuration.filters.GenerableFieldsFilter.FieldFilterType;
 public class JeneratorConfiguration {
 
 	private static JeneratorConfiguration engineConfiguration;
-	private GenerableFieldsFilter generableFieldsFilter = new GenerableFieldsFilter();
+//	private GenerableFieldsFilter generableFieldsFilter = new GenerableFieldsFilter();
 	private GenerableAnnotationsFilter generableAnnotationFilter = new GenerableAnnotationsFilter();
 
 	private JeneratorConfiguration() {
@@ -26,19 +24,19 @@ public class JeneratorConfiguration {
 	public static JeneratorConfiguration getInstance() {
 		if (engineConfiguration == null) {
 			engineConfiguration = new JeneratorConfiguration();
-			engineConfiguration.setGenerableFieldsFilterType(FieldFilterType.EXPLICITFILTER);
+//			engineConfiguration.setGenerableFieldsFilterType(FieldFilterType.EXPLICITFILTER);
 			engineConfiguration.setGenerableAnnotationFilterType(AnnotationFilterType.STANDARD);
 		}
 		return engineConfiguration;
 	}
 
-	public GenerableFieldsFilter getGenerableFieldsFilter() {
-		return generableFieldsFilter;
-	}
-
-	public void setGenerableFieldsFilterType(FieldFilterType fieldFilterType) {
-		generableFieldsFilter.setFilterType(fieldFilterType);
-	}
+//	public GenerableFieldsFilter getGenerableFieldsFilter() {
+//		return generableFieldsFilter;
+//	}
+//
+//	public void setGenerableFieldsFilterType(FieldFilterType fieldFilterType) {
+//		generableFieldsFilter.setFilterType(fieldFilterType);
+//	}
 
 	/**
 	 * @return the generableAnnotationFilter

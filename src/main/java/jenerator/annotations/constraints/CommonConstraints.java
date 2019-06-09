@@ -6,9 +6,9 @@ import java.net.URISyntaxException;
 
 public class CommonConstraints extends Constraints {
 
-	private String source;
-	private Boolean unique;
-	private Double nullable;
+	private String source = "";
+	private Boolean unique = false;
+	private Double nullable = 0.0;
 
 	public CommonConstraints() {
 		super();

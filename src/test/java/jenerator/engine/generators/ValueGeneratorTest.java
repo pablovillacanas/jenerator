@@ -20,7 +20,7 @@ public class ValueGeneratorTest {
 		ArrayList<Foo> arrayList = new ArrayList<Foo>();
 		arrayList.add(foo);
 		arrayList.add(foo2);
-		GeneratorController generatorController = new GeneratorController(Foo.class, arrayList);
+		GeneratorController generatorController = new GeneratorController(arrayList);
 		generatorController.process();
 		System.out.println(foo);
 	}

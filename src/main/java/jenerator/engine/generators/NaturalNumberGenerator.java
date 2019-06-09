@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 
 import com.google.common.collect.Streams;
 
-import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.ElementFromSourceException;
@@ -21,16 +20,12 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 	private Class<?> numberType;
 
 	public NaturalNumberGenerator(Class<?> numberType, long quantity, NaturalNumberConstraints constraints) {
-		this(quantity, constraints);
-		if (constraints == null) {
+		super(quantity, constraints);
+		this.constraints = constraints;
+		if (this.constraints == null) {
 			this.constraints = new NaturalNumberConstraints();
 		}
 		this.numberType = numberType;
-	}
-
-	private NaturalNumberGenerator(long quantity, CommonConstraints constraints) {
-		super(quantity, constraints);
-
 	}
 
 	@Override
@@ -47,7 +42,7 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 			} else if (Byte.class.isAssignableFrom(numberType)) {
 				number = Long.valueOf(nextLong).byteValue();
 			}
-			addValue(number);
+			getValueContainer().add(number);
 		}
 	}
 

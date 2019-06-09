@@ -1,9 +1,11 @@
 package jenerator;
 
+import jenerator.annotations.Generable;
 import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
 
+@Generable
 public class FooFromSource {
 
 	@StringGenerable(constraints = @GenerationConstraints(source = "names.txt"))

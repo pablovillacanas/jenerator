@@ -12,7 +12,6 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 
 import com.google.common.collect.Streams;
 
-import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.ElementFromSourceException;
@@ -25,18 +24,12 @@ public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Num
 	public DecimalNumberGenerator(Class<?> numberType, long quantity, DecimalNumberConstraints constraints) {
 		// TODO es necesario el tema de llevar al padre las constraints si despues las
 		// sobreescribimos? Piensalo.
-		this(quantity, constraints);
-		if (constraints == null) {
+		super(quantity, constraints);
+		this.constraints = constraints;
+		if (this.constraints == null) {
 			this.constraints = new DecimalNumberConstraints();
 		}
 		this.numberType = numberType;
-	}
-
-	private DecimalNumberGenerator(long quantity, CommonConstraints constraints) {
-		super(quantity, constraints);
-		if (constraints == null) {
-			constraints = new DecimalNumberConstraints();
-		}
 	}
 
 	@Override
@@ -60,10 +53,10 @@ public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Num
 			long nextLong = randomDataGenerator.nextLong((long) minValue, (long) maxValue);
 			double value = nextLong / Math.pow(10, constraints.getPrecision());
 			if (Double.class.isAssignableFrom(numberType)) {
-				addValue(value);
+				getValueContainer().add(value);
 			}
 			if (Float.class.isAssignableFrom(numberType)) {
-				addValue(Double.valueOf(value).floatValue());
+				getValueContainer().add(Double.valueOf(value).floatValue());
 			}
 		}
 	}

@@ -2,6 +2,9 @@ package jenerator.engine.generators;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,13 +33,13 @@ public class DecimalNumberGeneratorTest {
 		numberConstraints.setPrecision((short) 1);
 		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Double.class, numGenerations,
 				numberConstraints);
-		nng.generate();
+		Collection<Number> generate = nng.generate();
+		Iterator<Number> iterator = generate.iterator();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
-			Number value = nng.getValue();
+			Number value = iterator.next();
 			assert (String.valueOf(value).matches("[0-9]+.[0-9]{1}"));
 		}
-		assertTrue(nng.getValueContainer().size() == 0);
 	}
 
 	@Test
@@ -49,13 +52,13 @@ public class DecimalNumberGeneratorTest {
 		numberConstraints.setPrecision((short) 1);
 		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Float.class, numGenerations,
 				numberConstraints);
-		nng.generate();
+		Collection<Number> generate = nng.generate();
+		Iterator<Number> iterator = generate.iterator();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
-			Number value = nng.getValue();
+			Number value = iterator.next();
 			assert (String.valueOf(value).matches("[0-9]+.[0-9]{1}"));
 		}
-		assertTrue(nng.getValueContainer().size() == 0);
 	}
 
 	@Test
@@ -68,13 +71,13 @@ public class DecimalNumberGeneratorTest {
 		numberConstraints.setPrecision((short) 1);
 		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Double.class, numGenerations,
 				numberConstraints);
-		nng.generate();
+		Collection<Number> generate = nng.generate();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
+		Iterator<Number> iterator = generate.iterator();
 		for (int i = 0; i < numGenerations; i++) {
-			Number value = nng.getValue();
+			Number value = iterator.next();
 			assert (String.valueOf(value).matches("[0-9]+.[0-9]{1}"));
 		}
-		assertTrue(nng.getValueContainer().size() == 0);
 	}
 
 	@Test(expected = CoverageExceededException.class)

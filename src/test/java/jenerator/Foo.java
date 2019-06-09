@@ -1,11 +1,13 @@
 package jenerator;
 
 import jenerator.annotations.DecimalNumberGenerable;
+import jenerator.annotations.Generable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.NoGenerable;
 import jenerator.annotations.StringGenerable;
 import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
 
+@Generable
 public class Foo {
 
 	@NaturalNumberGenerable

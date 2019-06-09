@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 
@@ -26,7 +27,7 @@ public abstract class ValueGenerator<T> {
 	protected SourceType sourceType;
 	protected static RandomDataGenerator random = new RandomDataGenerator();
 	private Collection<T> valueContainer;
-	protected CommonConstraints constraints;
+	protected CommonConstraints commonConstraints;
 
 	/**
 	 * <p>
@@ -38,13 +39,16 @@ public abstract class ValueGenerator<T> {
 	public static final double CRITICAL_COVERAGE = 0.75;
 
 	public ValueGenerator(long quantity, CommonConstraints constraints) {
-		this.constraints = constraints;
+		this.commonConstraints = constraints;
+		if(constraints == null) {
+			commonConstraints = new CommonConstraints();
+		}
 		this.quantity = quantity;
 	}
 
 	protected void initSourceReader() throws SourceNotFoundException, ElementFromSourceException {
 		// TODO the logic SourceReaderFactory? By now all are Plain Document
-		sourceReader = new PlainDocumentReader(new PlainDocument(constraints.getSourceAsFile()));
+		sourceReader = new PlainDocumentReader(new PlainDocument(commonConstraints.getSourceAsFile()));
 	}
 
 	/**
@@ -66,7 +70,7 @@ public abstract class ValueGenerator<T> {
 	protected double calculateCoverage() throws CoverageExceededException {
 		long possibilities = getPossibilities();
 		double coverage = getValuesToGenerate() / (double) possibilities;
-		if (coverage > 1 && constraints.getUnique()) {
+		if (coverage > 1 && commonConstraints.getUnique()) {
 			throw new CoverageExceededException(getQuantity(), (int) possibilities);
 		}
 		return coverage;
@@ -82,7 +86,7 @@ public abstract class ValueGenerator<T> {
 	 *         of values desired.
 	 */
 	protected long getValuesToGenerate() {
-		long toGenerate = (long) (quantity - quantity * constraints.getNullable());
+		long toGenerate = (long) (quantity - quantity * commonConstraints.getNullable());
 		return toGenerate;
 	}
 
@@ -104,7 +108,7 @@ public abstract class ValueGenerator<T> {
 	 * 
 	 */
 	private void addNullElements() {
-		long nullElements = (long) (quantity * 1 - constraints.getNullable());
+		long nullElements = (long) (quantity * 1 - commonConstraints.getNullable());
 		for (int i = 0; i < nullElements; i++) {
 			valueContainer.add(null);
 		}
@@ -120,30 +124,6 @@ public abstract class ValueGenerator<T> {
 		return valueContainer.size() == quantity;
 	}
 
-	/**
-	 * <p>
-	 * Returns a value and removes it from the value container
-	 * </p>
-	 * 
-	 * @return
-	 */
-	public T getValue() {
-		T t = getValueContainer().stream().findAny().get();
-		getValueContainer().remove(t);
-		return t;
-	}
-
-	/**
-	 * <p>
-	 * Adds a value to the container value
-	 * </p>
-	 * 
-	 * @param value
-	 */
-	public void addValue(T value) {
-		valueContainer.add(value);
-	}
-
 	protected Collection<T> getValueContainer() {
 		return valueContainer;
 	}
@@ -157,15 +137,15 @@ public abstract class ValueGenerator<T> {
 	 */
 	protected void setValueContainer(Collection<T> valueContainer) {
 		this.valueContainer = valueContainer;
-		if (valueContainer.isEmpty() && constraints.getNullable() != 0.0)
+		if (valueContainer.isEmpty() && commonConstraints.getNullable() != 0.0)
 			addNullElements();
 	}
 
 	public Collection<T> generate() throws CoverageExceededException, ElementFromSourceException {
-		if (!constraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
+		if (!commonConstraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
 			setValueContainer(generateFromSource());
 		} else {
-			if (constraints.getUnique()) {
+			if (commonConstraints.getUnique()) {
 				setValueContainer(new HashSet<T>()); // Value container now may contain null values
 				if (calculateCoverage() >= CRITICAL_COVERAGE) {
 					List<T> allValues = loadAllValues();
@@ -181,7 +161,9 @@ public abstract class ValueGenerator<T> {
 				valuesRandomGenerator();
 			}
 		}
-		return getValueContainer();
+		List<T> values = valueContainer.stream().collect(Collectors.toList());
+		Collections.shuffle(values);
+		return values;
 	}
 
 	/**

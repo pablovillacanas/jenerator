@@ -2,9 +2,9 @@ package jenerator.annotations.constraints;
 
 public class DecimalNumberConstraints extends CommonConstraints {
 
-	private double minValue;
-	private double maxValue;
-	private short precision;
+	private double minValue = Double.MIN_VALUE;
+	private double maxValue = Double.MAX_VALUE;
+	private short precision = 2;
 
 	public void setMinValue(double minValue) {
 		this.minValue = minValue;

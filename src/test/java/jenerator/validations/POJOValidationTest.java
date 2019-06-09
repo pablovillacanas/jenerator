@@ -7,8 +7,7 @@ import jenerator.validations.POJOValidationTestsCases.ClassWellFormedWithoutExpl
 import jenerator.validations.POJOValidationTestsCases.ClassWithoutCorrectModifierConstructor;
 import jenerator.validations.POJOValidationTestsCases.ClassWithoutEmptyConstructor;
 import jenerator.validations.POJOValidationTestsCases.ClassWithoutSetter;
-import jenerator.validations.pojo.POJOValidator;
-import jenerator.validations.pojo.exceptions.POJOValidationException;
+import jenerator.validations.exceptions.POJOValidationException;
 
 public class POJOValidationTest {
 

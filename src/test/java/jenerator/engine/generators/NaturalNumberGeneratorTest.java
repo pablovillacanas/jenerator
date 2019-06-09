@@ -2,6 +2,9 @@ package jenerator.engine.generators;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +25,19 @@ public class NaturalNumberGeneratorTest {
 	}
 
 	@Test
+	public void testNoConsraints()
+			throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
+		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Short.class, numGenerations, null);
+		Collection<Number> generate = nng.generate();
+		Iterator<Number> iterator = generate.iterator();
+		assertTrue(nng.getValueContainer().size() == numGenerations);
+		for (int i = 0; i < numGenerations; i++) {
+			Number value = iterator.next();
+			assertTrue(String.valueOf(value).matches("-?[0-9]+"));
+		}
+	}
+
+	@Test
 	public void testNumbers() throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
 		numberConstraints.setMinValue(5);
 		numberConstraints.setMaxValue(7);
@@ -29,13 +45,13 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setNullable(0.0);
 		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Short.class, numGenerations,
 				numberConstraints);
-		nng.generate();
+		Collection<Number> generate = nng.generate();
+		Iterator<Number> iterator = generate.iterator();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
-			Number value = nng.getValue();
-			assert (String.valueOf(value).matches("[0-9]+"));
+			Number value = iterator.next();
+			assert (String.valueOf(value).matches("-?[0-9]+"));
 		}
-		assertTrue(nng.getValueContainer().size() == 0);
 	}
 
 	@Test
@@ -47,13 +63,13 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setNullable(0.0);
 		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Integer.class, numGenerations,
 				numberConstraints);
-		nng.generate();
+		Collection<Number> generate = nng.generate();
+		Iterator<Number> iterator = generate.iterator();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
-			Number value = nng.getValue();
-			assert (String.valueOf(value).matches("[0-9]+"));
+			Number value = iterator.next();
+			assert (String.valueOf(value).matches("-?[0-9]+"));
 		}
-		assertTrue(nng.getValueContainer().size() == 0);
 	}
 
 	@Test
@@ -65,13 +81,13 @@ public class NaturalNumberGeneratorTest {
 		numberConstraints.setNullable(0.0);
 		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Byte.class, numGenerations,
 				numberConstraints);
-		nng.generate();
+		Collection<Number> generate = nng.generate();
+		Iterator<Number> iterator = generate.iterator();
 		assertTrue(nng.getValueContainer().size() == numGenerations);
 		for (int i = 0; i < numGenerations; i++) {
-			Number value = nng.getValue();
-			assert (String.valueOf(value).matches("[0-9]+"));
+			Number value = iterator.next();
+			assert (String.valueOf(value).matches("-?[0-9]+"));
 		}
-		assertTrue(nng.getValueContainer().size() == 0);
 	}
 
 	@Test(expected = CoverageExceededException.class)
