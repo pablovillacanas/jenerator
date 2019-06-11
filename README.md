@@ -1,6 +1,6 @@
-
-
 # Jenerator
+
+[![Build Status](https://travis-ci.org/PabloVillacanhas/jenerator.svg?branch=master)](https://travis-ci.org/PabloVillacanhas/jenerator)
 
 Jenerator is a simple library that allows developers to create random instances of custom classes. The generation of those instances can be controlled by annotations on their fields, allowing to constraint the values generated for each one. Ones of the jenerator capabilities are:  
 
