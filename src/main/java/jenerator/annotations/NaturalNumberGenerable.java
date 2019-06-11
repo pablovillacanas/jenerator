@@ -10,8 +10,20 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 public @interface NaturalNumberGenerable {
 
+	/**
+	 * <p>
+	 * Maximum value included in the generation of values. Default is
+	 * Long.MAX_VALUE.
+	 * </p>
+	 */
 	long maxValue() default Long.MAX_VALUE;
 
+	/**
+	 * <p>
+	 * Maximum value included in the generation of values. Default is
+	 * Long.MAX_VALUE.
+	 * </p>
+	 */
 	long minValue() default Long.MIN_VALUE;
 
 	GenerationConstraints constraints() default @GenerationConstraints();

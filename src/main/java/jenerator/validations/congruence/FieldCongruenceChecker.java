@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import jenerator.annotations.BooleanGenerable;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
@@ -104,7 +105,12 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	 * <tr>
 	 * <td>{@link java.lang.Character Character}</td>
 	 * </tr>
-	 *
+	 * 
+	 * <tr>
+	 * <td>{@link java.lang.Boolean Boolean}</td>
+	 * <td>{@link java.lang.BooleanGenerable BooleanGenerable}</td>
+	 * </tr>
+	 * 
 	 * <tr>
 	 * <td>{@link java.lang.Collection Collection} with Object implementing
 	 * {@link jenerator.annotations.Generable Generable} annotation</td>
@@ -128,23 +134,21 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 			HashSet<Class<?>> annotations = new HashSet<Class<?>>();
 			switch (class1.getCanonicalName()) {
 			case "java.lang.Long":
-
 			case "java.lang.Integer":
-
 			case "java.lang.Byte":
-
 			case "java.lang.Short":
 				annotations.add(NaturalNumberGenerable.class);
 				break;
 			case "java.lang.Double":
-
 			case "java.lang.Float":
 				annotations.add(DecimalNumberGenerable.class);
-
 				break;
 			case "java.lang.String":
 				annotations.add(StringGenerable.class);
-
+				break;
+			case "java.lang.Boolean":
+				annotations.add(BooleanGenerable.class);
+				break;
 			default:
 				break;
 			}

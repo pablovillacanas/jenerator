@@ -2,6 +2,7 @@ package jenerator.annotations.readers;
 
 import java.lang.annotation.Annotation;
 
+import jenerator.annotations.BooleanGenerable;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
@@ -33,6 +34,8 @@ public class AnnotationParser {
 			return new StringConstraintsReader().readValues((StringGenerable) annotation);
 		if (annotation instanceof DecimalNumberGenerable)
 			return new DecimalNumberConstraintsReader().readValues((DecimalNumberGenerable) annotation);
+		if (annotation instanceof BooleanGenerable)
+			return new BooleanConstraintsReader().readValues((BooleanGenerable) annotation);
 		return null;
 	}
 }

@@ -1,5 +1,6 @@
 package jenerator;
 
+import jenerator.annotations.BooleanGenerable;
 import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.Generable;
 import jenerator.annotations.NaturalNumberGenerable;
@@ -34,6 +35,9 @@ public class Foo {
 	@DecimalNumberGenerable(minValue = 5, maxValue = 7, precision = 13)
 	private Float float1;
 
+	@BooleanGenerable
+	private Boolean boolean1;
+
 	public Foo() {
 	}
 
@@ -47,6 +51,14 @@ public class Foo {
 
 	public Short getShort1() {
 		return short1;
+	}
+
+	public Boolean getBoolean1() {
+		return boolean1;
+	}
+
+	public void setBoolean1(Boolean boolean1) {
+		this.boolean1 = boolean1;
 	}
 
 	public void setShort1(Short short1) {
@@ -104,7 +116,8 @@ public class Foo {
 	@Override
 	public String toString() {
 		return "Foo [long1=" + long1 + ", phone=" + phone + ", long2=" + long2 + ", short1=" + short1 + ", integer1="
-				+ integer1 + ", byte1=" + byte1 + ", double1=" + double1 + ", float1=" + float1 + "]";
+				+ integer1 + ", byte1=" + byte1 + ", double1=" + double1 + ", float1=" + float1 + ", boolean1="
+				+ boolean1 + "]";
 	}
 
 }

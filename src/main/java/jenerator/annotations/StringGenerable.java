@@ -17,16 +17,24 @@ public @interface StringGenerable {
 
 	/**
 	 * Minimum length of the string generated. Inclusive.
+	 * 
 	 * @return
 	 */
 	int minLenght() default DEFAULT_MIN_VALUE;
 
 	/**
 	 * Maximum length of the string generated. Inclusive.
+	 * 
 	 * @return
 	 */
 	int maxLenght() default DEFAULT_MAX_VALUE;
 
+	/**
+	 * Format of string generated. Default {@link StringSimpleFormat.ONLY_LETTERS ONLY_LETTERS}
+	 * 
+	 * @return the format of string that has to be generated.
+	 * @see StringSimpleFormat
+	 */
 	StringSimpleFormat style() default StringSimpleFormat.ONLY_LETTERS;
 
 	GenerationConstraints constraints() default @GenerationConstraints();

@@ -38,6 +38,11 @@ public abstract class ValueGenerator<T> {
 
 	public static final double CRITICAL_COVERAGE = 0.75;
 
+	public ValueGenerator(long quantity) {
+		super();
+		this.quantity = quantity;
+	}
+
 	public ValueGenerator(long quantity, CommonConstraints constraints) {
 		this.commonConstraints = constraints;
 		if(constraints == null) {

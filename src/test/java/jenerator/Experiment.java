@@ -30,22 +30,6 @@ public class Experiment {
 	}
 
 	@Test
-	public void cosas() throws NoSuchFieldException, SecurityException {
-		ArrayList<Class<?>> clases = new ArrayList<Class<?>>();
-		clases.add(Short.class);
-		clases.add(Byte.class);
-		clases.add(Integer.class);
-		for (Class<?> class1 : clases) {
-			boolean assignableFrom = getShortClass().isAssignableFrom(class1);
-			assertTrue(assignableFrom);
-		}
-	}
-
-	public Class<?> getShortClass() {
-		return Short.class;
-	}
-
-	@Test
 	public void cosas2() throws NoSuchFieldException, SecurityException {
 		double minValue = 50.5;
 		double maxValue = 55.5;

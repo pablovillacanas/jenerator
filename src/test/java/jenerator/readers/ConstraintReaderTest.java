@@ -1,10 +1,14 @@
 package jenerator.readers;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
+import jenerator.annotations.BooleanGenerable;
 import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
+import jenerator.annotations.constraints.BooleanConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.annotations.readers.AnnotationParser;
@@ -16,6 +20,9 @@ public class ConstraintReaderTest {
 
 	@StringGenerable(minLenght = 12, constraints = @GenerationConstraints(source = "hola", nullable = 0))
 	String s;
+
+	@BooleanGenerable(nullable = 0.7d, relationTrueFalse = 0.3d)
+	Boolean b;
 
 	AnnotationParser reader = new AnnotationParser();
 
@@ -40,5 +47,13 @@ public class ConstraintReaderTest {
 		assert (constraints.getNullable() == 0);
 		assert (constraints.getUnique() == false);
 		assert (constraints.getSource().equals("hola"));
+	}
+
+	@Test
+	public void BooleanGenerableParser() throws NoSuchFieldException, SecurityException {
+		BooleanGenerable annotation = getClass().getDeclaredField("b").getAnnotation(BooleanGenerable.class);
+		BooleanConstraints constraints = (BooleanConstraints) reader.parse(annotation);
+		assertEquals(0.3d, constraints.getRelationTrueFalse(), 0);
+		assertEquals(0.7d, constraints.getNullable(), 0);
 	}
 }

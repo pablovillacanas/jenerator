@@ -31,11 +31,24 @@ public class StringGenerator extends ValueGenerator<String> {
 	 * Enum that contains all the possible agrupations of characters to generate an
 	 * array
 	 * <p>
+	 * <ul>
+	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#ALPHANUMERIC
+	 * ALPHANUMERIC}</li>
+	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#ONLY_DIGITS
+	 * ONLY_DIGITS}</li>
+	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#ONLY_LETTERS
+	 * ONLY_LETTERS}</li>
+	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#DIGITS_AND_LETTERS
+	 * DIGITS_AND_LETTERS}</li>
+	 * </ul>
 	 * 
 	 * @author Pablo Villacanas
 	 *
 	 */
 	public static enum StringSimpleFormat {
+		/**
+		 * Contains ASCII characters from 33 to 127.
+		 */
 		ALPHANUMERIC("alpha"), ONLY_DIGITS("digits"), ONLY_LETTERS("letters"), DIGITS_AND_LETTERS("digits_letters");
 
 		private List<Character> characters = new ArrayList<Character>();
@@ -81,10 +94,7 @@ public class StringGenerator extends ValueGenerator<String> {
 		}
 
 		private void getAlphaNumerics() {
-			for (char c = 33; c < 48; c++) {
-				characters.add(c);
-			}
-			for (char c = 58; c < 65; c++) {
+			for (char c = 33; c < 127; c++) {
 				characters.add(c);
 			}
 		}

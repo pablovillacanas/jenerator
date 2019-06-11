@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import jenerator.Jenerator;
 import jenerator.JeneratorException;
 import jenerator.annotations.Generable;
+import jenerator.annotations.constraints.BooleanConstraints;
 import jenerator.annotations.constraints.Constraints;
 import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
@@ -25,6 +26,7 @@ import jenerator.configuration.filters.GenerableAnnotationsFilter;
 import jenerator.configuration.filters.GenerableFieldsFilter;
 import jenerator.configuration.filters.GenerableFieldsFilter.FieldFilterType;
 import jenerator.engine.exceptions.CoverageExceededException;
+import jenerator.engine.generators.BooleanGenerator;
 import jenerator.engine.generators.DecimalNumberGenerator;
 import jenerator.engine.generators.NaturalNumberGenerator;
 import jenerator.engine.generators.StringGenerator;
@@ -119,6 +121,8 @@ public class GeneratorController {
 			}
 		} else if (String.class.isAssignableFrom(fieldType)) {
 			valueGenerator = new StringGenerator(quantity, (StringConstraints) constraints);
+		} else if (Boolean.class.isAssignableFrom(fieldType)) {
+			valueGenerator = new BooleanGenerator(quantity, (BooleanConstraints) constraints);
 		} else if (Collection.class.isAssignableFrom(fieldType)) {
 			// TODO creamos un nuevo Generator controller solo si su parametrizada es
 			// Generable o un tipo soportado por el framework
