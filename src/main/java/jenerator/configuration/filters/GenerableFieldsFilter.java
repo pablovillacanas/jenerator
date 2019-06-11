@@ -24,8 +24,8 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 		 * <p>
 		 * This predicate filters all fields that do not have a
 		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation and could be
-		 * generated. See the list of fields that could be generated at {@link
-		 * jenerator.validations.congruence.FieldCongruenceChecker.ConcordantAnnotationRetriever
+		 * generated. See the list of fields that could be generated at
+		 * {@link jenerator.validations.congruence.FieldCongruenceChecker.ConcordantAnnotationRetriever
 		 * RetrieveConcordantAnnotation}
 		 * </p>
 		 */
