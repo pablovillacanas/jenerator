@@ -1,5 +1,7 @@
 package jenerator.engine.generators;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -23,5 +25,6 @@ public class ValueGeneratorTest {
 		GeneratorController generatorController = new GeneratorController(arrayList);
 		generatorController.process();
 		System.out.println(foo);
+		assertTrue(true);
 	}
 }
