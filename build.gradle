@@ -9,21 +9,17 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
-    id "info.solidsoft.pitest" version '1.1.11'
+    id 'net.saliman.cobertura' version '2.3.1'
     id 'com.github.kt3k.coveralls' version '2.8.2'
 }
+
+cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
     mavenCentral()
-}
-
-
-pitest {
-    timestampedReports = false
-    outputFormats = ['XML']
 }
 
 dependencies {

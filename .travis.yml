@@ -4,4 +4,4 @@ jdk:
         - oraclejdk8
 
 after_success: 
-        - ./gradlew pitest coveralls
+        - ./gradlew covertura coveralls
