@@ -1,5 +1,7 @@
 package jenerator.validations;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 import jenerator.validations.POJOValidationTestsCases.ClassWellFormedWithExplicitConstructor;
@@ -13,12 +15,12 @@ public class POJOValidationTest {
 
 	@Test
 	public void testAllOk() throws POJOValidationException {
-		POJOValidator.isPOJO(ClassWellFormedWithExplicitConstructor.class);
+		assertTrue(POJOValidator.isPOJO(ClassWellFormedWithExplicitConstructor.class));
 	}
 
 	@Test
 	public void testAllOk2() throws POJOValidationException {
-		POJOValidator.isPOJO(ClassWellFormedWithoutExplicitConstructor.class);
+		assertTrue(POJOValidator.isPOJO(ClassWellFormedWithoutExplicitConstructor.class));
 	}
 
 	@Test(expected = POJOValidationException.class)

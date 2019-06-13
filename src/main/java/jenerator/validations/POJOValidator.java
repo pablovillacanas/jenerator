@@ -67,7 +67,7 @@ public class POJOValidator {
 			int modifiers = field.getModifiers();
 			// If field is private and it is not final or static, it must have a setter and
 			// a getter.
-			if (Modifier.isPrivate(modifiers) && !Modifier.isFinal(modifiers) || !Modifier.isStatic(modifiers)) {
+			if (!field.isSynthetic() && Modifier.isPrivate(modifiers) && !Modifier.isFinal(modifiers) || !Modifier.isStatic(modifiers)) {
 				return true;
 			} else {
 				return false;
