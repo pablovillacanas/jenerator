@@ -8,6 +8,8 @@ Jenerator is a simple library that allows developers to create random instances 
   - Constraints, field by field, the possibles values that the API can generate for each field, including percent of nulls or if it has to be unique.
   - Provide possible values for each field by passing a text file.
 
+# Add the dependency to your project [![](https://jitpack.io/v/PabloVillacanhas/jenerator.svg)](https://jitpack.io/#PabloVillacanhas/jenerator)
+
 # Start now
 
 You can start right now to generate random instances of your classes. First mark your class as generable.
