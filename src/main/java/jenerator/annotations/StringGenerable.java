@@ -12,8 +12,8 @@ import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
 @Target(FIELD)
 public @interface StringGenerable {
 
-	public final int DEFAULT_MIN_VALUE = 5;
-	public final int DEFAULT_MAX_VALUE = 10;
+	int DEFAULT_MIN_VALUE = 5;
+	int DEFAULT_MAX_VALUE = 10;
 
 	/**
 	 * Minimum length of the string generated. Inclusive.
@@ -30,7 +30,8 @@ public @interface StringGenerable {
 	int maxLenght() default DEFAULT_MAX_VALUE;
 
 	/**
-	 * Format of string generated. Default {@link StringSimpleFormat.ONLY_LETTERS ONLY_LETTERS}
+	 * Format of string generated. Default {@link StringSimpleFormat.ONLY_LETTERS
+	 * ONLY_LETTERS}
 	 * 
 	 * @return the format of string that has to be generated.
 	 * @see StringSimpleFormat

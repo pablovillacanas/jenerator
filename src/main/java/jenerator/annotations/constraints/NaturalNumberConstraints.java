@@ -2,8 +2,8 @@ package jenerator.annotations.constraints;
 
 public class NaturalNumberConstraints extends CommonConstraints {
 
-	private long minValue = Long.MIN_VALUE;
-	private long maxValue = Long.MAX_VALUE;
+	private long minValue = constraintsConfiguration.getMinNaturalValue();
+	private long maxValue = constraintsConfiguration.getMaxNaturalValue();
 
 	public void setMinValue(long minValue) {
 		this.minValue = minValue;

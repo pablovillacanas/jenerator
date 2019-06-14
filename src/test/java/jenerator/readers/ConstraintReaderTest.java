@@ -12,8 +12,11 @@ import jenerator.annotations.constraints.BooleanConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.annotations.readers.AnnotationParser;
+import jenerator.configuration.JeneratorConfiguration;
 
 public class ConstraintReaderTest {
+
+	JeneratorConfiguration jeneratorConfiguration = JeneratorConfiguration.getInstance();
 
 	@NaturalNumberGenerable(maxValue = 12, constraints = @GenerationConstraints(source = "hola", nullable = 0, unique = true))
 	Integer i;
@@ -23,6 +26,11 @@ public class ConstraintReaderTest {
 
 	@BooleanGenerable(nullable = 0.7d, relationTrueFalse = 0.3d)
 	Boolean b;
+
+	Integer ic;
+
+	@StringGenerable
+	String sc;
 
 	AnnotationParser reader = new AnnotationParser();
 

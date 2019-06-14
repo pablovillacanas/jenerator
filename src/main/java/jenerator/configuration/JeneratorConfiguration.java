@@ -1,5 +1,6 @@
 package jenerator.configuration;
 
+import jenerator.configuration.constraints.ConstraintsConfiguration;
 import jenerator.configuration.filters.GenerableAnnotationsFilter;
 import jenerator.configuration.filters.GenerableAnnotationsFilter.AnnotationFilterType;
 
@@ -15,8 +16,8 @@ import jenerator.configuration.filters.GenerableAnnotationsFilter.AnnotationFilt
 public class JeneratorConfiguration {
 
 	private static JeneratorConfiguration engineConfiguration;
-//	private GenerableFieldsFilter generableFieldsFilter = new GenerableFieldsFilter();
 	private GenerableAnnotationsFilter generableAnnotationFilter = new GenerableAnnotationsFilter();
+	private ConstraintsConfiguration constraintsConfiguration = new ConstraintsConfiguration();
 
 	private JeneratorConfiguration() {
 	}
@@ -24,19 +25,10 @@ public class JeneratorConfiguration {
 	public static JeneratorConfiguration getInstance() {
 		if (engineConfiguration == null) {
 			engineConfiguration = new JeneratorConfiguration();
-//			engineConfiguration.setGenerableFieldsFilterType(FieldFilterType.EXPLICITFILTER);
 			engineConfiguration.setGenerableAnnotationFilterType(AnnotationFilterType.STANDARD);
 		}
 		return engineConfiguration;
 	}
-
-//	public GenerableFieldsFilter getGenerableFieldsFilter() {
-//		return generableFieldsFilter;
-//	}
-//
-//	public void setGenerableFieldsFilterType(FieldFilterType fieldFilterType) {
-//		generableFieldsFilter.setFilterType(fieldFilterType);
-//	}
 
 	/**
 	 * @return the generableAnnotationFilter
@@ -50,6 +42,20 @@ public class JeneratorConfiguration {
 	 */
 	public void setGenerableAnnotationFilterType(AnnotationFilterType filterType) {
 		this.generableAnnotationFilter.setAnnotationFilterType(filterType);
+	}
+
+	/**
+	 * @return the constraintsConfiguration
+	 */
+	public ConstraintsConfiguration getConstraintsConfiguration() {
+		return constraintsConfiguration;
+	}
+
+	/**
+	 * @param constraintsConfiguration the constraintsConfiguration to set
+	 */
+	public void setConstraintsConfiguration(ConstraintsConfiguration constraintsConfiguration) {
+		this.constraintsConfiguration = constraintsConfiguration;
 	}
 
 }
