@@ -27,7 +27,7 @@ jacocoTestReport {
     afterEvaluate {
 	    classDirectories = files(classDirectories.files.collect {
 	        fileTree(dir: it,
-	                exclude: ['jenerator/annotations/*'])
+	                exclude: ['jenerator/annotations/*', '**/exceptions/**'])
 	    })
     }
 }
