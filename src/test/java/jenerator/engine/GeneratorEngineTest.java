@@ -23,4 +23,11 @@ public class GeneratorEngineTest {
 			System.out.println(hierarchicalGeneration.get(i));
 		}
 	}
+
+	@Test
+	public void generateEmpty() throws JeneratorException {
+		Jenerator.generateEmpty(Foo.class);
+		Jenerator.generateEmpty(Foo.class, 2);
+		Jenerator.generateOne(Foo.class);
+	}
 }
