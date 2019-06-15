@@ -92,4 +92,18 @@ public class DecimalNumberGeneratorTest {
 				numberConstraints);
 		nng.generate();
 	}
+	
+	@Test(expected = CoverageExceededException.class)
+	public void testNumbersOverCriticalInSource()
+			throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
+		numberConstraints.setMinValue(-2);
+		numberConstraints.setMaxValue(0);
+		numberConstraints.setUnique(true);
+		numberConstraints.setNullable(0.0);
+		numberConstraints.setPrecision((short) 1);
+		numberConstraints.setSource("numbers.txt");
+		DecimalNumberGenerator<Number> nng = new DecimalNumberGenerator<Number>(Float.class, numGenerations,
+				numberConstraints);
+		nng.generate();
+	}
 }

@@ -101,4 +101,17 @@ public class NaturalNumberGeneratorTest {
 				numberConstraints);
 		nng.generate();
 	}
+
+	@Test(expected = CoverageExceededException.class)
+	public void testNumbersOverCriticalInSource()
+			throws NumberIsTooLargeException, CoverageExceededException, ElementFromSourceException {
+		numberConstraints.setMinValue(-2);
+		numberConstraints.setMaxValue(0);
+		numberConstraints.setUnique(true);
+		numberConstraints.setNullable(0.0);
+		numberConstraints.setSource("numbers.txt");
+		NaturalNumberGenerator<Number> nng = new NaturalNumberGenerator<Number>(Integer.class, numGenerations,
+				numberConstraints);
+		nng.generate();
+	}
 }
