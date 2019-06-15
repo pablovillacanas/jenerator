@@ -4,9 +4,16 @@ import jenerator.engine.generators.StringGenerator.StringSimpleFormat;
 
 public class StringConstraints extends CommonConstraints {
 
-	private long minLenght = constraintsConfiguration.getMinLenght();
-	private long maxLength = constraintsConfiguration.getMaxLenght();
-	private StringSimpleFormat stringSimpleFormat = StringSimpleFormat.ONLY_LETTERS;
+	private long minLenght;
+	private long maxLength;
+	private StringSimpleFormat stringSimpleFormat;
+
+	public StringConstraints() {
+		super();
+		setMinLenght(constraintsConfiguration.getMinLenght());
+		setMaxLenght(constraintsConfiguration.getMaxLenght());
+		setStringSimpleFormat(StringSimpleFormat.ONLY_LETTERS);
+	}
 
 	public long getMinLenght() {
 		return minLenght;

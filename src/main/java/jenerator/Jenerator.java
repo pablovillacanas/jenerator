@@ -55,7 +55,8 @@ public class Jenerator {
 		// Create n empty instance of that class
 		List<T> instances = new ArrayList<T>();
 		try {
-			instances.add(class1.getConstructor().newInstance());
+			for (int i = 0; i < numInstances; i++)
+				instances.add(class1.getConstructor().newInstance());
 		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | SecurityException e) {
 			e.printStackTrace();

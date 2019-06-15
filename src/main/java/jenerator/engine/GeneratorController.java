@@ -131,7 +131,7 @@ public class GeneratorController {
 			try {
 				Class<?> forName = Class.forName(fieldType.getCanonicalName());
 				try {
-					return (Collection<? extends E>) Jenerator.generate(forName, 1);
+					return (Collection<? extends E>) Jenerator.generate(forName, quantity);
 				} catch (JeneratorException e) {
 					e.printStackTrace();
 				}

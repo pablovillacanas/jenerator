@@ -1,5 +1,6 @@
 package jenerator.engine;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,10 +18,13 @@ public class DefaultConfigurationTest {
 	@Test
 	public void test() throws NoSuchFieldException, SecurityException, JeneratorException {
 		ConstraintsConfiguration configuration = new ConstraintsConfiguration().setMaxNaturalValue(1000)
-				.setMinNaturalValue(10).setMaxDecimalValue(20).setMinDecimalValue(0);
+				.setMinNaturalValue(10).setMaxDecimalValue(20).setMinDecimalValue(0).setDecimalPrecision((short) 3);
 		jeneratorConfiguration.setConstraintsConfiguration(configuration);
-		List<NoAnnotationFoo> nafoo = Jenerator.generate(NoAnnotationFoo.class, 2);
-		System.out.println(nafoo.get(0));
-		System.out.println(nafoo.get(1));
+		List<NoAnnotationFoo> nafoo = Jenerator.generate(NoAnnotationFoo.class, 10);
+		Iterator<NoAnnotationFoo> iterator = nafoo.iterator();
+		while (iterator.hasNext()) {
+			NoAnnotationFoo next = iterator.next();
+			System.out.println(next);
+		}
 	}
 }
