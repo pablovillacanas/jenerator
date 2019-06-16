@@ -34,6 +34,12 @@ public class StringConstraints extends CommonConstraints {
 			this.maxLength = minLenght + 5;
 	}
 
+	/**
+	 * Format of string to generate.
+	 * 
+	 * @return the format of string that has to be generated.
+	 * @see jenerator.engine.generators.StringGenerator.StringSimpleFormat
+	 */
 	public StringSimpleFormat getStringSimpleFormat() {
 		return stringSimpleFormat;
 	}

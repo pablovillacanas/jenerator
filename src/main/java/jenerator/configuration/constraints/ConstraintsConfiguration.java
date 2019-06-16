@@ -1,10 +1,26 @@
 package jenerator.configuration.constraints;
 
 /**
+ * <p>
  * This class provides the possibility of constraint the values on that fields
- * without values specified. ALl the constrints will take on first instance this
- * values and if there are some annotation, it will take preference for its
- * default values.
+ * without annotation specified. All the constraints will take at first this
+ * values and if there are some annotation, that annotation will take preference
+ * for its default values.
+ * <p>
+ * <p>
+ * The hierarchy of constraints are, from more to less important
+ * </p>
+ * <ol>
+ * <li>ConstraintConfiguration parameter values</li>
+ * <li>Default annotation values</li>
+ * <li>Annotation explicitly defined values</li>
+ * </ol>
+ * 
+ * <p>
+ * This means that you can set a configuration with this class, but it will be
+ * only applied for the generation of fields that will not have a annotation
+ * over them, even if there are empty.
+ * </p>
  */
 public class ConstraintsConfiguration {
 

@@ -26,6 +26,13 @@ public class DecimalNumberConstraints extends CommonConstraints {
 		return maxValue;
 	}
 
+	/**
+	 * <p>
+	 * Number of floating numbers in the generation of values.
+	 * </p>
+	 * 
+	 * @return the number of digits in the decimal part to be generated.
+	 */
 	public short getPrecision() {
 		return precision;
 	}
