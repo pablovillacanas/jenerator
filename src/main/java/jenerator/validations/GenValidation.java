@@ -11,7 +11,7 @@ import jenerator.configuration.JeneratorConfiguration;
 import jenerator.configuration.filters.GenerableFieldsFilter;
 import jenerator.configuration.filters.GenerableFieldsFilter.FieldFilterType;
 import jenerator.validations.congruence.FieldCongruenceChecker;
-import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
+import jenerator.validations.congruence.exceptions.FieldCongruenceException;
 import jenerator.validations.congruence.exceptions.CongruenceException;
 import jenerator.validations.exceptions.NoGenerableClassException;
 import jenerator.validations.exceptions.ValidationException;
@@ -34,7 +34,7 @@ public class GenValidation {
 			FieldCongruenceChecker fieldCongruenceChecker = new FieldCongruenceChecker();
 			Optional<Field> field = generableFields.stream().filter(fieldCongruenceChecker).findFirst();
 			if (field.isPresent()) {
-				throw new CongruenceException(new Annotation_FieldCongruenceException(field.get()));
+				throw new CongruenceException(new FieldCongruenceException(field.get()));
 			}
 		} else {
 			throw new NoGenerableClassException(class1);

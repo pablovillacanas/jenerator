@@ -2,40 +2,40 @@ package jenerator.validations.congruence.exceptions;
 
 import java.lang.reflect.Field;
 
-public class Annotation_FieldCongruenceException extends CongruenceException {
+public class FieldCongruenceException extends CongruenceException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Annotation_FieldCongruenceException() {
+	public FieldCongruenceException() {
 		this("Annotation does not match with the type of the field attached on");
 		// TODO Auto-generated constructor stub
 	}
 
-	public Annotation_FieldCongruenceException(String message, Throwable cause, boolean enableSuppression,
+	public FieldCongruenceException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Annotation_FieldCongruenceException(String message, Throwable cause) {
+	public FieldCongruenceException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Annotation_FieldCongruenceException(String message) {
+	public FieldCongruenceException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Annotation_FieldCongruenceException(Field field) {
+	public FieldCongruenceException(Field field) {
 		this("The field " + field.getName() + " in class " + field.getDeclaringClass().getCanonicalName()
 				+ " has a no correct annotation attached on");
 	}
 
-	public Annotation_FieldCongruenceException(Throwable cause) {
+	public FieldCongruenceException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}

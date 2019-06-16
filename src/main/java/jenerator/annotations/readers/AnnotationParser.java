@@ -9,8 +9,13 @@ import jenerator.annotations.constraints.Constraints;
 
 /**
  * <p>
- * This class provides the constraints of Annotation
+ * This class provides the constraints of an Annotation.
  * </p>
+ * <p>
+ * You must be aware that this class loads the default values of the annotation
+ * read, and those default values take more relevance that default values
+ * defined by the JeneratorConfiguration class.
+ * <p>
  * 
  * @author Pablo Villacanas
  *

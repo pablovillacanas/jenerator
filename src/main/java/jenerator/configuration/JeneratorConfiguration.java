@@ -5,8 +5,8 @@ import jenerator.configuration.filters.GenerableAnnotationsFilter.AnnotationFilt
 
 /**
  * <p>
- * This class must provide a minimal configuration, like if the developer is
- * going to use our annotations or Hibernate ones.
+ * This class provides a minimal configuration for diferent parameters of the
+ * object generation.
  * </p>
  * 
  * @author Pablo Villacanas
