@@ -13,10 +13,18 @@ import jenerator.validations.exceptions.FieldValidationException;
 import jenerator.validations.exceptions.NoEmptyConstructorException;
 import jenerator.validations.exceptions.POJOValidationException;
 
+/**
+ * <p>
+ * This class ensure that another one is a bean or a POJO (Plain Old Java
+ * Object).
+ * </p>
+ * 
+ * @author Pablo Villacanas
+ *
+ */
 public class POJOValidator {
 
-	public static <T extends Object> boolean isPOJO(Class<T> class1)
-			throws POJOValidationException {
+	public static <T extends Object> boolean isPOJO(Class<T> class1) throws POJOValidationException {
 		if (hasValidConstructor(class1) && isEncapsulated(class1))
 			return true;
 		else
@@ -33,9 +41,9 @@ public class POJOValidator {
 	 * constructor has one argument that refers to that parent.
 	 * </p>
 	 * 
-	 * @param <T>
-	 * @param class1
-	 * @return
+	 * @param <T>    type parameter of the class
+	 * @param class1 the class tested to be encapsulated.
+	 * @return true if has a valid constructor, false otherwise.
 	 * @throws POJOValidationException if class not have a correct non-arg
 	 *                                 constructor declared.
 	 */
@@ -54,20 +62,22 @@ public class POJOValidator {
 	/**
 	 * <p>
 	 * This method filters all private fields that do not have final or static
-	 * modifiers and ensures that have a setter and a getter
+	 * modifiers and ensures that have a setter and a getter.
 	 * </p>
 	 * 
-	 * @param <T>
-	 * @param class1
-	 * @return
-	 * @throws POJOValidationException 
+	 * @param <T>    type parameter of the class
+	 * @param class1 the class tested to be encapsulated.
+	 * @return true if fields are encapsulated, false otherwise
+	 * @throws POJOValidationException if class have not some field without proper
+	 *                                 getters and setters.
 	 */
 	public static <T extends Object> boolean isEncapsulated(Class<T> class1) throws POJOValidationException {
 		List<Field> privateFilteredFields = getDeclaredFields(class1).stream().filter(field -> {
 			int modifiers = field.getModifiers();
 			// If field is private and it is not final or static, it must have a setter and
 			// a getter.
-			if (!field.isSynthetic() && Modifier.isPrivate(modifiers) && !Modifier.isFinal(modifiers) || !Modifier.isStatic(modifiers)) {
+			if (!field.isSynthetic() && Modifier.isPrivate(modifiers) && !Modifier.isFinal(modifiers)
+					|| !Modifier.isStatic(modifiers)) {
 				return true;
 			} else {
 				return false;
@@ -80,6 +90,15 @@ public class POJOValidator {
 		return true;
 	}
 
+	/**
+	 * <p>
+	 * Gets only the fields of the instance.
+	 * </p>
+	 * 
+	 * @param <T>    type parameter of the class
+	 * @param class1 the class where fields generable come from.
+	 * @return a list of fields declared by the Class
+	 */
 	private static <T extends Object> ArrayList<Field> getDeclaredFields(Class<T> class1) {
 		return (ArrayList<Field>) Arrays.asList(class1.getDeclaredFields()).stream()
 				.filter(field -> !field.getName().startsWith("this$")).collect(Collectors.toList());

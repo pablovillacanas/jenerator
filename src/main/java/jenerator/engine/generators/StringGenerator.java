@@ -28,17 +28,17 @@ public class StringGenerator extends ValueGenerator<String> {
 
 	/**
 	 * <p>
-	 * Enum that contains all the possible agrupations of characters to generate an
-	 * array
-	 * <p>
+	 * Enumeration that contains all the possible groups of characters to generate
+	 * an array.
+	 * </p>
 	 * <ul>
-	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#ALPHANUMERIC
+	 * <li>{@link jenerator.engine.generators.StringGenerator.StringSimpleFormat#ALPHANUMERIC
 	 * ALPHANUMERIC}</li>
-	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#ONLY_DIGITS
+	 * <li>{@link jenerator.engine.generators.StringGenerator.StringSimpleFormat#ONLY_LETTERS
 	 * ONLY_DIGITS}</li>
-	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#ONLY_LETTERS
+	 * <li>{@link jenerator.engine.generators.StringGenerator.StringSimpleFormat#ONLY_LETTERS
 	 * ONLY_LETTERS}</li>
-	 * <li>{@link jenerator.engine.generators.SringSimpleFormat#DIGITS_AND_LETTERS
+	 * <li>{@link jenerator.engine.generators.StringGenerator.StringSimpleFormat#DIGITS_AND_LETTERS
 	 * DIGITS_AND_LETTERS}</li>
 	 * </ul>
 	 * 
@@ -143,17 +143,6 @@ public class StringGenerator extends ValueGenerator<String> {
 		return null;
 	}
 
-	/**
-	 * <p>
-	 * Variations with repetition. Sumatory of all variation with repetitions within
-	 * range - both inclusive.
-	 * </p>
-	 * 
-	 * @param minLenght
-	 * @param maxLenght
-	 * @param sizeGroup
-	 * @return
-	 */
 	@Override
 	protected long getPossibilities() {
 		int sizegroup = constraints.getStringSimpleFormat().characters.size();

@@ -19,6 +19,8 @@ public @interface DecimalNumberGenerable {
 	 * Maximum value included in the generation of values. Default is
 	 * Double.MAX_VALUE.
 	 * </p>
+	 * 
+	 * @return the maximum value generated for the instances being generated
 	 */
 	double maxValue() default MAX_DEFAULT;
 
@@ -27,6 +29,8 @@ public @interface DecimalNumberGenerable {
 	 * Minimum value included in the generation of values. Default is
 	 * Double.MIN_VALUE.
 	 * </p>
+	 * 
+	 * @return the minimum value generated for the instances being generated
 	 */
 	double minValue() default MIN_DEFAULT;
 
@@ -35,6 +39,8 @@ public @interface DecimalNumberGenerable {
 	 * Number of floating numbers in the generation of values. If it is not set
 	 * default is 2.
 	 * </p>
+	 * 
+	 * @return the number of digits in the decimal part to be generated.
 	 */
 	short precision() default PRECISION;
 

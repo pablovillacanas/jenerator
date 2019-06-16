@@ -27,6 +27,8 @@ public @interface BooleanGenerable {
 	 * false. Also you can no determine this value setting it to one less than 0. In
 	 * this case, true and false will be randomly generated.
 	 * </p>
+	 * 
+	 * @return the relation between true and false values
 	 */
 	double relationTrueFalse() default 0.5d;
 
@@ -37,6 +39,8 @@ public @interface BooleanGenerable {
 	 * out of 10 values will be null and 7 out of 10 will be calculated by the
 	 * relation defined in relationTrueFalse.
 	 * </p>
+	 * 
+	 * @return the relation of nullable values
 	 */
 	double nullable() default 0.0d;
 }

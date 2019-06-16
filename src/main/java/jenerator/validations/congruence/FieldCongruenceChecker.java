@@ -13,7 +13,6 @@ import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
 import jenerator.configuration.JeneratorConfiguration;
-import jenerator.validations.congruence.exceptions.Annotation_FieldCongruenceException;
 
 /**
  * <p>
@@ -35,12 +34,9 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	 * not exist conflicts between annotations type and field type.
 	 * </p>
 	 * 
-	 * @param <T>
-	 * @param fields
+	 * @param field field to be tested for congruence with its annotation.
 	 * @return true if the field does does not fit with the annotation attached
 	 *         with, false otherwise
-	 * @throws Annotation_FieldCongruenceException if the fields type does not match
-	 *                                             with the annotation type.
 	 */
 
 	@SuppressWarnings("unlikely-arg-type")
@@ -66,13 +62,14 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	 * </p>
 	 * 
 	 * <table border="1">
+	 * <caption>Java types and their correspondent annotations</caption>
 	 * <tr>
 	 * <th>Java Type</th>
 	 * <th>Annotation Type</th>
 	 * </tr>
 	 * <tr>
 	 * <td>{@link java.lang.Long Long}</td>
-	 * <td rowspan="4">{@link java.lang.NaturalNumberGenerable
+	 * <td rowspan="4">{@link jenerator.annotations.NaturalNumberGenerable
 	 * NaturalNumberGenerable}</td>
 	 * </tr>
 	 * <tr>
@@ -89,7 +86,7 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	 *
 	 * <tr>
 	 * <td>{@link java.lang.Double Double}</td>
-	 * <td rowspan="2">{@link java.lang.DecimalNumberGenerable
+	 * <td rowspan="2">{@link jenerator.annotations.DecimalNumberGenerable
 	 * DecimalNumberGenerable}</td>
 	 * </tr>
 	 *
@@ -99,7 +96,8 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	 *
 	 * <tr>
 	 * <td>{@link java.lang.String String}</td>
-	 * <td rowspan="2">{@link java.lang.StringGenerable StringGenerable}</td>
+	 * <td rowspan="2">{@link jenerator.annotations.StringGenerable
+	 * StringGenerable}</td>
 	 * </tr>
 	 *
 	 * <tr>
@@ -108,19 +106,14 @@ public class FieldCongruenceChecker implements Predicate<Field> {
 	 * 
 	 * <tr>
 	 * <td>{@link java.lang.Boolean Boolean}</td>
-	 * <td>{@link java.lang.BooleanGenerable BooleanGenerable}</td>
+	 * <td>{@link jenerator.annotations.BooleanGenerable BooleanGenerable}</td>
 	 * </tr>
 	 * 
-	 * <tr>
-	 * <td>{@link java.lang.Collection Collection} with Object implementing
-	 * {@link jenerator.annotations.Generable Generable} annotation</td>
-	 * <td>{@link java.lang.CollectionGenerabe CollectionGenerable}</td>
-	 * </tr>
 	 *
 	 * <tr>
 	 * <td>{@link java.lang.Object Object} with
 	 * {@link jenerator.annotations.Generable Generable} annotation</td>
-	 * <td>{@link java.lang.StringGenerable StringGenerable}</td>
+	 * <td>{@link jenerator.annotations.StringGenerable StringGenerable}</td>
 	 * </tr>
 	 * </table>
 	 * 

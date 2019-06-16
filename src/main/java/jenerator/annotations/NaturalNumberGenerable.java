@@ -18,6 +18,8 @@ public @interface NaturalNumberGenerable {
 	 * Maximum value included in the generation of values. Default is
 	 * Long.MAX_VALUE.
 	 * </p>
+	 * 
+	 * @return the maximum value generated for the instances being generated.
 	 */
 	long maxValue() default MAX_DEFAULT;
 
@@ -26,6 +28,9 @@ public @interface NaturalNumberGenerable {
 	 * Maximum value included in the generation of values. Default is
 	 * Long.MAX_VALUE.
 	 * </p>
+	 * 
+	 * @return the minimum value generated for the instances being generated.
+	 * 
 	 */
 	long minValue() default MIN_DEFAULT;
 

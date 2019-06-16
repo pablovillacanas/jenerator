@@ -26,6 +26,9 @@ public class AnnotationParser {
 	 * You must cast the Constraint Object to the correct Constraint type to have
 	 * access to all the parameters of the constraint.
 	 * </p>
+	 * 
+	 * @param annotation The annotation to be parsed
+	 * @return The constraints contained by the annotation
 	 */
 	public Constraints parse(Annotation annotation) {
 		if (annotation instanceof NaturalNumberGenerable)

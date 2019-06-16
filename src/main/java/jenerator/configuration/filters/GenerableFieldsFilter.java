@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
-import jenerator.annotations.JenAnnotations;
+import jenerator.annotations.Generable;
 import jenerator.annotations.NoGenerable;
 
 public class GenerableFieldsFilter implements Predicate<Field> {
@@ -15,7 +15,7 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 		 * <p>
 		 * This predicate filters all fields that have one annotation of type
 		 * jenerator.annotations and does not have a
-		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation
+		 * {@link jenerator.annotations.NoGenerable NoGenerable} annotation
 		 * </p>
 		 */
 		EXPLICITFILTER,
@@ -23,8 +23,9 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 		/**
 		 * <p>
 		 * This predicate filters all fields that do not have a
-		 * {@link jenerator.annotation.NoGenerable NoGenerable} annotation and could be
-		 * generated. See the list of fields that could be generated at
+		 * {@link jenerator.annotations.NoGenerable NoGenerable} annotation and could be
+		 * generated. See the list of fields that could be generated with their
+		 * respective annotations at
 		 * {@link jenerator.validations.congruence.FieldCongruenceChecker.ConcordantAnnotationRetriever
 		 * RetrieveConcordantAnnotation}
 		 * </p>
@@ -49,7 +50,7 @@ public class GenerableFieldsFilter implements Predicate<Field> {
 				else
 					return false;
 			case EXPLICITFILTER:
-				String packageName = JenAnnotations.getPackageName();
+				String packageName = Generable.class.getPackage().getName();
 				Annotation[] fieldAnnotations = field.getAnnotations();
 				for (int i = 0; i < fieldAnnotations.length; i++) {
 					Class<? extends Annotation> class1 = fieldAnnotations[i].annotationType();

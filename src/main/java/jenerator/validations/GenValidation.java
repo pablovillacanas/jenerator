@@ -20,9 +20,8 @@ public class GenValidation {
 
 	JeneratorConfiguration engineConfiguration = JeneratorConfiguration.getInstance();
 
-	public GenValidation(JeneratorConfiguration engineConfiguration) {
+	public GenValidation() {
 		super();
-		this.engineConfiguration = engineConfiguration;
 	}
 
 	public void validate(Class<?> class1, long numInstances) throws ValidationException, CongruenceException {
