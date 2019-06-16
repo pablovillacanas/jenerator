@@ -18,7 +18,7 @@ public class GenerableAnnotationsFilter implements Predicate<Annotation> {
 		/**
 		 * <p>
 		 * Gets only proper jenerator annotations
-		 * <p>
+		 * </p>
 		 */
 		STANDARD,
 

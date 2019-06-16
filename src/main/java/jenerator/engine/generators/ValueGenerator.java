@@ -40,7 +40,7 @@ public abstract class ValueGenerator<T> {
 
 	public ValueGenerator(long quantity, CommonConstraints constraints) {
 		this.commonConstraints = constraints;
-		if(constraints == null) {
+		if (constraints == null) {
 			commonConstraints = new CommonConstraints();
 		}
 		this.quantity = quantity;
@@ -63,9 +63,10 @@ public abstract class ValueGenerator<T> {
 	 * 
 	 * @return A number representing the relation between the possibilities of
 	 *         values to generate and the quantity of values desired.
-	 * @throws CoverageExceededException  if number of values exceeds the
-	 *                                    possibilities for unique values in case.
-	 * @throws NoSuitableElementsOnSource
+	 * @throws CoverageExceededException if number of values exceeds the
+	 *                                   possibilities for unique values in case.
+	 * @throws CoverageExceededException if there are less elements that
+	 *                                   possibilities developer wants to generate.
 	 */
 	protected double calculateCoverage() throws CoverageExceededException {
 		long possibilities = getPossibilities();
@@ -96,8 +97,7 @@ public abstract class ValueGenerator<T> {
 	 * unique.
 	 * </p>
 	 * 
-	 * @return all the possibilities within constraints settled
-	 * @throws NoSuitableElementsOnSource
+	 * @return all the possibilities within constraints setted.
 	 */
 	protected abstract long getPossibilities();
 
@@ -115,10 +115,12 @@ public abstract class ValueGenerator<T> {
 	}
 
 	/**
+	 * <p>
 	 * Control if the container has the same number of elements the developer
 	 * require.
+	 * </p>
 	 * 
-	 * @return true if container is filled, false otherwise
+	 * @return true if container is filled, false otherwise.
 	 */
 	protected boolean containerIsFilled() {
 		return valueContainer.size() == quantity;
@@ -130,10 +132,10 @@ public abstract class ValueGenerator<T> {
 
 	/**
 	 * <p>
-	 * Sets the value container with the null values the developer desires
+	 * Sets the value container with the null values the developer desires.
 	 * </p>
 	 * 
-	 * @param valueContainer
+	 * @param valueContainer The container of values for this ValueGenerator.
 	 */
 	protected void setValueContainer(Collection<T> valueContainer) {
 		this.valueContainer = valueContainer;
@@ -167,15 +169,18 @@ public abstract class ValueGenerator<T> {
 	}
 
 	/**
-	 * Loads value container untill fill it
+	 * Loads value container until it is filled
 	 */
 	public abstract void valuesRandomGenerator();
 
 	/**
 	 * Loads all values on value container
+	 * 
+	 * @return a list with all possible values.
 	 */
 	public abstract List<T> loadAllValues();
 
+	// TODO generate a good documentation for this method if possible
 	public abstract Collection<T> generateFromSource() throws CoverageExceededException, ElementFromSourceException;
 
 	public void setQuantity(long quantity) {

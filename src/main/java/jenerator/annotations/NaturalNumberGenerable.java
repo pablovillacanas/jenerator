@@ -10,9 +10,29 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 public @interface NaturalNumberGenerable {
 
-	long maxValue() default Long.MAX_VALUE;
+	long MAX_DEFAULT = Long.MAX_VALUE;
+	long MIN_DEFAULT = Long.MIN_VALUE;
 
-	long minValue() default Long.MIN_VALUE;
+	/**
+	 * <p>
+	 * Maximum value included in the generation of values. Default is
+	 * Long.MAX_VALUE.
+	 * </p>
+	 * 
+	 * @return the maximum value generated for the instances being generated.
+	 */
+	long maxValue() default MAX_DEFAULT;
+
+	/**
+	 * <p>
+	 * Maximum value included in the generation of values. Default is
+	 * Long.MAX_VALUE.
+	 * </p>
+	 * 
+	 * @return the minimum value generated for the instances being generated.
+	 * 
+	 */
+	long minValue() default MIN_DEFAULT;
 
 	GenerationConstraints constraints() default @GenerationConstraints();
 }
