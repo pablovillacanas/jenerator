@@ -74,7 +74,6 @@ public class GeneratorController {
 					Class<?> type = method.getParameterTypes()[0];
 					Object value = values.iterator().next();
 					method.invoke(t, type.cast(value));
-					values.remove(value);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					e.printStackTrace();
 				}
