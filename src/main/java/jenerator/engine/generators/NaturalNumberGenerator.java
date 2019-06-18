@@ -112,7 +112,8 @@ public class NaturalNumberGenerator<E> extends ValueGenerator<Number> {
 		}
 
 		if (!constraints.getUnique()) {
-			setValueContainer(collectedPossibilities);
+			setValueContainer(new ArrayList<Number>());
+			return collectedPossibilities;
 		} else {
 			collectedPossibilities = collectedPossibilities.stream().collect(Collectors.toSet());
 			if (collectedLongPossibilities.size() < getValuesToGenerate()) {

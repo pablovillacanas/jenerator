@@ -54,6 +54,7 @@ public class StringGenerator extends ValueGenerator<String> {
 		private List<Character> characters = new ArrayList<Character>();
 		private Pattern pattern;
 
+		// TODO add whitespaces after and clear them
 		private StringSimpleFormat(String string) {
 			switch (string) {
 			case "alpha":
@@ -166,7 +167,8 @@ public class StringGenerator extends ValueGenerator<String> {
 				return false;
 		}).collect(Collectors.toList());
 		if (!constraints.getUnique()) {
-			setValueContainer(collectedPossibilities);
+			setValueContainer(new ArrayList<String>());
+			return collectedPossibilities;
 		} else {
 			collectedPossibilities = collectedPossibilities.stream().collect(Collectors.toSet());
 			if (collectedPossibilities.size() < getValuesToGenerate()) {

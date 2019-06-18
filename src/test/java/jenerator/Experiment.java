@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
@@ -61,5 +62,4 @@ public class Experiment {
 		String typeName = type.getTypeName();
 		System.out.println(typeName);
 	}
-
 }

@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
 @Target(FIELD)
 public @interface DecimalNumberGenerable {
 
-	long MAX_DEFAULT = Long.MAX_VALUE;
-	long MIN_DEFAULT = Long.MIN_VALUE;
+	double MAX_DEFAULT = Double.MAX_VALUE;
+	double MIN_DEFAULT = Double.MIN_VALUE;
 	int PRECISION = 2;
 
 	/**

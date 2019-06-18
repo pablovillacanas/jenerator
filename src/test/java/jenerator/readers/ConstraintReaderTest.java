@@ -2,13 +2,17 @@ package jenerator.readers;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import jenerator.annotations.BooleanGenerable;
+import jenerator.annotations.DecimalNumberGenerable;
 import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.NaturalNumberGenerable;
 import jenerator.annotations.StringGenerable;
 import jenerator.annotations.constraints.BooleanConstraints;
+import jenerator.annotations.constraints.DecimalNumberConstraints;
 import jenerator.annotations.constraints.NaturalNumberConstraints;
 import jenerator.annotations.constraints.StringConstraints;
 import jenerator.annotations.readers.AnnotationParser;
@@ -31,6 +35,15 @@ public class ConstraintReaderTest {
 
 	@StringGenerable
 	String sc;
+
+	@DecimalNumberGenerable
+	Double d;
+
+//	@CollectionGenerable()
+	List<String> c;
+
+//	@CollectionGenerable(numberOfItems = -3)
+	List<String> c2;
 
 	AnnotationParser reader = new AnnotationParser();
 
@@ -64,4 +77,29 @@ public class ConstraintReaderTest {
 		assertEquals(0.3d, constraints.getRelationTrueFalse(), 0);
 		assertEquals(0.7d, constraints.getNullable(), 0);
 	}
+
+	@Test
+	public void DecimalNumberGenerableParser() throws NoSuchFieldException, SecurityException {
+		DecimalNumberGenerable annotation = getClass().getDeclaredField("d")
+				.getAnnotation(DecimalNumberGenerable.class);
+		DecimalNumberConstraints constraints = (DecimalNumberConstraints) reader.parse(annotation);
+		assertEquals(Double.MAX_VALUE, constraints.getMaxValue(), 0);
+		assertEquals(Double.MIN_VALUE, constraints.getMinValue(), 0);
+		assertEquals(2, constraints.getPrecision(), 0);
+		assertEquals(0.0d, constraints.getNullable(), 0);
+	}
+
+//	@Test
+//	public void CollectionGenerableParser() throws NoSuchFieldException, SecurityException {
+//		CollectionGenerable annotation = getClass().getDeclaredField("c").getAnnotation(CollectionGenerable.class);
+//		CollectionConstraints constraints = (CollectionConstraints) reader.parse(annotation);
+//		assertEquals(5, constraints.getNumOfItems(), 0);
+//	}
+//
+//	@Test
+//	public void CollectionNegativeItems() throws NoSuchFieldException, SecurityException {
+//		CollectionGenerable annotation = getClass().getDeclaredField("c2").getAnnotation(CollectionGenerable.class);
+//		CollectionConstraints constraints = (CollectionConstraints) reader.parse(annotation);
+//		assertEquals(0, constraints.getNumOfItems(), 0);
+//	}
 }

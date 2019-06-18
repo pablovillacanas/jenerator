@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -68,18 +69,18 @@ public class GeneratorController {
 			Collection<? extends Object> generatedValues = generateValues(fieldType, quantity, constraints);
 			method_values.put(getter, generatedValues);
 		}
-		for (Object t : instances) {
-			method_values.forEach((method, values) -> {
-				try {
+		method_values.forEach((method, values) -> {
+			try {
+				Iterator<?> iterator = values.iterator();
+				for (Object t : instances) {
 					Class<?> type = method.getParameterTypes()[0];
-					Object value = values.iterator().next();
+					Object value = iterator.next();
 					method.invoke(t, type.cast(value));
-					values.remove(value);
-				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
 				}
-			});
-		}
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	private Method retrieveGetterOf(Field field) {

@@ -107,7 +107,8 @@ public class DecimalNumberGenerator<E extends Number> extends ValueGenerator<Num
 		}
 
 		if (!constraints.getUnique()) {
-			setValueContainer(collectedPossibilities);
+			setValueContainer(new ArrayList<Number>());
+			return collectedPossibilities;
 		} else {
 			collectedPossibilities = collectedPossibilities.stream().collect(Collectors.toSet());
 			if (collectedDoublePossibilities.size() < getValuesToGenerate()) {

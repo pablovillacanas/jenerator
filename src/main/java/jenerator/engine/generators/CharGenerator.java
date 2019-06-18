@@ -23,6 +23,7 @@ public class CharGenerator extends ValueGenerator<Character> {
 		return constraints.getStringSimpleFormat().getCharacters().size();
 	}
 
+	// TODO
 	@Override
 	public Collection<Character> generateFromSource() throws CoverageExceededException, NoSuitableElementsOnSource {
 		return null;

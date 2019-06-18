@@ -13,7 +13,6 @@ import jenerator.annotations.GenerationConstraints;
 import jenerator.annotations.constraints.CommonConstraints;
 import jenerator.engine.exceptions.CoverageExceededException;
 import jenerator.engine.generators.exceptions.ElementFromSourceException;
-import jenerator.engine.generators.exceptions.NoSuitableElementsOnSource;
 import jenerator.engine.generators.exceptions.SourceNotFoundException;
 import jenerator.engine.parser.Source;
 import jenerator.engine.parser.SourceReader;
@@ -150,7 +149,11 @@ public abstract class ValueGenerator<T> {
 
 	public Collection<T> generate() throws CoverageExceededException, ElementFromSourceException {
 		if (!commonConstraints.getSource().equals(GenerationConstraints.NONSOURCE)) {
-			setValueContainer(generateFromSource());
+			Collection<T> possibilities = generateFromSource();
+			while (!containerIsFilled()) {
+				T element = possibilities.stream().skip(random.nextLong(0, possibilities.size() - 1)).findFirst().get();
+				valueContainer.add(element);
+			}
 		} else {
 			if (commonConstraints.getUnique()) {
 				setValueContainer(new HashSet<T>()); // Value container now may contain null values
